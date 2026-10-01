@@ -1,0 +1,81 @@
+{
+  "experiment": "morat-geometric-candidate-v7",
+  "status": "experimental",
+  "source_policy": "numeric research evidence only; source and candidate artwork remain outside Git",
+  "baseline": "morat-geometric-candidate-v6",
+  "secondary_upper_band": {
+    "normalized_model": {
+      "center": [50.088029, 87.919398],
+      "outer_radius": 51.718624,
+      "inner_radius": 46.048624,
+      "width": 5.67
+    },
+    "source_redundancy": {
+      "outer_family": "present in the compound white path and large black region",
+      "inner_family": "present in the compound white path and multiple separate black regions over disjoint arc intervals",
+      "interpretation": "the circular family is repeated source structure, not a fit to one isolated boundary"
+    },
+    "unconstrained_joint_fit": {
+      "center": [50.644132247, 86.368425126],
+      "outer_radius": 50.283598571,
+      "inner_radius": 44.479711053,
+      "width": 5.803887518,
+      "joint_radial_rmse": 0.152651629,
+      "max_abs_residual": 0.467841024
+    },
+    "fixed_5_67_fit": {
+      "center": [50.488462977, 86.79303463],
+      "outer_radius": 50.59425746,
+      "inner_radius": 44.92425746,
+      "width": 5.67,
+      "joint_radial_rmse": 0.159000416,
+      "max_abs_residual": 0.480794208
+    },
+    "classification": "source-supported circular constant-width family within the current first-party export",
+    "note": "The normalized reconstruction retains the earlier intersection-compatible center/radii rather than replacing them with a raw-error optimum. The free and fixed-width fits are evidence for the family and nominal width, not automatic rewrite coordinates."
+  },
+  "long_upper_band_width_cross_check": {
+    "unconstrained_width": 5.615760446,
+    "unconstrained_joint_radial_rmse": 0.047799027,
+    "fixed_5_67_joint_radial_rmse": 0.051878909,
+    "interpretation": "independent support for 5.67 as the shared nominal ribbon width with small export drift"
+  },
+  "endpoint_updates": {
+    "path8_end": {
+      "rule": "centerline intersection with upper-long-inner circle",
+      "point": [56.239965531, 37.271308209],
+      "previous_point": [56.2528, 37.31904]
+    },
+    "path9_end": {
+      "rule": "outer-edge intersection with upper-secondary-outer circle, projected radially to the path9 centerline",
+      "outer_edge_intersection": [71.666839941, 40.917579026],
+      "centerline_point": [68.834218309, 41.033681103],
+      "previous_point": [68.8364, 41.0878]
+    },
+    "path5_start": {
+      "rule": "retain source-fitted hidden cap",
+      "reason": "available intersection normalization has weaker source-vertex support and no visible structural benefit"
+    },
+    "path7_start": {
+      "rule": "retain source-fitted hidden cap",
+      "rejected_outer_edge_secondary_inner_centerline": [41.667661297, 45.412821983],
+      "rejected_cardinal_top": [37.437702, 45.191884],
+      "reason": "the exact-intersection variant materially worsens localized source fit; the cardinal variant also slightly worsens it"
+    }
+  },
+  "validation_1600_cairosvg": {
+    "raw_vs_v6_full_rgba_rmse": 22.416113911439354,
+    "raw_vs_v7_full_rgba_rmse": 22.41597800067092,
+    "raw_vs_v6_upper_crop_rgba_rmse": 29.919656707659954,
+    "raw_vs_v7_upper_crop_rgba_rmse": 29.919111111325236,
+    "v6_vs_v7_rgba_rmse": 0.01817342668568589,
+    "v6_vs_v7_changed_fraction": 0.000221484375,
+    "assessment": "endpoint normalization is visually negligible and slightly improves the raw comparison; structural evidence is the acceptance reason"
+  },
+  "rejected_path7_exact_intersection_variant": {
+    "full_rgba_rmse": 23.84880461045493,
+    "upper_crop_rgba_rmse": 34.23061871292525,
+    "assessment": "rejected; a mathematically convenient intersection is not supported as the authored hidden cap"
+  },
+  "next_step": "Limit further Morat changes to connector/cap constraints that can be justified from source topology; the principal circle families, secondary upper band, lower-left cutout, and red regions are now sufficiently supported for the research model."
+}

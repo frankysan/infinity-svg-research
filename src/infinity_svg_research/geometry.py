@@ -30,6 +30,17 @@ class CircleFit:
     max_abs_residual: float
 
 
+@dataclass(frozen=True, slots=True)
+class ConcentricBandFit:
+    """Joint fit for two concentric boundaries with an unconstrained width."""
+
+    outer: Circle
+    inner: Circle
+    width: float
+    rmse: float
+    max_abs_residual: float
+
+
 def _point_array(points: Iterable[tuple[float, float]] | np.ndarray) -> np.ndarray:
     result = np.asarray(list(points) if not isinstance(points, np.ndarray) else points, dtype=float)
     if result.ndim != 2 or result.shape[1] != 2:
@@ -80,6 +91,87 @@ def fit_circle(points: Iterable[tuple[float, float]] | np.ndarray) -> CircleFit:
         max_abs_residual=float(np.max(np.abs(residual))),
     )
 
+
+
+def fit_concentric_band(
+    outer_points: Iterable[tuple[float, float]] | np.ndarray,
+    inner_points: Iterable[tuple[float, float]] | np.ndarray,
+    *,
+    max_iterations: int = 50,
+    tolerance: float = 1e-12,
+) -> ConcentricBandFit:
+    """Fit two point sets to concentric circles without constraining their width."""
+
+    outer = _point_array(outer_points)
+    inner = _point_array(inner_points)
+    if len(outer) < 3 or len(inner) < 3:
+        raise ValueError("at least three points are required for each band boundary")
+
+    outer_fit = fit_circle(outer).circle
+    inner_fit = fit_circle(inner).circle
+    cx = (outer_fit.cx + inner_fit.cx) / 2.0
+    cy = (outer_fit.cy + inner_fit.cy) / 2.0
+    outer_radius = outer_fit.radius
+    inner_radius = inner_fit.radius
+
+    for _ in range(max_iterations):
+        outer_dx = cx - outer[:, 0]
+        outer_dy = cy - outer[:, 1]
+        inner_dx = cx - inner[:, 0]
+        inner_dy = cy - inner[:, 1]
+        outer_distances = np.hypot(outer_dx, outer_dy)
+        inner_distances = np.hypot(inner_dx, inner_dy)
+        if np.any(outer_distances <= 1e-15) or np.any(inner_distances <= 1e-15):
+            raise ValueError("band fit is degenerate at the current center estimate")
+
+        residual = np.concatenate(
+            (outer_distances - outer_radius, inner_distances - inner_radius)
+        )
+        outer_jacobian = np.column_stack(
+            (
+                outer_dx / outer_distances,
+                outer_dy / outer_distances,
+                -np.ones(len(outer)),
+                np.zeros(len(outer)),
+            )
+        )
+        inner_jacobian = np.column_stack(
+            (
+                inner_dx / inner_distances,
+                inner_dy / inner_distances,
+                np.zeros(len(inner)),
+                -np.ones(len(inner)),
+            )
+        )
+        jacobian = np.vstack((outer_jacobian, inner_jacobian))
+        delta, _residuals, rank, _singular = np.linalg.lstsq(
+            jacobian, -residual, rcond=None
+        )
+        if rank < 4:
+            raise ValueError("band fit is degenerate")
+
+        cx += float(delta[0])
+        cy += float(delta[1])
+        outer_radius += float(delta[2])
+        inner_radius += float(delta[3])
+        if float(np.linalg.norm(delta)) <= tolerance:
+            break
+
+    if inner_radius <= 0.0 or outer_radius <= inner_radius:
+        raise ValueError("fitted band requires positive radii with outer > inner")
+
+    fitted_outer = Circle(cx=cx, cy=cy, radius=outer_radius)
+    fitted_inner = Circle(cx=cx, cy=cy, radius=inner_radius)
+    residual = np.concatenate(
+        (radial_residuals(fitted_outer, outer), radial_residuals(fitted_inner, inner))
+    )
+    return ConcentricBandFit(
+        outer=fitted_outer,
+        inner=fitted_inner,
+        width=outer_radius - inner_radius,
+        rmse=float(np.sqrt(np.mean(residual * residual))),
+        max_abs_residual=float(np.max(np.abs(residual))),
+    )
 
 def fit_fixed_width_band(
     outer_points: Iterable[tuple[float, float]] | np.ndarray,
@@ -183,3 +275,15 @@ def circle_intersections(
         return (first_point,)
     second_point = (midpoint_x - offset_x, midpoint_y - offset_y)
     return (first_point, second_point)
+
+
+def project_point_to_circle(circle: Circle, point: tuple[float, float]) -> tuple[float, float]:
+    """Project a point radially onto ``circle`` while preserving its center angle."""
+
+    dx = float(point[0]) - circle.cx
+    dy = float(point[1]) - circle.cy
+    distance = hypot(dx, dy)
+    if distance <= 1e-15:
+        raise ValueError("cannot radially project the circle center")
+    scale = circle.radius / distance
+    return (circle.cx + dx * scale, circle.cy + dy * scale)
