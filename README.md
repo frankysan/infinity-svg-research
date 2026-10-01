@@ -13,6 +13,9 @@ tooling used to decide whether an SVG can be safely simplified or reconstructed.
   authorial intent, not every pixel produced by a pathological exporter.
 - **Authorial intent before byte count.** Silhouette, composition, identifying marks, palette, and
   meaningful shading take priority over absolute minimal element count or file size.
+- **Recover construction, not export irregularity.** When the source supports simple geometric
+  construction, prefer exact circles, regular spacing, reflection/rotational symmetry, and constructed
+  arcs over small alignment or path irregularities introduced by export or tracing.
 - **Small fidelity gains can justify small structural costs.** Minimality means removing accidental
   complexity, not choosing the fewest possible elements regardless of appearance.
 - **Exact and representative work stay separate.** Exact transforms require pixel-identical validation;
@@ -80,9 +83,11 @@ family has a compact three-gradient reconstruction that clears the hard classifi
 source hashes, but remains experimental because high-contrast inner-disc edge differences are still
 being investigated.
 
-See [`docs/design-goals.md`](docs/design-goals.md), [`docs/provenance.md`](docs/provenance.md),
-[`research/README.md`](research/README.md), and [`docs/research-log.md`](docs/research-log.md) for the
-project criteria, evidence policy, current status, and research history.
+See [`docs/design-goals.md`](docs/design-goals.md),
+[`docs/geometric-reconstruction.md`](docs/geometric-reconstruction.md),
+[`docs/provenance.md`](docs/provenance.md), [`research/README.md`](research/README.md), and
+[`docs/research-log.md`](docs/research-log.md) for the project criteria, reconstruction principles,
+evidence policy, current status, and research history.
 
 ## Licensing and asset scope
 

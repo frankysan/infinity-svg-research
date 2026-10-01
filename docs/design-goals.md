@@ -73,6 +73,32 @@ A reconstruction must not invent new visual content merely because it looks plau
 evidence is insufficient to establish authorial intent, record the uncertainty and keep the case
 experimental or deferred.
 
+## Geometric construction
+
+When source evidence indicates that a symbol was designed from simple geometry, the reconstruction
+should recover that construction rather than preserve small irregularities in the exported paths.
+
+Prefer, when supported by the source:
+
+- exact circles and common centers over nearly circular or slightly drifting outlines;
+- rotational or reflection symmetry over independently traced copies of repeated motifs;
+- regular angular spacing and congruent repeated sectors;
+- true circular arcs, shared radii, and deliberate tangencies/intersections over free-form curves that
+  only approximate the same construction;
+- constant-width bands and annular sectors when paired boundaries support that interpretation;
+- exact horizontal, vertical, and deliberate-angle relationships where the design clearly uses them.
+
+Treat **base geometry and shading as separate concerns**. Lighting, gradient focal points, highlights, and
+shadows may be asymmetric without moving or deforming an otherwise symmetric underlying symbol.
+
+Symmetry is evidence, not a requirement. Do not regularize deliberate asymmetry or force an irregular
+foreground design into a polar construction merely because the surrounding badge is symmetric. Any
+normalization of geometry should be justified by stronger construction evidence than the irregularity
+being removed.
+
+See [`geometric-reconstruction.md`](geometric-reconstruction.md) for reference cases and practical
+guidelines.
+
 ## Optimization priority
 
 When goals compete, use this order:

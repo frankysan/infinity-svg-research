@@ -56,6 +56,27 @@ Second-party material must not silently become the authoritative source. Fan-mad
 identified as fan-made even when it is technically cleaner than available first-party assets. Human
 Sphere renders should be treated as evidence of appearance, not proof of underlying vector geometry.
 
+## Project-authored reconstructions
+
+Manual redraws, generated candidates, fitted primitives, and other reconstructions produced within this
+project are **research artifacts**, not a third source-authority class. They do not become evidence of
+Corvus Belli's intent merely because they are clean or geometrically convincing.
+
+Such artifacts may be used to:
+
+- demonstrate a reconstruction method;
+- test a geometric hypothesis against first- or second-party evidence;
+- serve as regression/reference examples for tooling;
+- document accepted project conventions such as concentric geometry or rotational repetition.
+
+When a project-authored redraw influences a later reconstruction, cite the underlying first-/second-party
+evidence and the reconstruction decision separately. Do not cite the redraw itself as independent
+provenance.
+
+The manually reconstructed Combined Army, Morat, Onyx, Shasvastii, and Exrah examples are therefore
+methodological references for geometric construction recovery, not provenance sources. See
+[`geometric-reconstruction.md`](geometric-reconstruction.md).
+
 ## Evidence ordering
 
 When sources disagree, prefer evidence in this order unless the case record documents a reason to do

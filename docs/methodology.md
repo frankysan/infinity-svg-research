@@ -19,13 +19,45 @@ plan. See [`design-goals.md`](design-goals.md) and [`provenance.md`](provenance.
 5. **Form a structural hypothesis** about the exporter pathology. Avoid transformations based solely on
    file size or element count.
 6. **Identify the intended visual construction** using the strongest available provenance evidence.
-7. **Implement the smallest well-supported transformation** that tests that hypothesis.
-8. **Render at multiple resolutions** with Inkscape and compare RGBA pixels and spatial error patterns.
-9. **Review authorial features** such as silhouette, proportions, palette, identifying marks, major
-   gradients, texture, and composition; numeric image metrics are evidence, not the acceptance rule.
-10. **Rescan the candidate** to determine whether the targeted pathology was actually removed.
-11. **Record the result**, including rejected approaches, source evidence, uncertainty, and why the
+7. **Test for geometric regularity** before fitting free-form paths: common centers/radii, exact circles,
+   reflection or rotational symmetry, regular angular spacing, constant-width bands, tangencies,
+   intersections, and repeated sectors.
+8. **Separate base geometry from lighting** so gradients and shadows may remain asymmetric without
+   distorting an otherwise regular symbol.
+9. **Implement the smallest well-supported transformation** that tests that hypothesis.
+10. **Render at multiple resolutions** with Inkscape and compare RGBA pixels and spatial error patterns.
+11. **Review authorial features** such as silhouette, proportions, palette, identifying marks, major
+    gradients, texture, and composition; numeric image metrics are evidence, not the acceptance rule.
+12. **Rescan the candidate** to determine whether the targeted pathology was actually removed.
+13. **Record the result**, including rejected approaches, source evidence, uncertainty, and why the
     preferred candidate best balances representation and minimality.
+
+## Geometry recovery
+
+For strongly geometric symbols, reconstruction is closer to reverse-engineering a drawing construction
+than to tracing a bitmap or simplifying arbitrary Bézier paths.
+
+Before introducing free-form control points, test whether the observed geometry is better explained by:
+
+- concentric or tangent circles;
+- circular arcs with shared centers or radii;
+- rotational repetition of one sector or motif;
+- reflection across one or more axes;
+- fixed angular relationships such as 45 or 90 degrees;
+- constant-width offsets or annular bands;
+- intersections of simple primitives.
+
+Small residual differences against an exported path are not automatically evidence against the simpler
+construction. Export expansion, raster masks, tracing, coordinate rounding, and editor transforms can
+introduce irregularity. Prefer the simpler regular construction when first-party evidence supports it and
+record the rejected irregularity as an exporter artifact or uncertainty.
+
+Conversely, do not use symmetry as a cleanup heuristic without evidence. Deliberately asymmetric symbols,
+letterforms, organic motifs, and faction-specific foreground artwork must remain asymmetric.
+
+Project-authored manual redraws can be used as methodological reference cases for this process, but they
+are not source-authority evidence. See [`geometric-reconstruction.md`](geometric-reconstruction.md) and
+[`provenance.md`](provenance.md).
 
 ## Exact versus representative transformations
 

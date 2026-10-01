@@ -12,7 +12,9 @@
    three-gradient baseline before promoting a default reconstruction model.
 5. Exercise the exact optimizer across the current raw corpus and promote case records only where
    pixel-identical validation is reproduced from the repository tooling.
-6. Add reduced/synthetic fixtures for every hard pathology so detector contracts do not depend on the
+6. Formalize geometry/symmetry analysis for symbols built from repeated sectors, circles, and arcs;
+   start with a focused Morat reconstruction using circular-arc/constant-width hypotheses.
+7. Add reduced/synthetic fixtures for every hard pathology so detector contracts do not depend on the
    private/raw corpus.
 
 ## Medium term
@@ -22,6 +24,9 @@
 - Resolve the remaining missing-external-image cases, especially Kaeltar Specialists.
 - Improve provenance tooling for historical first-party assets without treating second-party mirrors as
   authoritative.
+- Add advisory tooling for rotational/reflection symmetry, common circle/arc fits, angular spacing, and
+  constant-width curved bands. These tools should propose construction hypotheses, not rewrite geometry
+  automatically.
 
 ## Release direction
 
