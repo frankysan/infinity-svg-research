@@ -32,17 +32,6 @@ ACCENT_BASE_RELATIVE = {
     "x2": (48.529 - 41.1) / 24.69,
     "y2": (41.526 - 41.1) / 24.69,
 }
-ACCENT_RIM_GRADIENT_RELATIVE = {
-    "x1": (16.51 - 41.1) / 24.69,
-    "y1": (41.076 - 41.1) / 24.69,
-    "x2": (65.984 - 41.1) / 24.69,
-    "y2": (41.076 - 41.1) / 24.69,
-}
-ACCENT_RIM_RELATIVE = {
-    "cx": (41.247 - 41.1) / 24.69,
-    "cy": (41.076 - 41.1) / 24.69,
-    "r": 24.737 / 24.69,
-}
 ACCENT_RADIAL_1_RELATIVE = {
     "cx": (42.077 - 41.1) / 24.69,
     "cy": (13.377 - 41.1) / 24.69,
@@ -249,15 +238,6 @@ def reconstruct_decomposed_tree(
         coordinates=GRAY_BASE_RELATIVE,
         stops=[("0", gray_dark, None), ("1", gray_light, None)],
     )
-    rim_id, rim_gradient = _make_linear_gradient(
-        root,
-        prefix="svg-research-accent-rim",
-        center_x=inner_cx,
-        center_y=inner_cy,
-        radius=inner_r,
-        coordinates=ACCENT_RIM_GRADIENT_RELATIVE,
-        stops=[("0", accent_light, None), ("1", accent_dark, None)],
-    )
     accent_base_id, accent_base = _make_linear_gradient(
         root,
         prefix="svg-research-accent-base-2d",
@@ -286,7 +266,7 @@ def reconstruct_decomposed_tree(
             ("1", accent_light, "0"),
         ],
     )
-    defs.extend((gray_base, rim_gradient, accent_base, radial_1, radial_2))
+    defs.extend((gray_base, accent_base, radial_1, radial_2))
 
     gray_group = etree.Element(f"{{{scan.SVG}}}g")
     gray_group.set("data-svg-research", "reconstructed-gray-field")
@@ -312,12 +292,6 @@ def reconstruct_decomposed_tree(
 
     accent_group = etree.Element(f"{{{scan.SVG}}}g")
     accent_group.set("data-svg-research", "reconstructed-accent-field")
-    rim = etree.SubElement(accent_group, f"{{{scan.SVG}}}circle")
-    rim.set("cx", _format(inner_cx + ACCENT_RIM_RELATIVE["cx"] * inner_r))
-    rim.set("cy", _format(inner_cy + ACCENT_RIM_RELATIVE["cy"] * inner_r))
-    rim.set("r", _format(ACCENT_RIM_RELATIVE["r"] * inner_r))
-    rim.set("fill", f"url(#{rim_id})")
-    rim.set("data-svg-research", "reconstructed-accent-rim")
     for gradient_id, marker in (
         (accent_base_id, "reconstructed-accent-base"),
         (radial_1_id, "reconstructed-accent-radial-1"),
@@ -339,7 +313,13 @@ def reconstruct_decomposed_tree(
     defs_stats = legacy.prune_unreferenced_defs(root)
 
     return {
-        "model": "decomposed-six-element",
+        "model": "decomposed-concentric",
+        "geometry_policy": "concentric-authorial",
+        "geometry_invariant": {
+            "center": {"cx": inner_cx, "cy": inner_cy},
+            "gray_radius": gray_r,
+            "accent_radius": inner_r,
+        },
         "match_mode": scaffold.get("match_mode", "unknown"),
         "removed_scaffold_nodes": removed_count,
         "outer_stripe_geometry_removed": legacy._stripe_geometry_count(scaffold["outer_stripes"]),
@@ -349,8 +329,8 @@ def reconstruct_decomposed_tree(
         "gray_geometry": {"cx": gray_cx, "cy": gray_cy, "r": gray_r},
         "gray_colors": [gray_dark, gray_light],
         "accent_colors": [accent_light, accent_dark],
-        "gradient_count": 5 + (1 if shadow_summary else 0),
-        "circle_count": 5 + (1 if shadow_summary else 0),
+        "gradient_count": 4 + (1 if shadow_summary else 0),
+        "circle_count": 4 + (1 if shadow_summary else 0),
         "gray_shadow": shadow_summary,
         "css_pruning": css_stats,
         "defs_pruning": defs_stats,
@@ -561,8 +541,8 @@ def _apply_fit_report(
             if key in {"target_alpha_p99", "fit_alpha_rmse", "sample_count"}
         }
     )
-    reconstruction["gradient_count"] = 6
-    reconstruction["circle_count"] = 6
+    reconstruction["gradient_count"] = 5
+    reconstruction["circle_count"] = 5
 
 
 def _load_fit_report(path: Path) -> dict[str, Any]:
@@ -585,8 +565,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description=(
             "Experimental decomposed gradient/mask reconstruction: replace the flattened badge "
-            "with a gray linear field, optional fitted gray edge shadow, accent rim, one accent "
-            "linear field, and two accent radial highlights. Outputs always require review."
+            "with concentric gray/accent circles, a gray linear field, optional fitted gray edge "
+            "shadow, one accent linear field, and two accent radial highlights. Outputs always "
+            "require review."
         )
     )
     parser.add_argument("source", type=Path)

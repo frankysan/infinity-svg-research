@@ -98,51 +98,62 @@ legacy three-gradient reconstruction remains available unchanged for comparison.
 
 Structural comparison of the six current InfinityDB-published badge families found the same 83-gradient
 scaffold, the same 46-circle inner-stack geometry, and effectively the same gradient-coordinate sequence.
-The family differences are primarily the two-stop accent palette and foreground artwork. This supports a
-shared six-element replacement model:
+The family differences are primarily the two-stop accent palette and foreground artwork.
 
-1. one gray linear field;
-2. one gray radial edge shadow;
-3. one accent rim circle;
-4. one accent linear base field;
-5. two accent radial highlights.
+The authoritative end-to-end raw batch completed successfully for all six unique SHA groups with
+gray-shadow fitting enabled. It produced 6 successful groups, no rejects/missing/hash mismatches, and no
+scanner classifications, advisories, or signals in any candidate. The shared renderer used exactly two
+Inkscape processes for the complete run: one fit shell and one validation shell.
 
-An offline experiment against the **raw-source 1600 px renders archived by the v8.9.4 batch** improved
-all six source families substantially. With shared geometry, RGBA RMSE fell to roughly 1.57–2.00 for five
-families. Gecko improved from 7.13 to 4.01 but remained an outlier because its first-party gray-mask
-crescent is much stronger than the others.
+At 1600 px, the decomposed-rim model measured:
+
+- Guijia / Blue Wolf / Longwang: RGBA RMSE 1.6215, shared-weak gray shadow;
+- Gecko: 1.8124, fitted-strong gray shadow;
+- Juggernauts: 2.0408, shared-weak gray shadow;
+- Maghariba / Shakush: 1.6592, shared-weak gray shadow;
+- Mechazoid / O-Yoroi: 1.8192, shared-weak gray shadow;
+- Scarface / Triphammers: 1.6178, shared-weak gray shadow.
+
+Candidate sizes ranged from 6,893 to 13,784 bytes. These results validate the decomposed shading model
+across the raw family set, but do not by themselves establish that every raw edge pixel is authorial.
 
 The three embedded mask images use the same SVG placement across all six families, but their native PNG
-widths vary while their heights remain fixed. The gray-mask widths range from 2167 to 2194 pixels, with
-Gecko at 2194x2173. This is evidence that some family-to-family mask variation may come from raster export
-or cropping rather than intended geometry, so exact raster-mask differences must not automatically be
-promoted as authorial intent.
+widths vary while their heights remain fixed. Gecko's stronger fitted gray crescent therefore remains a
+provenance question: it is first-party evidence of the current export, but may partly reflect raster
+cropping/export variance. No fitted shadow is automatically accepted as authorial intent.
 
-A shifted one-ramp radial gradient fitted to Gecko's current Army render reduces its 1600 px full-image
-RGBA RMSE to about 1.82 and the outer gray-boundary RMSE to about 2.97. The fit can be recovered with a
-deterministic NumPy-only coordinate search; no SciPy dependency is required. However, whether the
-unusually strong Gecko crescent is intentional remains unresolved pending an independent first-party
-appearance reference.
+### Concentric geometry decision
 
-The new decomposed-model CLI therefore remains explicitly experimental. It uses the shared weak shadow
-when measured source-render evidence is weak and only fits a stronger shifted radial shadow when the
-neutral gray-ring alpha contribution exceeds a conservative threshold. No fitted result is automatically
-accepted.
+Subsequent review changed the interpretation of the thin accent rim. The explicit source base circle and
+inner clip are perfectly concentric at `(41.1, 41.1)` with `r=24.69`; the outer gray circle is likewise
+centered at `(41.1, 41.1)` with `r=32.02`. Only the expanded 44-circle exporter stack wanders slightly.
 
-Raw Guijia end-to-end validation of the generalized implementation produced a 7,910-byte Scoured SVG
-from the 505,086-byte source, no scanner findings, zero alpha RMSE, and 1.62155 RGBA RMSE at 1600 px.
-The other five unique raw sources still need an end-to-end batch run before the decomposed model can
-replace the legacy three-gradient baseline.
+The preferred representative construction therefore removes the fitted offset rim entirely. Shading may
+remain asymmetric through gradient focal points, but all accent shading circles must share the exact
+inner-circle geometry and all gray shading must preserve the exact outer-circle silhouette. This reduces
+the purposeful construction from six gradients/circles to five when the default gray shadow is present.
+
+Raw full-image RMSE becomes worse after removing the rim because the source render contains that swept
+edge artifact. The disagreement is highly localized: at 1600 px, excluding only a `+/-0.25` SVG-unit
+band around `r=24.69` gives RGBA RMSE of roughly 1.25--1.38 across all six unique families. The project
+therefore treats the centered circles as stronger geometry evidence than the expanded-stack boundary.
+
+Earlier capsule, endpoint-circle, and single-resolution rim-fitting experiments remain useful negative
+evidence. They either performed worse than the compact fitted rim or overfit one raster size while
+degrading the rest of the validation set. The rim is no longer part of the preferred representative
+model.
 
 Next questions:
 
-1. run the decomposed model end-to-end against all six unique raw source hashes;
-2. inspect any family whose fitted shadow or fidelity is materially different from the shared pattern;
-3. seek independent first-party appearance evidence for Gecko before deciding whether its strong gray
-   crescent represents authorial intent or exporter variance;
-4. only after that review, decide whether the decomposed model should become the default reconstruction.
+1. run the concentric model end-to-end against all six unique raw source hashes;
+2. add an edge-excluded representative-fidelity metric alongside normal full-image comparison;
+3. visually review the normalized concentric candidates at vector/native and normal UI sizes;
+4. seek independent first-party appearance evidence for Gecko's unusually strong gray crescent;
+5. then decide whether the concentric decomposed model should replace the legacy three-gradient baseline.
 
 See `../../reports/gradient-mask-v8.9.4-summary.json` for the old batch baseline,
 `../../reports/guijia-inner-field-experiment.json` and
-`../../reports/guijia-edge-gray-experiment.json` for the Guijia decomposition, and
-`../../reports/gradient-mask-decomposed-cross-family.json` for the cross-family structural/render study.
+`../../reports/guijia-edge-gray-experiment.json` for the Guijia decomposition,
+`../../reports/gradient-mask-decomposed-cross-family.json` for the structural/render study,
+`../../reports/gradient-mask-decomposed-2-summary.json` for the authoritative raw six-family batch, and
+`../../reports/gradient-mask-concentric-geometry-decision.json` for the concentric geometry decision.

@@ -105,21 +105,38 @@ Comparison of the six current published badge SVGs found a common exporter scaff
 families use the same gradient coordinate serialization; Scarface differs only by one mathematically
 equivalent transform spelling. Accent palettes differ as expected.
 
-Applying the Guijia-derived six-element structural model to the raw-source renders archived by the
-v8.9.4 batch improved every family. Five families reached roughly 1.57–2.00 RGBA RMSE at 1600 px with
-shared geometry. Gecko remained at about 4.01 because its current Army gray-mask crescent is much
-stronger. Fitting that crescent as one shifted radial-opacity field lowered Gecko to about 1.82.
+The authoritative raw-source batch completed successfully for all six unique SHA-256 groups with
+gray-shadow fitting enabled. It recorded 6 successful groups, 0 rejects, 0 missing/hash-mismatch groups,
+and no candidate scanner classifications, advisories, or signals. Candidate sizes ranged from 6,893 to
+13,784 bytes. At 1600 px, RGBA RMSE measured 1.6215 (Guijia/Blue Wolf/Longwang), 1.8124 (Gecko),
+2.0408 (Juggernauts), 1.6592 (Maghariba/Shakush), 1.8192 (Mechazoid/O-Yoroi), and 1.6178
+(Scarface/Triphammers). Gecko alone selected the fitted-strong gray shadow; the other five used the
+shared-weak shadow.
+
+The shared-shell renderer handled the complete fit+validation run with exactly two Inkscape process
+startups: one shell for all six source/no-shadow fit pairs and one for all six final validation pairs.
 
 The mask placement metadata is shared, but the embedded PNG native widths vary between families while
-the heights stay fixed. This makes the exact mask-strength differences provenance-sensitive: they are
+the heights stay fixed. This makes exact mask-strength differences provenance-sensitive: they are
 first-party evidence of the current export, but may reflect raster cropping/export variance rather than
-authorial intent. The experimental implementation therefore uses a shared weak shadow by default and
-only performs a strong source-render fit above a conservative measured threshold; all results remain
-review-required.
+authorial intent. All fitted results therefore remain review-required.
 
-The generalized decomposed model is implemented separately from the legacy three-gradient model. An
-end-to-end raw Guijia run produced a 7,910-byte Scoured candidate, no scanner findings, zero alpha RMSE,
-and 1.62155 RGBA RMSE at 1600 px. Full raw-source validation of the other five unique hashes is pending.
+### Concentric geometry decision
+
+Follow-up review changed the interpretation of the thin accent rim. The explicit source base circle and
+inner clip are perfectly concentric at `(41.1, 41.1)` with `r=24.69`; the gray circle is likewise centered
+at `(41.1, 41.1)` with `r=32.02`. Only the expanded 44-circle exporter stack wanders slightly.
+
+The representative model therefore removes the fitted offset rim and preserves the exact concentric
+circle geometry. Shading gradients may have offset focal points, but they must not alter the principal
+silhouettes. This intentionally worsens full-image RMSE against the pathological raw source because the
+source pixels include the swept edge artifact. Excluding only a +/-0.25 SVG-unit band around the inner
+circle boundary leaves about 1.25--1.38 RGBA RMSE at 1600 px across all six families, showing that the
+remaining disagreement is overwhelmingly localized to the rejected exporter edge.
+
+The concentric model still requires a new end-to-end six-family batch run. Validation should report both
+normal full-image metrics and an edge-excluded representative-fidelity metric so the known exporter rim
+does not pull the reconstructed geometry away from the stronger explicit circle evidence.
 
 ## Palette-fragmented traces
 

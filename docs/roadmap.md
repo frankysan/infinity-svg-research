@@ -2,15 +2,17 @@
 
 ## Near term
 
-1. Run the new decomposed gradient-mask model against all six unique raw source hashes with gray-shadow
-   fitting enabled and record per-family manifests/renders.
-2. Review any strong fitted gray-mask crescent as a provenance question rather than automatically
+1. Re-run all six unique raw gradient-mask families with the concentric-circle model and record both
+   normal full-image metrics and an edge-excluded representative-fidelity metric.
+2. Review the concentric candidates visually at native/vector scale and normal UI sizes; do not tune the
+   principal circle geometry to reproduce the rejected swept rim artifact.
+3. Review any strong fitted gray-mask crescent as a provenance question rather than automatically
    preserving it; Gecko specifically needs an independent first-party appearance reference if possible.
-3. Compare the raw six-family batch against the legacy three-gradient baseline and promote the new model
-   to the default only if the family-wide results support it.
-4. Exercise the exact optimizer across the current raw corpus and promote case records only where
+4. Compare the concentric six-family result against both the validated decomposed-rim batch and the legacy
+   three-gradient baseline before promoting a default reconstruction model.
+5. Exercise the exact optimizer across the current raw corpus and promote case records only where
    pixel-identical validation is reproduced from the repository tooling.
-5. Add reduced/synthetic fixtures for every hard pathology so detector contracts do not depend on the
+6. Add reduced/synthetic fixtures for every hard pathology so detector contracts do not depend on the
    private/raw corpus.
 
 ## Medium term

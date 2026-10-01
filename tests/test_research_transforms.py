@@ -307,15 +307,23 @@ class GradientMaskReconstructTests(unittest.TestCase):
         self.assertEqual(result["accent_base_gradient"]["colors"], ["#7fd4c1", "#39a572"])
         self.assertEqual(result["accent_highlight_gradient"]["color"], "#7fd4c1")
 
-    def test_decomposed_gradient_mask_model_adds_six_purposeful_primitives(self) -> None:
+    def test_decomposed_gradient_mask_model_uses_concentric_authorial_geometry(self) -> None:
         root = etree.fromstring(self._source())
         result = gradient_mask_model.reconstruct_decomposed_tree(etree.ElementTree(root))
-        self.assertEqual(result["model"], "decomposed-six-element")
-        self.assertEqual(result["gradient_count"], 6)
-        self.assertEqual(result["circle_count"], 6)
+        self.assertEqual(result["model"], "decomposed-concentric")
+        self.assertEqual(result["gradient_count"], 5)
+        self.assertEqual(result["circle_count"], 5)
         self.assertEqual(result["accent_colors"], ["#ffb669", "#ff6b00"])
         self.assertEqual(result["gray_shadow"]["mode"], "shared-weak")
-        self.assertEqual(len(root.xpath(".//s:linearGradient", namespaces=scan.NS)), 3)
+        self.assertEqual(result["geometry_policy"], "concentric-authorial")
+        circles = root.xpath(".//s:g[@data-svg-research='reconstructed-accent-field']/s:circle", namespaces=scan.NS)
+        self.assertEqual(len(circles), 3)
+        for circle in circles:
+            self.assertEqual(circle.get("cx"), "41.1")
+            self.assertEqual(circle.get("cy"), "41.1")
+            self.assertEqual(circle.get("r"), "24.69")
+        self.assertFalse(root.xpath(".//*[@data-svg-research='reconstructed-accent-rim']", namespaces=scan.NS))
+        self.assertEqual(len(root.xpath(".//s:linearGradient", namespaces=scan.NS)), 2)
         self.assertEqual(len(root.xpath(".//s:radialGradient", namespaces=scan.NS)), 3)
         self.assertEqual(len(root.xpath(".//s:mask", namespaces=scan.NS)), 0)
         self.assertEqual(len(root.xpath(".//s:filter", namespaces=scan.NS)), 0)
