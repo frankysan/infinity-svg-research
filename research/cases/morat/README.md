@@ -78,13 +78,31 @@ crop improves from about `36.36` to `31.32` RGBA RMSE against the raw source, an
 from about `44.87` to `35.67`. The full-image RMSE also improves slightly. The v7 beak is therefore treated
 as a reconstruction artifact caused by independent cap endpoints, not as authored geometry.
 
+The v9 review refines the path5 outer start again. The v8 shared-apex correction removed the visible
+beak, but it did so by inserting a short straight bridge between the upper-band point and the path5
+outer circle. The first-party source has duplicate forward/reverse cubic boundaries beginning directly
+at about `(29.4, 40.5)` and continuing as one curve, so that straight bridge is not source-supported.
+
+The source boundary converges rapidly onto the established path5 outer circle. A second large-radius
+circle through the upper-band point can be joined tangentially to the path5 outer circle after roughly
+30% of the raw cubic. The resulting two-circle boundary is G1-continuous at the join. Its geometric RMSE
+against the raw cubic is about `0.060` SVG units, compared with about `0.250` for treating the whole
+boundary as the original path5 outer circle. At 1600 px, the tight junction crop improves by about
+13.45% against the raw render and the full-image RMSE also improves slightly.
+
+A whole-boundary low-eccentricity ellipse was tested as an alternative. It improves the isolated outer
+boundary fit, but moving the complete stroked ribbon onto that ellipse damages the already-good inner and
+downstream geometry. The smaller two-circle transition is therefore preferred: it changes only the
+source-supported exceptional start and rejoins the established circular family tangentially.
+
 The path7 start remains source-fitted. Its previously tested exact-intersection and cardinal-top
 normalizations remain rejected because they worsen the localized source comparison.
 
 Numeric evidence is recorded in
 [`../../reports/morat-geometric-v6.json`](../../reports/morat-geometric-v6.json),
 [`../../reports/morat-geometric-v7.json`](../../reports/morat-geometric-v7.json), and
-[`../../reports/morat-geometric-v8.json`](../../reports/morat-geometric-v8.json). Source and candidate
+[`../../reports/morat-geometric-v8.json`](../../reports/morat-geometric-v8.json), and
+[`../../reports/morat-geometric-v9.json`](../../reports/morat-geometric-v9.json). Source and candidate
 artwork remain outside Git under the repository's provenance/licensing policy.
 
 ## Guardrails
@@ -99,7 +117,8 @@ artwork remain outside Git under the repository's provenance/licensing policy.
 
 ## Next step
 
-The shared-apex junction is resolved. The main remaining uncertainty is the retained path7 start and any
-other minor connector/cap choices that still lack a supported construction rule. Continue only where a new
-constraint is supported by source topology or clear visual evidence; avoid global fitting that merely
-lowers pixel RMSE against exporter drift.
+The path5 start boundary is now represented as a source-supported tangent two-circle transition rather
+than a forced intersection or a whole-ribbon ellipse. The main remaining uncertainty is the retained
+path7 start and any other minor connector/cap choices that still lack a supported construction rule.
+Continue only where a new constraint is supported by source topology or clear visual evidence; avoid
+global fitting that merely lowers pixel RMSE against exporter drift.

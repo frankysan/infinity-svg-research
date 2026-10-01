@@ -287,3 +287,44 @@ def project_point_to_circle(circle: Circle, point: tuple[float, float]) -> tuple
         raise ValueError("cannot radially project the circle center")
     scale = circle.radius / distance
     return (circle.cx + dx * scale, circle.cy + dy * scale)
+
+def tangent_circle_through_point(
+    reference: Circle,
+    join: tuple[float, float],
+    point: tuple[float, float],
+    *,
+    tolerance: float = 1e-9,
+) -> Circle:
+    """Return a circle through ``point`` tangent to ``reference`` at ``join``.
+
+    ``join`` must lie on ``reference`` within ``tolerance``. The returned circle shares the
+    reference tangent at the join point. This is useful for testing piecewise circular boundaries
+    without introducing a free-form transition curve.
+    """
+
+    if reference.radius <= 0.0:
+        raise ValueError("reference circle radius must be positive")
+
+    jx, jy = (float(join[0]), float(join[1]))
+    px, py = (float(point[0]), float(point[1]))
+    radial_x = jx - reference.cx
+    radial_y = jy - reference.cy
+    radial_distance = hypot(radial_x, radial_y)
+    if abs(radial_distance - reference.radius) > tolerance:
+        raise ValueError("join point must lie on the reference circle")
+
+    normal_x = radial_x / radial_distance
+    normal_y = radial_y / radial_distance
+    dx = px - jx
+    dy = py - jy
+    denominator = 2.0 * (normal_x * dx + normal_y * dy)
+    if abs(denominator) <= tolerance:
+        raise ValueError("tangent-circle construction is degenerate")
+
+    signed_radius = (dx * dx + dy * dy) / denominator
+    cx = jx + signed_radius * normal_x
+    cy = jy + signed_radius * normal_y
+    radius = abs(signed_radius)
+    if radius <= tolerance:
+        raise ValueError("tangent-circle construction produced a zero radius")
+    return Circle(cx=cx, cy=cy, radius=radius)

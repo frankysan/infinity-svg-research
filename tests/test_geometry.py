@@ -12,6 +12,7 @@ from infinity_svg_research.geometry import fit_concentric_band
 from infinity_svg_research.geometry import fit_fixed_width_band
 from infinity_svg_research.geometry import project_point_to_circle
 from infinity_svg_research.geometry import radial_residuals
+from infinity_svg_research.geometry import tangent_circle_through_point
 
 
 class GeometryTests(unittest.TestCase):
@@ -81,6 +82,17 @@ class GeometryTests(unittest.TestCase):
 
         self.assertAlmostEqual(projected[0], 8.0)
         self.assertAlmostEqual(projected[1], 11.0)
+
+
+    def test_tangent_circle_through_point_preserves_join_tangent(self) -> None:
+        reference = Circle(0.0, 0.0, 10.0)
+
+        result = tangent_circle_through_point(reference, (10.0, 0.0), (8.0, 4.0))
+
+        self.assertAlmostEqual(result.cx, 5.0)
+        self.assertAlmostEqual(result.cy, 0.0)
+        self.assertAlmostEqual(result.radius, 5.0)
+        self.assertAlmostEqual(math.hypot(8.0 - result.cx, 4.0 - result.cy), result.radius)
 
     def test_radial_residuals_preserve_signed_error(self) -> None:
         residuals = radial_residuals(Circle(0.0, 0.0, 2.0), [(2.5, 0.0), (1.5, 0.0)])
