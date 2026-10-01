@@ -76,22 +76,26 @@ fragments.
 
 ### Morat
 
-The Morat redraw is intentionally **not** treated as a finished reference construction. Its outer badge
-already uses three exact concentric circles, but several internal curved ribbons remain eyeballed Bézier
-paths.
+The Morat redraw began as an explicitly unfinished methodology reference. Follow-up source analysis
+recovered a compact construction based on concentric badge circles, circular ribbon families, a common
+nominal ribbon width of `5.67`, shared edge circles, and exact or source-supported intersection rules.
+The three substantive red regions and the lower-left negative space can be derived from the same circle
+families rather than fitted independently.
 
-Preliminary inspection suggests that multiple ribbon centerlines and some paired edges are close to
-circular arcs. The next hypothesis to test is therefore:
+One local boundary demonstrated an important exception to naive regularization. The path5 outer start
+matches a short large-radius transition circle that joins the established downstream circle tangentially.
+A whole-boundary low-eccentricity ellipse improved the isolated boundary fit but damaged geometry that was
+already well supported. The preferred model therefore changes only the exceptional source-supported
+segment and rejoins the stronger circular family with G1 continuity.
 
-1. fit each ribbon's intended centerline to a circle/arc;
-2. test whether paired edges can share that center with two radii;
-3. prefer constant-width annular sectors when the residuals support them;
-4. constrain endpoints through radial guides, tangencies, or exact intersections where supported;
-5. derive adjacent negative/positive regions from the same construction instead of fitting each boundary
-   independently.
+Morat also established a useful representation split. The v9 research master retains the recovered
+primitive construction so its centers, radii, widths, intersections, and tangent transition remain
+inspectable. The v10 publication candidate freezes that geometry but boolean-unions contiguous white
+regions and removes four non-authorial micro-holes caused by adjacent fill/stroke topology. Cleanup is
+therefore allowed to change serialization and antialiasing without redefining the recovered construction.
 
-Do not promote those curves to circular construction until the source evidence and fit residuals support
-the hypothesis. The current redraw is a useful indication of direction, not proof.
+The case is considered resolved. Future changes require a specific visual defect or materially stronger
+source evidence; a lower exporter-pixel RMSE alone is not sufficient reason to reopen the geometry.
 
 ## Typography as construction
 

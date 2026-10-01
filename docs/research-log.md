@@ -68,20 +68,24 @@ Typography reconstruction status: **active research**.
 
 ## Morat geometric reconstruction
 
-A project-authored Morat redraw was supplied as a methodology reference. Its outer badge uses exact
-concentric circles, but several internal ribbon-like curves are still eyeballed Bézier paths and are not
-considered final reconstructed geometry.
+The project-authored redraw began as a methodology reference rather than provenance evidence. Source
+analysis subsequently recovered the internal ribbons as a compact circular system: a common nominal
+`5.67` ribbon width, shared circle families, source-supported intersections, derived red/negative regions,
+and a local G1-continuous two-circle transition where the source departs briefly from the main path5
+circle before converging back onto it. A whole-ribbon ellipse was tested and rejected because it damaged
+otherwise-supported downstream geometry.
 
-Preliminary inspection suggests that multiple ribbon centerlines and some paired edges are close to
-circular arcs. The active hypothesis is to recover those regions from shared circle centers/radii,
-constant-width annular sectors, radial endpoint guides, and supported tangency/intersection constraints.
-Adjacent positive/negative regions should be derived from the same construction where possible rather
-than fitted independently.
+The final representation is intentionally split. **v9 is the geometric research master**, preserving the
+primitive construction for inspection. **v10 is the cleaned publication candidate**, keeping the v9
+geometry fixed while boolean-unioning contiguous white regions and removing four non-authorial junction
+micro-holes. The v10 cleanup improves the affected local source comparison even though full-image raw
+RMSE rises slightly from antialiasing differences introduced by stroke-to-filled-region conversion.
 
-The redraw itself is a project research artifact, not provenance evidence, and the circular-arc
-hypothesis must be validated against source evidence before it is promoted.
+The retained source-fitted path7 start is accepted: previously tested exact-intersection/cardinal-top
+normalizations were visually and numerically worse. Further geometry work is gated on a specific visual
+defect or materially stronger first-party evidence rather than continued global fitting.
 
-Status: **active research**.
+Status: **resolved reconstruction**.
 
 ## Flattened gradient/mask badge family
 

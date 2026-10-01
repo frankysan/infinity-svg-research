@@ -1,15 +1,16 @@
 # Morat
 
-Status: **active research**
+Status: **resolved reconstruction**
 
 Research topic: geometric construction recovery
 
 ## Motivation
 
-A project-authored manual redraw demonstrates the intended reconstruction mindset but is not itself
-provenance evidence. The redraw regularizes the outer badge as exact concentric circles. Its internal
-ribbon-like forms were still based on eyeballed Bézier curves, so Morat remains an explicit research
-subject rather than a finished reference reconstruction.
+A project-authored manual redraw demonstrated the intended reconstruction mindset but is not itself
+provenance evidence. The redraw regularized the outer badge as exact concentric circles while leaving
+several internal ribbon-like forms as eyeballed Bézier curves. The v6-v9 research recovered those
+regions as a compact circle/arc construction, and v10 performed a cleanup-only topology pass without
+changing that recovered geometry.
 
 ## Recovered construction
 
@@ -98,11 +99,33 @@ source-supported exceptional start and rejoins the established circular family t
 The path7 start remains source-fitted. Its previously tested exact-intersection and cardinal-top
 normalizations remain rejected because they worsen the localized source comparison.
 
+## Final representation decision
+
+The reconstruction now has two deliberately different representations:
+
+- **v9 is the geometric research master.** It retains the recovered primitive construction explicitly:
+  concentric badge circles, circular ribbon families, shared-width bands, circle intersections, and the
+  local G1-continuous two-circle transition at the path5 start.
+- **v10 is the cleaned publication candidate.** It freezes the v9 geometry, boolean-unions contiguous
+  internal white regions, and removes four non-authorial micro-holes created by adjacent fill/stroke
+  topology. The substantive black negative spaces, red regions, and lower-left cutout are unchanged.
+
+The cleanup improves the affected 1600 px source comparison from about `22.95` to `21.19` RGBA RMSE in
+its junction crop and from about `26.60` to `26.03` in the broader left context. Full-image raw RMSE rises
+slightly because replacing stroked/overlapping primitives with one filled region changes antialiasing
+along otherwise unchanged boundaries; that is not treated as a geometry regression.
+
+This split is intentional. The research master preserves the recovered construction for inspection and
+future evidence review, while the publication candidate removes rendering seams that have no authorial
+meaning. No further Morat geometry changes are planned unless a specific visual defect or stronger source
+evidence identifies a concrete problem.
+
 Numeric evidence is recorded in
 [`../../reports/morat-geometric-v6.json`](../../reports/morat-geometric-v6.json),
-[`../../reports/morat-geometric-v7.json`](../../reports/morat-geometric-v7.json), and
-[`../../reports/morat-geometric-v8.json`](../../reports/morat-geometric-v8.json), and
-[`../../reports/morat-geometric-v9.json`](../../reports/morat-geometric-v9.json). Source and candidate
+[`../../reports/morat-geometric-v7.json`](../../reports/morat-geometric-v7.json),
+[`../../reports/morat-geometric-v8.json`](../../reports/morat-geometric-v8.json),
+[`../../reports/morat-geometric-v9.json`](../../reports/morat-geometric-v9.json), and
+[`../../reports/morat-geometric-v10.json`](../../reports/morat-geometric-v10.json). Source and candidate
 artwork remain outside Git under the repository's provenance/licensing policy.
 
 ## Guardrails
@@ -115,10 +138,13 @@ artwork remain outside Git under the repository's provenance/licensing policy.
 - Treat endpoint rules independently from circle-family recovery: a well-supported circle does not prove
   that every hidden cap should be snapped to the nearest mathematically convenient intersection.
 
-## Next step
+## Closure and revisit criteria
 
-The path5 start boundary is now represented as a source-supported tangent two-circle transition rather
-than a forced intersection or a whole-ribbon ellipse. The main remaining uncertainty is the retained
-path7 start and any other minor connector/cap choices that still lack a supported construction rule.
-Continue only where a new constraint is supported by source topology or clear visual evidence; avoid
-global fitting that merely lowers pixel RMSE against exporter drift.
+The Morat geometric reconstruction is considered complete. The path7 start remains source-fitted because
+previous exact-intersection and cardinal-top alternatives worsened the localized source comparison; this
+is accepted rather than treated as an outstanding normalization task.
+
+Reopen the geometry only for a specific visual defect, materially stronger first-party evidence, or a
+new construction constraint supported by source topology. Do not resume global fitting merely to lower
+pixel RMSE against exporter drift. Downstream publication work should use the v10 cleaned representation
+while retaining v9 as the geometric research master.

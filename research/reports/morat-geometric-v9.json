@@ -1,0 +1,81 @@
+{
+  "experiment": "morat-geometric-candidate-v9",
+  "status": "experimental-preferred-local-boundary-model",
+  "baseline": "morat-geometric-candidate-v8",
+  "source_policy": "numeric research evidence only; source and candidate artwork remain outside Git",
+  "finding": {
+    "problem": "v8 removed the beak but inserted a short straight bridge before the path5 outer circular boundary",
+    "source_boundary": {
+      "black_duplicate": "M 29.4 40.5 C 35.3 55.5 43.7 67.9 59.8 73.5",
+      "white_reverse_duplicate": "M 59.8 73.5 C 43.7 67.9 35.3 55.5 29.4 40.6",
+      "interpretation": "the first-party export supports one contiguous curved boundary beginning at the upper-band point; it does not support the v8 straight bridge"
+    },
+    "main_path5_outer_circle": {
+      "center": [
+        75.60951409830255,
+        30.027965311910997
+      ],
+      "radius": 46.37344
+    },
+    "transition": {
+      "model": "two-circle G1-continuous boundary",
+      "start": [
+        29.38649,
+        40.524647
+      ],
+      "join_fraction_of_source_cubic": 0.3,
+      "join": [
+        35.455037502718554,
+        53.225248488358545
+      ],
+      "transition_circle": {
+        "center": [
+          113.545860162345,
+          8.112098466218278
+        ],
+        "radius": 90.18521435677447
+      },
+      "join_rule": "transition circle passes through the upper-band start and is tangent to the established path5 outer circle at the join",
+      "continuation": "established path5 outer circle after the join"
+    }
+  },
+  "geometry_validation": {
+    "single_path5_outer_circle_radial_rmse": 0.24960121628221932,
+    "v9_piecewise_tangent_circle_boundary_rmse": 0.06039220237434528,
+    "relative_improvement_percent": 75.8045240027753,
+    "note": "nearest-distance comparison against the substantive raw path5 outer cubic; duplicate reverse boundary differs only by about 0.1 SVG unit at the start"
+  },
+  "ellipse_experiment": {
+    "assessment": "rejected for v9",
+    "fixed_endpoint_axis_ratio_1_10": {
+      "source_boundary_rmse": 0.16932583556674421,
+      "raw_full_rgba_rmse": 23.56514800480322,
+      "raw_context_rgba_rmse": 34.78003292699462
+    },
+    "fixed_endpoint_axis_ratio_1_20": {
+      "source_boundary_rmse": 0.11579488586199886,
+      "raw_full_rgba_rmse": 23.384945475718855,
+      "raw_context_rgba_rmse": 33.98125141759744
+    },
+    "reason": "a whole-ribbon ellipse improves the isolated outer-boundary fit but disturbs the already-good inner/downstream geometry; the local tangent-circle transition is both simpler and better in rendered source comparison"
+  },
+  "validation_1600_cairosvg": {
+    "full": {
+      "raw_vs_v8_rgba_rmse": 22.323153728423154,
+      "raw_vs_v9_rgba_rmse": 22.206149936887556,
+      "relative_improvement_percent": 0.5241364771260892
+    },
+    "left_context": {
+      "raw_vs_v8_rgba_rmse": 28.976807621673046,
+      "raw_vs_v9_rgba_rmse": 28.38717543834121,
+      "relative_improvement_percent": 2.034841763903711
+    },
+    "junction_tight": {
+      "raw_vs_v8_rgba_rmse": 29.819519195938483,
+      "raw_vs_v9_rgba_rmse": 25.80897276602697,
+      "relative_improvement_percent": 13.449400050882657
+    }
+  },
+  "assessment": "preferred over v8: removes the artificial straight bridge, restores a contiguous source-supported boundary, preserves the established downstream circle, and improves both local and full-image source comparisons",
+  "next_step": "Treat the path5 outer start as a G1-continuous two-circle construction. Remaining Morat uncertainty is limited to path7 start and any similarly evidenced local connector/cap issue."
+}

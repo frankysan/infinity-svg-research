@@ -1,0 +1,32 @@
+{
+  "experiment": "morat-geometric-candidate-v10",
+  "status": "cleanup-candidate",
+  "baseline": "morat-geometric-candidate-v9",
+  "geometry_policy": "v9 recovered construction is frozen; v10 changes render topology only",
+  "cleanup": {
+    "operation": "convert internal white strokes/adjacent fills to one boolean-unioned filled region, then remove four non-authorial junction micro-holes",
+    "removed_micro_holes": 4,
+    "reason": "v9 construction produced a narrow triangular void and three subpixel sliver voids where mathematically adjacent regions met; these are cleanup artifacts, not recovered negative-space features",
+    "substantive_negative_spaces_preserved": true,
+    "red_regions_preserved": true,
+    "lower_left_black_cutout_preserved": true
+  },
+  "validation_1600_cairosvg": {
+    "full": {
+      "raw_vs_v9_rgba_rmse": 22.206149936887556,
+      "raw_vs_v10_rgba_rmse": 22.494761799104197,
+      "v9_vs_v10_rgba_rmse": 3.6793655644732084,
+      "v9_vs_v10_changed_fraction_gt1": 0.0035515625
+    },
+    "left_context": {
+      "raw_vs_v9_rgba_rmse": 26.596974786044257,
+      "raw_vs_v10_rgba_rmse": 26.02824610434133
+    },
+    "junction": {
+      "raw_vs_v9_rgba_rmse": 22.952651035174206,
+      "raw_vs_v10_rgba_rmse": 21.185878883168563
+    }
+  },
+  "assessment": "preferred visual cleanup candidate: removes the visible hairline/sliver artifacts while leaving the recovered v9 construction model unchanged; full-image raw RMSE is not the acceptance criterion because stroke-to-outline union changes antialiasing along otherwise unchanged ribbon boundaries",
+  "representation_note": "retain v9 primitive construction as the geometric research master; v10 is the cleaned display/publication-oriented rendering derived from that construction"
+}

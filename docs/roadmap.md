@@ -12,8 +12,9 @@
    three-gradient baseline before promoting a default reconstruction model.
 5. Exercise the exact optimizer across the current raw corpus and promote case records only where
    pixel-identical validation is reproduced from the repository tooling.
-6. Formalize geometry/symmetry analysis for symbols built from repeated sectors, circles, and arcs;
-   start with a focused Morat reconstruction using circular-arc/constant-width hypotheses.
+6. Generalize the reusable geometry/symmetry analysis demonstrated by Morat: common circle/arc fits,
+   constant-width bands, supported intersections, and tangent-transition diagnostics. Keep these as
+   advisory reconstruction tools rather than automatic rewrite rules.
 7. Start the Wolfgang typography study: recover the literal lettering/layout, identify candidate fonts
    and distressed variants, and test clean semantic text plus a separate distress treatment where needed.
    Reuse InfinityDB's existing text-to-path publication stage rather than implementing one here.
