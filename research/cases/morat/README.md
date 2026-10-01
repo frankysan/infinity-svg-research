@@ -101,32 +101,51 @@ normalizations remain rejected because they worsen the localized source comparis
 
 ## Final representation decision
 
-The reconstruction now has two deliberately different representations:
+The reconstruction now has deliberately different research and publication representations:
 
 - **v9 is the geometric research master.** It retains the recovered primitive construction explicitly:
   concentric badge circles, circular ribbon families, shared-width bands, circle intersections, and the
   local G1-continuous two-circle transition at the path5 start.
-- **v10 is the cleaned publication candidate.** It freezes the v9 geometry, boolean-unions contiguous
-  internal white regions, and removes four non-authorial micro-holes created by adjacent fill/stroke
-  topology. The substantive black negative spaces, red regions, and lower-left cutout are unchanged.
+- **v10 established the first cleaned publication candidate.** It froze the v9 geometry, boolean-unioned
+  contiguous white regions, and removed four non-authorial micro-holes caused by adjacent fill/stroke
+  topology.
+- **v10.1 is the preferred publication model.** A manual topology pass kept the recovered geometry but
+  replaced separately authored visible red islands with one oversized red underlay revealed through the
+  foreground white construction. It also removed a redundant lower-left black corrective overlay whose
+  visible edge was already defined by the canonical foreground topology.
 
-The cleanup improves the affected 1600 px source comparison from about `22.95` to `21.19` RGBA RMSE in
-its junction crop and from about `26.60` to `26.03` in the broader left context. Full-image raw RMSE rises
-slightly because replacing stroked/overlapping primitives with one filled region changes antialiasing
-along otherwise unchanged boundaries; that is not treated as a geometry regression.
+At 1600 px, v10 and v10.1 differ by about `0.94` RGBA RMSE and only about `0.106%` of pixels differ by
+more than one channel value. Full-image raw-source RMSE changes only from about `22.4948` to `22.5029`.
+The simpler topology is preferred because shared boundaries have one owner rather than several nearly
+coincident paths.
 
 This split is intentional. The research master preserves the recovered construction for inspection and
-future evidence review, while the publication candidate removes rendering seams that have no authorial
-meaning. No further Morat geometry changes are planned unless a specific visual defect or stronger source
-evidence identifies a concrete problem.
+future evidence review, while publication topology may simplify layering, boolean structure, and
+antialiasing without silently redefining supported geometry.
 
 Numeric evidence is recorded in
 [`../../reports/morat-geometric-v6.json`](../../reports/morat-geometric-v6.json),
 [`../../reports/morat-geometric-v7.json`](../../reports/morat-geometric-v7.json),
 [`../../reports/morat-geometric-v8.json`](../../reports/morat-geometric-v8.json),
-[`../../reports/morat-geometric-v9.json`](../../reports/morat-geometric-v9.json), and
-[`../../reports/morat-geometric-v10.json`](../../reports/morat-geometric-v10.json). Source and candidate
-artwork remain outside Git under the repository's provenance/licensing policy.
+[`../../reports/morat-geometric-v9.json`](../../reports/morat-geometric-v9.json),
+[`../../reports/morat-geometric-v10.json`](../../reports/morat-geometric-v10.json), and
+[`../../reports/morat-publication-v10.1.json`](../../reports/morat-publication-v10.1.json). Source and
+candidate artwork remain outside Git under the repository's provenance/licensing policy.
+
+## Morat-family publication-topology lesson
+
+v10.1 establishes the preferred publication model for the Morat family:
+
+- foreground circle/line geometry owns visible boundaries;
+- intended intersections meet at explicit shared points rather than overlapping into blobs;
+- oversized flat-color underlays extend safely behind foreground geometry;
+- foreground cutouts reveal the intended color islands;
+- neighboring color regions do not depend on subpixel-perfect coincidence to avoid gaps;
+- redundant overlays and seam-fixing fragments are removed when canonical geometry already provides the
+  intended edge.
+
+This is a Morat-family conclusion only. It must not be generalized to unrelated Infinity symbol families
+without separate evidence.
 
 ## Guardrails
 
@@ -135,16 +154,16 @@ artwork remain outside Git under the repository's provenance/licensing policy.
 - Preserve deliberate asymmetry if the source supports it.
 - Prefer a small shared construction over independently tuned Béziers only when the residuals and visual
   evidence justify it.
-- Treat endpoint rules independently from circle-family recovery: a well-supported circle does not prove
-  that every hidden cap should be snapped to the nearest mathematically convenient intersection.
+- Treat endpoint rules independently from circle-family recovery.
+- Keep geometric recovery separate from publication topology: an oversized underlay is a rendering
+  simplification, not evidence for a different circle, radius, intersection, or tangent rule.
 
 ## Closure and revisit criteria
 
 The Morat geometric reconstruction is considered complete. The path7 start remains source-fitted because
-previous exact-intersection and cardinal-top alternatives worsened the localized source comparison; this
-is accepted rather than treated as an outstanding normalization task.
+previous exact-intersection and cardinal-top alternatives worsened the localized source comparison.
 
 Reopen the geometry only for a specific visual defect, materially stronger first-party evidence, or a
 new construction constraint supported by source topology. Do not resume global fitting merely to lower
-pixel RMSE against exporter drift. Downstream publication work should use the v10 cleaned representation
-while retaining v9 as the geometric research master.
+pixel RMSE against exporter drift. Downstream publication work should use the v10.1 underlay/cutout
+representation while retaining v9 as the geometric research master.

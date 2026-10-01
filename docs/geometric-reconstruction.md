@@ -91,8 +91,32 @@ segment and rejoins the stronger circular family with G1 continuity.
 Morat also established a useful representation split. The v9 research master retains the recovered
 primitive construction so its centers, radii, widths, intersections, and tangent transition remain
 inspectable. The v10 publication candidate freezes that geometry but boolean-unions contiguous white
-regions and removes four non-authorial micro-holes caused by adjacent fill/stroke topology. Cleanup is
-therefore allowed to change serialization and antialiasing without redefining the recovered construction.
+regions and removes four non-authorial micro-holes caused by adjacent fill/stroke topology.
+
+A later project-author cleanup refines the publication representation as **v10.1** without changing the
+v9 geometry. Instead of separately authoring the visible red islands, v10.1 uses one oversized red
+underlay and lets the foreground white construction expose the intended red regions. It also removes a
+redundant lower-left black corrective overlay. This gives each visible boundary one owner instead of
+maintaining several nearly coincident positive and negative paths.
+
+### Morat-family publication topology
+
+For Morat faction and unit symbols, keep geometric recovery and publication topology separate:
+
+- recover circles, lines, supported intersections, tangent joins, and justified local exceptions in an
+  auditable geometric master;
+- make boundaries that should meet use one explicit shared intersection rather than overlapping caps,
+  blobs, almost-identical endpoints, or seam patches;
+- prefer one owner for each visible boundary;
+- place deliberately oversized flat-color polygons behind the foreground construction and reveal them
+  through white/black cutouts instead of independently tracing every visible color island;
+- eliminate subpixel gaps between color blocks by construction rather than corrective overlap fragments;
+- keep source-local exceptions when forcing a cleaner global circle/intersection would change supported
+  topology.
+
+This is currently a **Morat-family hypothesis, not a repository-wide rewrite rule**. Other Infinity
+symbol families must independently show compatible geometry and layering semantics before the same
+underlay/cutout model is used.
 
 The case is considered resolved. Future changes require a specific visual defect or materially stronger
 source evidence; a lower exporter-pixel RMSE alone is not sufficient reason to reopen the geometry.

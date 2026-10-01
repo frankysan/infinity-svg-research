@@ -1,0 +1,18 @@
+{
+  "report": "morat-publication-v10.1",
+  "base_geometry": "v9",
+  "base_publication_candidate": "v10",
+  "status": "preferred-publication-candidate",
+  "geometry_changed": false,
+  "changes": [
+    "replace separately authored visible red regions with one oversized red underlay",
+    "let the white foreground construction define the visible red cutouts",
+    "remove redundant lower-left black corrective overlay"
+  ],
+  "validation_1600px": {
+    "v10_to_v10_1_rgba_rmse": 0.94,
+    "fraction_pixels_changed_gt_1_channel_value": 0.00106,
+    "raw_rmse_v10": 22.4948,
+    "raw_rmse_v10_1": 22.5029
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "report": "morat-unit-publication-topology-v1",
+  "status": "active-publication-topology-migration",
+  "scope": {
+    "family": "Morat",
+    "global_rule": false
+  },
+  "preferred_publication_model": {
+    "boundary_ownership": "canonical foreground boundary",
+    "intersections": "explicit shared intersections",
+    "color_strategy": "oversized flat-color underlays exposed through foreground cutouts",
+    "seams": "eliminate structurally rather than patching subpixel gaps",
+    "geometry_policy": "publication topology must not silently redefine the geometric master"
+  },
+  "migration": [
+    {"symbol": "Treitak Anyat", "geometric_master": "v3", "publication_status": "rewrite pending"},
+    {"symbol": "Daturazi", "geometric_master": "v2", "publication_status": "v2.1 intermediate cleanup; rewrite pending"},
+    {"symbol": "Suryats", "geometric_master": "v3", "publication_status": "rewrite pending"},
+    {"symbol": "Rodok", "geometric_master": "v3", "publication_status": "rewrite pending"},
+    {"symbol": "Zerat", "geometric_master": "v3", "publication_status": "rewrite pending"},
+    {"symbol": "Yaogat", "geometric_master": "v2", "publication_status": "v2.1 intermediate cleanup; rewrite pending"}
+  ]
+}

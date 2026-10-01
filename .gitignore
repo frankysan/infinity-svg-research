@@ -33,6 +33,7 @@ run/
 runs/
 research/runs/
 render-compare/
+final/
 *.candidate.svg
 *.reconstructed.svg
 *.scour.svg

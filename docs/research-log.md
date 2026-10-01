@@ -87,6 +87,23 @@ defect or materially stronger first-party evidence rather than continued global 
 
 Status: **resolved reconstruction**.
 
+### Morat publication-topology follow-up
+
+Manual review of the faction symbol and six reconstructed unit symbols found a recurring problem that
+circle recovery alone does not solve: path intersections can become blobs, adjacent color regions can
+leave visible gaps, and exporter-era positive/negative paths can remain almost identical overlays.
+
+The preferred Morat publication model now follows the manually refined faction emblem: retain a separate
+geometric master, derive clean canonical intersections and foreground boundary ownership, and place
+oversized flat-color underlays behind those cutouts. Anyat, Daturazi, Suryats, Rodok, Zerat, and Yaogat
+should receive a new publication-topology pass using this model while preserving their evidence-supported
+geometric masters.
+
+This conclusion is deliberately limited to the Morat family. It is not assumed to describe unrelated
+Infinity symbol families.
+
+Status: **active Morat-family publication-topology migration**.
+
 ## Flattened gradient/mask badge family
 
 Eleven semantic files collapse to six unique SHA-256 streams. The recovered minimal model uses three

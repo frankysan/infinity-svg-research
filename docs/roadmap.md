@@ -15,11 +15,17 @@
 6. Generalize the reusable geometry/symmetry analysis demonstrated by Morat: common circle/arc fits,
    constant-width bands, supported intersections, and tangent-transition diagnostics. Keep these as
    advisory reconstruction tools rather than automatic rewrite rules.
-7. Start the Wolfgang typography study: recover the literal lettering/layout, identify candidate fonts
+7. Rebuild the six reconstructed Morat unit symbols as publication assets using the family-specific
+   underlay/cutout topology: Anyat, Daturazi, Suryats, Rodok, Zerat, and Yaogat. Preserve their geometric
+   masters, make intended intersections explicit, and remove duplicate boundary ownership and visible
+   seams.
+8. Treat the Morat publication model as a family hypothesis. Before applying it elsewhere, establish that
+   the target family's geometry and layering semantics support the same underlay/cutout abstraction.
+9. Start the Wolfgang typography study: recover the literal lettering/layout, identify candidate fonts
    and distressed variants, and test clean semantic text plus a separate distress treatment where needed.
    Reuse InfinityDB's existing text-to-path publication stage rather than implementing one here.
-8. Add reduced/synthetic fixtures for every hard pathology so detector contracts do not depend on the
-   private/raw corpus.
+10. Add reduced/synthetic fixtures for every hard pathology so detector contracts do not depend on the
+    private/raw corpus.
 
 ## Medium term
 
