@@ -134,15 +134,22 @@ candidate artwork remain outside Git under the repository's provenance/licensing
 
 ## Morat-family publication-topology lesson
 
-v10.1 establishes the preferred publication model for the Morat family:
+v10.1 establishes the preferred publication model for the Morat family, and the Anyat unit reconstruction
+confirms the same topology rule on a substantially different internal design:
 
-- foreground circle/line geometry owns visible boundaries;
+- foreground construction geometry owns visible boundaries;
+- intentional corners are sharp single-vertex intersections;
+- curves are smooth and contiguous everywhere between intentional corners;
 - intended intersections meet at explicit shared points rather than overlapping into blobs;
 - oversized flat-color underlays extend safely behind foreground geometry;
 - foreground cutouts reveal the intended color islands;
 - neighboring color regions do not depend on subpixel-perfect coincidence to avoid gaps;
-- redundant overlays and seam-fixing fragments are removed when canonical geometry already provides the
-  intended edge.
+- redundant overlays, helper arcs, intermediate vertices, and seam-fixing fragments are removed when the
+  restored construction already provides the intended edge.
+
+When a complete visible span supports one circle, prefer that circle. When it does not, prefer one clean
+smooth curve over preserving exporter segmentation that introduces kinks or local curvature bumps. The
+source SVG remains evidence for intended topology and placement, not authority for every exported node.
 
 This is a Morat-family conclusion only. It must not be generalized to unrelated Infinity symbol families
 without separate evidence.
