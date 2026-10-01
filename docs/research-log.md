@@ -66,6 +66,20 @@ close. Reintroducing the original circular clip paths did not improve fidelity.
 
 Status: **experimental / validated batch**, not yet resolved.
 
+### Guijia inner-field decomposition
+
+Follow-up analysis separated the accent disc into the 44-circle multiply edge stack, a nearly redundant
+base circle, and the 38-element clipped interior field. Removing only the base circle while leaving the
+38-element field changes the 1024 px full render by only 0.424 RGBA RMSE; removing the multiply stack
+changes only about 0.26% of pixels but produces large local edge differences.
+
+The interior field is genuinely two-dimensional. Replacing only that field while preserving the original
+edge stack improved from 1.4293 RGBA RMSE for the previous two-linear model to 0.7010 for an experimental
+one-linear plus two-radial-highlight model at 1600 px. Blurring away the exported strip boundaries keeps
+roughly the same twofold advantage, so the improvement is not dependent on reproducing the flattening
+artifacts. The production transformer remains unchanged pending tests on the other five unique source
+families.
+
 ## Palette-fragmented traces
 
 Six hard-classified cases were identified. Palette snapping can produce low colour error but does not

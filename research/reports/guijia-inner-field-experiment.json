@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "experiment": "guijia-inner-accent-field-decomposition",
+  "status": "experimental",
+  "source": {
+    "relative_path": "units/guijia-squadrons-2-1.svg",
+    "sha256": "a847157884ddf725bd7ff445cfcd2ab91093ea29e99dbc02d5c4b84eb4d3346f",
+    "bytes": 505086,
+    "authority": "first-party",
+    "source_type": "army-svg"
+  },
+  "structure": {
+    "accent_radius": 24.69,
+    "multiply_stack_circles": 44,
+    "multiply_stack_center_start": [41.27, 41.06],
+    "multiply_stack_center_end": [41.21, 41.11],
+    "inner_field_elements": 38,
+    "inner_field_polygons": 26,
+    "inner_field_rectangles": 12,
+    "inner_field_palette": ["#ffb669", "#ff6b00"]
+  },
+  "ablation_1024": {
+    "remove_multiply_stack": {
+      "changed_pixel_fraction": 0.0026416778564453125,
+      "rgba_rmse": 4.843052992354969,
+      "max_channel_diff": 244,
+      "interpretation": "localized high-contrast edge/shadow effect"
+    },
+    "remove_base_accent_circle": {
+      "changed_pixel_fraction": 0.010413169860839844,
+      "rgba_rmse": 0.42399207253512633,
+      "max_channel_diff": 51,
+      "interpretation": "base circle is nearly redundant beneath the clipped 38-element field"
+    }
+  },
+  "interior_model_comparison_1600": {
+    "comparison_context": "replace only the base accent circle and 38-element inner field; retain original multiply edge stack and all other source artwork",
+    "previous_two_linear_model": {
+      "full_image_rgba_rmse": 1.4293237242114714,
+      "full_image_rgb_rmse": 1.6504408738652228,
+      "changed_pixel_fraction": 0.126462890625,
+      "max_channel_diff": 42
+    },
+    "linear_plus_two_radial_highlights": {
+      "full_image_rgba_rmse": 0.7009886990886515,
+      "full_image_rgb_rmse": 0.809432028235437,
+      "changed_pixel_fraction": 0.117747265625,
+      "max_channel_diff": 38
+    }
+  },
+  "low_frequency_check_1600": {
+    "mask": "accent disc radius < 0.94 of nominal radius",
+    "metric": "RGB RMSE after Gaussian blur",
+    "samples": [
+      {"sigma_px": 0, "previous_two_linear": 2.956449867250571, "linear_plus_two_radial": 1.503484493417954},
+      {"sigma_px": 6, "previous_two_linear": 2.894655623962106, "linear_plus_two_radial": 1.3482471884300813},
+      {"sigma_px": 24, "previous_two_linear": 2.7767545394303967, "linear_plus_two_radial": 1.2202700403619804},
+      {"sigma_px": 36, "previous_two_linear": 2.5788659158191383, "linear_plus_two_radial": 1.0676649441470438}
+    ],
+    "interpretation": "the radial model remains substantially closer after exporter banding is blurred away, supporting a better match to the underlying smooth shading field"
+  },
+  "experimental_model": {
+    "description": "one linear base gradient plus two light-colour radial highlight gradients",
+    "base_linear": {
+      "normalized_scalar": "t = 0.76802098 + 0.76848458*x + 0.04407155*y",
+      "user_space_endpoints_guijia": [16.505781734882603, 39.68955488738364, 48.52862864346237, 41.52602179303557]
+    },
+    "radial_highlights": [
+      {
+        "normalized_center": [0.03958872, -1.12283306],
+        "normalized_radius": 1.453170166532504,
+        "center_opacity": 1.0,
+        "edge_opacity": 0.0
+      },
+      {
+        "normalized_center": [0.30348509, 0.25348874],
+        "normalized_radius": 0.7711495922522232,
+        "center_opacity": 0.34303773,
+        "edge_opacity": 0.0
+      }
+    ]
+  },
+  "compact_candidate_1600": {
+    "unscoured_bytes": 8147,
+    "scoured_bytes": 6833,
+    "full_image_rgba_rmse": 5.075231973993282,
+    "full_image_rgb_rmse": 5.860373092769635,
+    "note": "full-image error remains dominated by the separately reconstructed gray annulus and removed multiply edge stack"
+  },
+  "decision": {
+    "production_transform_changed": false,
+    "reason": "validate the same interior model against the other five unique flattened-gradient-mask source families before replacing the current reconstruction"
+  }
+}
