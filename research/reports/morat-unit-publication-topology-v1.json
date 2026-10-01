@@ -13,11 +13,41 @@
     "geometry_policy": "publication topology must not silently redefine the geometric master"
   },
   "migration": [
-    {"symbol": "Treitak Anyat", "geometric_master": "v3", "publication_status": "rewrite pending"},
-    {"symbol": "Daturazi", "geometric_master": "v2", "publication_status": "v2.1 intermediate cleanup; rewrite pending"},
-    {"symbol": "Suryats", "geometric_master": "v3", "publication_status": "rewrite pending"},
-    {"symbol": "Rodok", "geometric_master": "v3", "publication_status": "rewrite pending"},
-    {"symbol": "Zerat", "geometric_master": "v3", "publication_status": "rewrite pending"},
-    {"symbol": "Yaogat", "geometric_master": "v2", "publication_status": "v2.1 intermediate cleanup; rewrite pending"}
-  ]
+    {
+      "symbol": "Treitak Anyat",
+      "geometric_master": "v7",
+      "publication_status": "v7.3 restored-intent publication candidate; reference complete"
+    },
+    {
+      "symbol": "Daturazi",
+      "geometric_master": "v2",
+      "publication_status": "v2.1 intermediate cleanup; rewrite pending"
+    },
+    {
+      "symbol": "Suryats",
+      "geometric_master": "v3",
+      "publication_status": "rewrite pending"
+    },
+    {
+      "symbol": "Rodok",
+      "geometric_master": "v3",
+      "publication_status": "rewrite pending"
+    },
+    {
+      "symbol": "Zerat",
+      "geometric_master": "v3",
+      "publication_status": "rewrite pending"
+    },
+    {
+      "symbol": "Yaogat",
+      "geometric_master": "v2",
+      "publication_status": "v2.1 intermediate cleanup; rewrite pending"
+    }
+  ],
+  "reference_case": {
+    "symbol": "Treitak Anyat",
+    "geometric_master": "v7",
+    "publication_candidate": "v7.3",
+    "status": "restored-intent reference complete"
+  }
 }

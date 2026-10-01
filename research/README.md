@@ -7,7 +7,7 @@ Current cases:
 
 - `wolfgang/` — micro-contour explosion resolved; typography reconstruction active.
 - `morat/` — reconstruction resolved; v9 geometric master and v10.1 underlay/cutout publication model.
-- `morat-units/` — six representative unit reconstructions; publication-topology migration active.
+- `morat-units/` — Anyat v7/v7.3 reference complete; five Morat unit migrations remain.
 - `ruby-monday/` — flattened blend stack; validated.
 - `trinitarians/` — duplicate fill/stroke geometry; resolved exact transform.
 - `gradient-mask/` — six unique flattened-gradient-mask streams; active experiment.

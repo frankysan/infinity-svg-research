@@ -1,0 +1,71 @@
+{
+  "report": "treitak-anyat-restored-intent-v7",
+  "family": "Morat",
+  "status": "reference reconstruction complete",
+  "geometric_master": "v7",
+  "publication_candidate": "v7.3",
+  "evidence_policy": {
+    "old_anyat_source": "primary local-geometry evidence",
+    "team_ops_1": "newer first-party corroboration only; not authority over fragile micro-topology",
+    "raster_metrics": "validation and diagnostics, not construction authority"
+  },
+  "restoration_decisions": [
+    {
+      "decision": "remove unsupported small fitting/helper circles",
+      "reason": "clean intersections of supported larger circles explain the same junctions without blob-like rounding"
+    },
+    {
+      "decision": "recover the yellow corner as a drifted shared intersection",
+      "old_source_corner_distance_to_previous_purple_circle": 0.317,
+      "purple_fit_rmse_before": 0.0162,
+      "purple_fit_rmse_through_clean_intersection": 0.00997
+    },
+    {
+      "decision": "make white circle geometry own the top and bottom cuts",
+      "inner_white_circle_radius": 33.6,
+      "removed_micro_rounding_radii": [
+        9.38263,
+        1.1734,
+        1.0609
+      ]
+    },
+    {
+      "decision": "replace the lower red two-arc join with one circle",
+      "circle": {
+        "center": [
+          47.99035216,
+          17.56925817
+        ],
+        "radius": 48.36951913
+      },
+      "old_anyat_joint_radial_rmse": 0.0769,
+      "team_ops_joint_radial_rmse": 0.0728,
+      "removed_join_tangent_discontinuity_degrees": 0.91
+    }
+  ],
+  "publication_v7_3": {
+    "geometry_changed": false,
+    "large_red_underlay_overscan": {
+      "implementation": "same-color hidden stroke under authoritative white cutout",
+      "stroke_width_svg_units": 1.2,
+      "outward_safety_margin_svg_units": 0.6,
+      "purpose": "prevent black background leakage at antialiased red/white borders"
+    },
+    "v7_2_vs_v7_3_1600px": {
+      "rgba_rmse": 0.5751512050628662,
+      "fraction_pixels_changed_gt_1_channel_value": 0.000933984375
+    },
+    "v7_2_vs_v7_3_3200px": {
+      "rgba_rmse": 0.39641720056533813,
+      "fraction_pixels_changed_gt_1_channel_value": 0.00046396484375
+    }
+  },
+  "family_method": [
+    "recover dominant circles and lines before local details",
+    "prefer exact shared intersections over exporter blobs and endpoint drift",
+    "treat tiny local circles and slivers as suspect until independently supported",
+    "test adjacent fitted arcs as one larger circle when a curvature bump is the only separator",
+    "let white foreground circles own cuts through black/color fields",
+    "publish with oversized color underlays behind canonical foreground cutouts"
+  ]
+}
