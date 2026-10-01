@@ -14,7 +14,10 @@
    pixel-identical validation is reproduced from the repository tooling.
 6. Formalize geometry/symmetry analysis for symbols built from repeated sectors, circles, and arcs;
    start with a focused Morat reconstruction using circular-arc/constant-width hypotheses.
-7. Add reduced/synthetic fixtures for every hard pathology so detector contracts do not depend on the
+7. Start the Wolfgang typography study: recover the literal lettering/layout, identify candidate fonts
+   and distressed variants, and test clean semantic text plus a separate distress treatment where needed.
+   Reuse InfinityDB's existing text-to-path publication stage rather than implementing one here.
+8. Add reduced/synthetic fixtures for every hard pathology so detector contracts do not depend on the
    private/raw corpus.
 
 ## Medium term
@@ -27,6 +30,9 @@
 - Add advisory tooling for rotational/reflection symmetry, common circle/arc fits, angular spacing, and
   constant-width curved bands. These tools should propose construction hypotheses, not rewrite geometry
   automatically.
+- If the Wolfgang study proves reusable, add typography-analysis helpers for repeated glyph comparison,
+  baseline/cap-height recovery, and font-candidate evaluation. Keep font identification advisory and
+  evidence-driven rather than automatically replacing outlines.
 
 ## Release direction
 

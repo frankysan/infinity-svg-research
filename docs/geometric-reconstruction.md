@@ -93,6 +93,51 @@ circular arcs. The next hypothesis to test is therefore:
 Do not promote those curves to circular construction until the source evidence and fit residuals support
 the hypothesis. The current redraw is a useful indication of direction, not proof.
 
+## Typography as construction
+
+Outlined or distressed lettering can also hide a simpler authored construction. A path-heavy export is
+not automatically evidence that each notch, chip, or contour was drawn independently. Where the source
+supports it, treat typography as a recoverable system consisting of the text content, typeface, layout,
+and deliberate modifications.
+
+Useful signals include:
+
+- repeated occurrences of the same glyph converging on the same low-frequency silhouette;
+- consistent baselines, cap heights, x-heights, stem widths, counters, and spacing;
+- letterforms that match a known typeface or family after small trace/export noise is ignored;
+- repeated distress motifs that can be separated from the underlying glyph geometry;
+- a clean font plus a distinct mask/overlay explaining the visible damage more simply than thousands of
+  independent contour fragments.
+
+For a typography reconstruction:
+
+1. recover the literal text and its layout before simplifying glyph outlines;
+2. identify the exact or best-supported font family and check for official distressed, grunge, stencil,
+   or other relevant variants;
+3. reconstruct the research/master asset as semantic `<text>` with supported size, tracking, alignment,
+   baseline, rotation, or curved placement;
+4. when the font itself is clean, model deliberate scratches, chips, gaps, or erosion as a separate
+   compact treatment rather than baking incidental trace noise into every glyph;
+5. validate the underlying letterforms and the distress treatment separately so one does not hide errors
+   in the other.
+
+The research project stops at the semantic reconstruction. InfinityDB already has the publication
+pipeline that converts text to final path geometry, so this repository must not add a second text-to-path
+implementation. A research candidate may intentionally retain `<text>` because that makes the recovered
+font and layout auditable even when the downstream published asset will contain paths.
+
+### Wolfgang Amadeus Wolff
+
+Wolfgang is the first explicit typography research subject. Its `micro-contour-explosion` pathology is
+already resolved by contour pruning plus one simplify pass, but the validated differences are confined
+to the distressed outer lettering. That makes the existing cleanup a valid pathology transform without
+proving that the remaining outlined lettering is the final authorial reconstruction.
+
+The next typography experiment should identify the underlying font and text layout, determine whether a
+matching distressed font variant exists, and otherwise test a clean font plus a separately reconstructed
+distress layer. This work must preserve deliberate typographic character while rejecting incidental
+trace/export noise.
+
 ## Symmetry in the current gradient-mask family
 
 The badge scaffold itself is strongly geometric and should remain concentric.

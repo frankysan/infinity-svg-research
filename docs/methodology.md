@@ -22,14 +22,16 @@ plan. See [`design-goals.md`](design-goals.md) and [`provenance.md`](provenance.
 7. **Test for geometric regularity** before fitting free-form paths: common centers/radii, exact circles,
    reflection or rotational symmetry, regular angular spacing, constant-width bands, tangencies,
    intersections, and repeated sectors.
-8. **Separate base geometry from lighting** so gradients and shadows may remain asymmetric without
-   distorting an otherwise regular symbol.
-9. **Implement the smallest well-supported transformation** that tests that hypothesis.
-10. **Render at multiple resolutions** with Inkscape and compare RGBA pixels and spatial error patterns.
-11. **Review authorial features** such as silhouette, proportions, palette, identifying marks, major
-    gradients, texture, and composition; numeric image metrics are evidence, not the acceptance rule.
-12. **Rescan the candidate** to determine whether the targeted pathology was actually removed.
-13. **Record the result**, including rejected approaches, source evidence, uncertainty, and why the
+8. **Test outlined lettering for recoverable typography** before treating path noise as authored glyph
+   geometry: literal text, typeface, spacing, baseline, repeated glyph structure, and deliberate distress.
+9. **Separate base construction from effects** so gradients, shadows, and typographic distress can remain
+   asymmetric or irregular without deforming the underlying geometry or clean glyph construction.
+10. **Implement the smallest well-supported transformation** that tests that hypothesis.
+11. **Render at multiple resolutions** with Inkscape and compare RGBA pixels and spatial error patterns.
+12. **Review authorial features** such as silhouette, proportions, palette, identifying marks, typography,
+    major gradients, texture, and composition; numeric image metrics are evidence, not the acceptance rule.
+13. **Rescan the candidate** to determine whether the targeted pathology was actually removed.
+14. **Record the result**, including rejected approaches, source evidence, uncertainty, and why the
     preferred candidate best balances representation and minimality.
 
 ## Geometry recovery
@@ -58,6 +60,29 @@ letterforms, organic motifs, and faction-specific foreground artwork must remain
 Project-authored manual redraws can be used as methodological reference cases for this process, but they
 are not source-authority evidence. See [`geometric-reconstruction.md`](geometric-reconstruction.md) and
 [`provenance.md`](provenance.md).
+
+## Typography recovery
+
+Outlined text should be analyzed as typography before it is treated as arbitrary path geometry. Where
+supported by the evidence, recover:
+
+- the literal text;
+- font family and relevant variant;
+- size, tracking, alignment, baseline, rotation, and placement;
+- repeated glyph identity and shared glyph construction;
+- deliberate distress or erosion as a separable treatment when it is not intrinsic to the font.
+
+The preferred research representation may contain semantic `<text>` elements. That is intentional: it
+keeps the recovered font and layout explicit and editable. Font identification and licensing remain part
+of the evidence record; a convenient local font is not proof of the intended typeface.
+
+Do not implement final text outlining in this repository. InfinityDB's existing symbol pipeline owns the
+text-to-path publication step. Research tooling should produce or describe the semantic reconstruction
+and let the downstream pipeline create portable published paths.
+
+Wolfgang Amadeus Wolff is the initial typography case. Its contour-explosion cleanup remains resolved as
+a pathology transform, while recovery of the underlying font/layout and deliberate distress is tracked
+as a separate active research question.
 
 ## Exact versus representative transformations
 

@@ -49,7 +49,39 @@ contours and measured 4.652896/255 RGBA RMSE at 1200 px with unchanged alpha. At
 changed pixels inside radius 480 px; the differences were confined to distressed outer lettering. The
 hard classifier no longer triggered, leaving only the expected `subpixel-detail-heavy` advisory.
 
-Status: **resolved**.
+Pathology status: **resolved**.
+
+### Wolfgang typography reconstruction follow-up
+
+The resolved micro-contour transform is intentionally narrower than a full authorial reconstruction of
+the lettering. Its validation showed that the changed pixels were confined to the distressed outer text,
+which raises a separate hypothesis: much of the remaining outline complexity may represent traced or
+expanded typography rather than deliberately hand-shaped contours.
+
+Wolfgang is therefore an active typography research subject. The next investigation should recover the
+literal text and layout, identify the underlying font family, check for an existing distressed/grunge
+variant, and otherwise test clean semantic text with deliberate distress reconstructed separately. The
+research representation may retain `<text>` elements; publication outlining must continue to use the
+existing InfinityDB symbol pipeline rather than a duplicate implementation in this repository.
+
+Typography reconstruction status: **active research**.
+
+## Morat geometric reconstruction
+
+A project-authored Morat redraw was supplied as a methodology reference. Its outer badge uses exact
+concentric circles, but several internal ribbon-like curves are still eyeballed Bézier paths and are not
+considered final reconstructed geometry.
+
+Preliminary inspection suggests that multiple ribbon centerlines and some paired edges are close to
+circular arcs. The active hypothesis is to recover those regions from shared circle centers/radii,
+constant-width annular sectors, radial endpoint guides, and supported tangency/intersection constraints.
+Adjacent positive/negative regions should be derived from the same construction where possible rather
+than fitted independently.
+
+The redraw itself is a project research artifact, not provenance evidence, and the circular-arc
+hypothesis must be validated against source evidence before it is promoted.
+
+Status: **active research**.
 
 ## Flattened gradient/mask badge family
 

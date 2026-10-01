@@ -5,7 +5,8 @@ They do not contain Corvus Belli artwork.
 
 Current cases:
 
-- `wolfgang/` — micro-contour explosion; resolved.
+- `wolfgang/` — micro-contour explosion resolved; typography reconstruction active.
+- `morat/` — circular-arc/constant-width geometric reconstruction; active.
 - `ruby-monday/` — flattened blend stack; validated.
 - `trinitarians/` — duplicate fill/stroke geometry; resolved exact transform.
 - `gradient-mask/` — six unique flattened-gradient-mask streams; active experiment.

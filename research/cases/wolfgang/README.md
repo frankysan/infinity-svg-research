@@ -1,6 +1,8 @@
 # Wolfgang Amadeus Wolff
 
-Status: **resolved**
+Pathology status: **resolved**
+
+Typography reconstruction status: **active research**
 
 Classification: `micro-contour-explosion`
 
@@ -38,3 +40,31 @@ Repeated simplification was rejected because it visibly damaged the distressed l
 - Alpha error: zero.
 - 1200 px changed pixels inside radius 480 px: zero.
 - Final scanner result: hard pathology cleared; `subpixel-detail-heavy` advisory remains.
+
+## Typography reconstruction research
+
+The validated pruning/simplification pipeline resolves the `micro-contour-explosion` pathology and
+remains the preferred fallback cleanup. It does not establish that the surviving distressed lettering is
+the final authorial construction.
+
+The fact that the 1200 px differences are confined to the outer lettering motivates a separate
+reconstruction track. The working hypothesis is that the symbol may contain an underlying regular
+font/layout plus deliberate distress, with additional contour noise introduced by expansion, tracing, or
+export.
+
+Research questions:
+
+1. What is the literal text and exact layout of each lettering run?
+2. Can the low-frequency glyph shapes identify a specific font family or close official variant?
+3. Does that family include a distressed, grunge, stencil, or otherwise matching variant?
+4. If the font is intrinsically clean, can the visible chips/scratches be represented as a compact
+   separate mask/overlay rather than thousands of independent outline contours?
+5. Do repeated glyphs converge on one underlying shape once micro-contours are ignored?
+
+The preferred research/master candidate may retain semantic `<text>` elements so the recovered font,
+tracking, baseline, and placement remain explicit. This repository must **not** add another text-to-path
+stage: final path conversion is already handled by the downstream InfinityDB symbol pipeline.
+
+Acceptance requires preserving deliberate typographic character. The goal is not to make Wolfgang's
+lettering generically clean; it is to separate supported font construction and intentional distress from
+incidental contour noise.

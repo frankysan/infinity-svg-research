@@ -99,6 +99,16 @@ being removed.
 See [`geometric-reconstruction.md`](geometric-reconstruction.md) for reference cases and practical
 guidelines.
 
+Outlined lettering can have the same kind of recoverable construction. When evidence supports it,
+recover semantic text, font choice, layout, spacing, and deliberate typographic treatment instead of
+treating every traced or expanded edge irregularity as authored geometry. Intentional distress may be
+reconstructed separately from the clean glyph construction rather than baked into thousands of noisy
+contours.
+
+Research/master SVGs may retain real `<text>` elements so the recovered typography remains explicit.
+Conversion to publication paths is a downstream concern already owned by the InfinityDB symbol pipeline;
+this project should not duplicate that text-to-path implementation.
+
 ## Optimization priority
 
 When goals compete, use this order:
