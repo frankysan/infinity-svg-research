@@ -1,0 +1,92 @@
+{
+  "experiment": "morat-geometric-candidate-v8",
+  "status": "experimental",
+  "source_policy": "numeric research evidence only; source and candidate artwork remain outside Git",
+  "baseline": "morat-geometric-candidate-v7",
+  "finding": {
+    "problem": "v7 retained separate cap endpoints at the left junction between the upper secondary band and path5, creating a visible black beak",
+    "interpretation": "the adjacent negative-space boundaries should terminate at one shared apex",
+    "construction": {
+      "upper_secondary_inner": {
+        "center": [
+          50.088029,
+          87.919398
+        ],
+        "radius": 46.048624
+      },
+      "path5": {
+        "center": [
+          75.60951409830255,
+          30.027965311910997
+        ],
+        "centerline_radius": 43.53844,
+        "outer_edge_radius": 46.37344,
+        "stroke_width": 5.67
+      },
+      "shared_apex": {
+        "rule": "left intersection of upper-secondary inner circle and path5 outer-edge circle",
+        "point": [
+          31.929550508051,
+          45.602197819095
+        ]
+      },
+      "path5_centerline_start": {
+        "rule": "radial projection of shared apex from path5 outer edge to path5 centerline",
+        "point": [
+          34.59988716581,
+          44.650080633958
+        ]
+      }
+    },
+    "v7_split_cap": {
+      "upper_secondary_inner_endpoint": [
+        32.974535,
+        45.168911
+      ],
+      "path5_centerline_start": [
+        33.4404,
+        40.86132
+      ],
+      "path5_outer_edge_corner": [
+        30.694563482461,
+        41.566732516865
+      ],
+      "note": "the distinct upper-band endpoint and path5 outer-edge corner created the visible local beak"
+    }
+  },
+  "validation_1600_cairosvg": {
+    "full": {
+      "raw_vs_v7_rgba_rmse": 22.41597800067092,
+      "raw_vs_v8_rgba_rmse": 22.323153728423154,
+      "absolute_improvement": 0.09282427224776413,
+      "relative_improvement_percent": 0.4140986944445871
+    },
+    "left_context": {
+      "raw_vs_v7_rgba_rmse": 28.502838261008588,
+      "raw_vs_v8_rgba_rmse": 27.803683989367574,
+      "absolute_improvement": 0.6991542716410137,
+      "relative_improvement_percent": 2.452928600438523
+    },
+    "apex": {
+      "raw_vs_v7_rgba_rmse": 36.357125046220126,
+      "raw_vs_v8_rgba_rmse": 31.31641678836954,
+      "absolute_improvement": 5.040708257850586,
+      "relative_improvement_percent": 13.864430291015664
+    },
+    "apex_tight": {
+      "raw_vs_v7_rgba_rmse": 44.866365656178615,
+      "raw_vs_v8_rgba_rmse": 35.670244369173595,
+      "absolute_improvement": 9.19612128700502,
+      "relative_improvement_percent": 20.496693129720008
+    },
+    "v7_vs_v8": {
+      "rgba_rmse": 2.355214999806281,
+      "changed_fraction": 0.0005734375
+    }
+  },
+  "assessment": "accepted as a local topology correction: it removes the visible beak, replaces two unrelated cap endpoints with one circle-derived apex, and improves the raw-source comparison strongly in the affected region",
+  "remaining_endpoint_uncertainty": {
+    "path7_start": "retain source-fitted hidden cap; previously tested exact/cardinal normalizations remain rejected"
+  },
+  "next_step": "Treat the shared-apex junction as resolved. Limit further Morat work to any remaining connector/cap topology with comparable source or visual evidence."
+}

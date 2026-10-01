@@ -67,15 +67,24 @@ rules without changing the visible design materially:
 - path9 end is a radial cap derived from the intersection of its outer edge circle with the upper secondary
   outer circle, giving centerline endpoint approximately `(68.834218, 41.033681)`.
 
-The path5 and path7 starts remain source-fitted hidden caps. Stronger-looking normalizations were tested
-and rejected rather than forced. In particular, moving the path7 start to the exact intersection implied
-by its outer edge and the secondary inner circle materially worsened the localized source comparison. A
-cardinal-top normalization also slightly worsened the source fit. Since the cap is buried by adjoining
-white geometry, retaining the source-supported endpoint is preferable to inventing a cleaner rule.
+The v8 review resolves the path5 start as well. In v7, the upper-secondary inner boundary and path5
+outer edge ended on separate caps, producing a visible black "beak" at the left junction. Extending the
+two already recovered circles gives a single shared apex at approximately `(31.929551, 45.602198)`. The
+path5 centerline start is the radial projection of that apex back to the path5 centerline, approximately
+`(34.599887, 44.650081)`.
+
+This is both structurally cleaner and better supported by the source render. At 1600 px, the local apex
+crop improves from about `36.36` to `31.32` RGBA RMSE against the raw source, and a tighter crop improves
+from about `44.87` to `35.67`. The full-image RMSE also improves slightly. The v7 beak is therefore treated
+as a reconstruction artifact caused by independent cap endpoints, not as authored geometry.
+
+The path7 start remains source-fitted. Its previously tested exact-intersection and cardinal-top
+normalizations remain rejected because they worsen the localized source comparison.
 
 Numeric evidence is recorded in
-[`../../reports/morat-geometric-v6.json`](../../reports/morat-geometric-v6.json) and
-[`../../reports/morat-geometric-v7.json`](../../reports/morat-geometric-v7.json). Source and candidate
+[`../../reports/morat-geometric-v6.json`](../../reports/morat-geometric-v6.json),
+[`../../reports/morat-geometric-v7.json`](../../reports/morat-geometric-v7.json), and
+[`../../reports/morat-geometric-v8.json`](../../reports/morat-geometric-v8.json). Source and candidate
 artwork remain outside Git under the repository's provenance/licensing policy.
 
 ## Guardrails
@@ -90,6 +99,7 @@ artwork remain outside Git under the repository's provenance/licensing policy.
 
 ## Next step
 
-The main unresolved Morat work is now the small number of retained connector/cap choices rather than the
-circle families or red field. Continue only where a new constraint is supported by source topology. Avoid
-further global fitting that merely lowers pixel RMSE against exporter drift.
+The shared-apex junction is resolved. The main remaining uncertainty is the retained path7 start and any
+other minor connector/cap choices that still lack a supported construction rule. Continue only where a new
+constraint is supported by source topology or clear visual evidence; avoid global fitting that merely
+lowers pixel RMSE against exporter drift.
