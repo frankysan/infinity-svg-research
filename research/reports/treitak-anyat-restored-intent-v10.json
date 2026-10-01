@@ -1,0 +1,33 @@
+{
+  "report": "treitak-anyat-restored-intent-v10",
+  "status": "restored-intent-reference-current",
+  "geometric_master": "v10",
+  "publication_candidate": "v10.1",
+  "family": "Morat",
+  "governing_invariant": {
+    "corners": "sharp single-vertex intersections",
+    "curves": "smooth and contiguous everywhere between intentional corners",
+    "source_segmentation": "not preserved when it produces kinks, bulges, micro-rounding, or short bridge segments"
+  },
+  "major_decisions": [
+    "unsupported micro-helper circles are not construction primitives",
+    "drifted endpoints are restored to supported circle intersections where evidence permits",
+    "white circle geometry owns circular cuts through black/color regions",
+    "the small red lower edge is one smooth circular span",
+    "the large red left white-cut edge is one uninterrupted smooth curve to its top sharp corner",
+    "the large red lower edge is one smooth curve without an internal non-smooth vertex",
+    "publication colors are oversized underlays; underlay overscan is seam safety and does not own visible boundaries"
+  ],
+  "evidence_policy": {
+    "old_first_party_source": "primary local evidence",
+    "newer_army_svg": "corroborating evidence for broad construction, not authority over fragile micro-topology",
+    "pixel_rmse": "diagnostic only when exporter damage conflicts with restored-intent geometry"
+  },
+  "remaining_migrations": [
+    "Daturazi",
+    "Suryats",
+    "Rodok",
+    "Zerat",
+    "Yaogat"
+  ]
+}

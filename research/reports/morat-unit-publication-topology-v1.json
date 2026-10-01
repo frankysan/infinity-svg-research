@@ -10,13 +10,15 @@
     "intersections": "explicit shared intersections",
     "color_strategy": "oversized flat-color underlays exposed through foreground cutouts",
     "seams": "eliminate structurally rather than patching subpixel gaps",
-    "geometry_policy": "publication topology must not silently redefine the geometric master"
+    "geometry_policy": "publication topology must not silently redefine the geometric master",
+    "restored_intent_invariant": "corners are sharp single-vertex intersections; curves are smooth and contiguous everywhere between intentional corners",
+    "curve_policy": "prefer one supported circle for a complete span; otherwise use one smooth continuous curve rather than exporter segmentation"
   },
   "migration": [
     {
       "symbol": "Treitak Anyat",
-      "geometric_master": "v7",
-      "publication_status": "v7.3 restored-intent publication candidate; reference complete"
+      "geometric_master": "v10",
+      "publication_status": "v10.1 restored-intent publication candidate; reference current"
     },
     {
       "symbol": "Daturazi",
@@ -46,8 +48,9 @@
   ],
   "reference_case": {
     "symbol": "Treitak Anyat",
-    "geometric_master": "v7",
-    "publication_candidate": "v7.3",
-    "status": "restored-intent reference complete"
+    "geometric_master": "v10",
+    "publication_candidate": "v10.1",
+    "status": "restored-intent reference current",
+    "invariant": "sharp single-vertex corners; smooth contiguous curves between corners"
   }
 }

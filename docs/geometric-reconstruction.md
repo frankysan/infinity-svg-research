@@ -101,18 +101,29 @@ maintaining several nearly coincident positive and negative paths.
 
 ### Morat-family publication topology
 
-For Morat faction and unit symbols, keep geometric recovery and publication topology separate:
+For Morat faction and unit symbols, keep geometric recovery and publication topology separate.
+
+The restored-intent invariant is:
+
+**Corners are sharp single-vertex intersections; curves are smooth and contiguous everywhere between
+intentional corners.**
+
+Apply that invariant before exporter-pixel fidelity when the source shows clear path/export damage:
 
 - recover circles, lines, supported intersections, tangent joins, and justified local exceptions in an
   auditable geometric master;
-- make boundaries that should meet use one explicit shared intersection rather than overlapping caps,
-  blobs, almost-identical endpoints, or seam patches;
+- make boundaries that should meet use one exact shared vertex rather than overlapping caps, blobs,
+  almost-identical endpoints, short bridge segments, or seam patches;
+- do not preserve a path node merely because the exporter emitted one: if a complete visible span is one
+  smooth curve, reconstruct it as one smooth curve;
+- prefer one circle for a complete span when the evidence supports it; otherwise prefer one clean
+  continuous curve over several fitted fragments that introduce a kink or curvature bump;
 - prefer one owner for each visible boundary;
 - place deliberately oversized flat-color polygons behind the foreground construction and reveal them
   through white/black cutouts instead of independently tracing every visible color island;
 - eliminate subpixel gaps between color blocks by construction rather than corrective overlap fragments;
-- keep source-local exceptions when forcing a cleaner global circle/intersection would change supported
-  topology.
+- keep source-local exceptions only when a cleaner reconstruction would erase independently supported
+  design evidence.
 
 This is currently a **Morat-family hypothesis, not a repository-wide rewrite rule**. Other Infinity
 symbol families must independently show compatible geometry and layering semantics before the same

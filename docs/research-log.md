@@ -102,7 +102,19 @@ geometric masters.
 This conclusion is deliberately limited to the Morat family. It is not assumed to describe unrelated
 Infinity symbol families.
 
-Status: **active Morat-family publication-topology migration**.
+Treitak Anyat is the current restored-intent reference case. The reconstruction work established the
+stronger family invariant that intended corners are sharp single-vertex intersections and visible curves
+are smooth and contiguous everywhere between those corners. Tiny exporter-rounding arcs, bridge
+segments, drifted endpoints, and curvature bumps are not retained merely because they improve agreement
+with damaged exporter pixels.
+
+The current Anyat reference is **v10 geometric / v10.1 publication**. Its final large-red cleanup replaces
+the remaining exporter-style segmentation with two clean spans: one uninterrupted smooth white-cut edge
+to the top sharp corner, and one smooth lower edge without an internal non-smooth vertex. The small-red
+lower edge is likewise a single smooth circular span. Publication colors remain oversized underlays
+behind canonical foreground cuts.
+
+Status: **active Morat-family publication-topology migration; Anyat reference established**.
 
 ## Flattened gradient/mask badge family
 

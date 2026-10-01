@@ -15,10 +15,11 @@
 6. Generalize the reusable geometry/symmetry analysis demonstrated by Morat: common circle/arc fits,
    constant-width bands, supported intersections, and tangent-transition diagnostics. Keep these as
    advisory reconstruction tools rather than automatic rewrite rules.
-7. Use Treitak Anyat v7/v7.3 as the restored-intent reference and migrate the remaining reconstructed
-   Morat units: Daturazi, Suryats, Rodok, Zerat, and Yaogat. Preserve their evidence-supported geometric
-   masters, reject unsupported micro-helper geometry, make intended intersections explicit, and rebuild
-   publication layering with oversized color underlays and canonical foreground cutouts.
+7. Use Treitak Anyat v10/v10.1 as the restored-intent reference and migrate the remaining reconstructed
+   Morat units: Daturazi, Suryats, Rodok, Zerat, and Yaogat. Enforce the family invariant that intended
+   corners are sharp single-vertex intersections and every visible curve is smooth and contiguous between
+   those corners; reject unsupported micro-helper geometry and rebuild publication layering with
+   oversized color underlays and canonical foreground cutouts.
 8. Treat the Morat publication model as a family hypothesis. Before applying it elsewhere, establish that
    the target family's geometry and layering semantics support the same underlay/cutout abstraction.
 9. Start the Wolfgang typography study: recover the literal lettering/layout, identify candidate fonts

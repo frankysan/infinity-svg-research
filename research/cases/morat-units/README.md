@@ -31,10 +31,17 @@ evidence above.
 ## Geometric master
 
 A geometric master should use circles and straight lines wherever supported, explicit shared
-intersections where boundaries are intended to meet, and G1 circular transitions where the source
-supports them. Duplicated positive/negative boundaries should share one geometric definition.
+intersections where boundaries are intended to meet, and smooth continuous curves for spans that are not
+well explained by one circle. Duplicated positive/negative boundaries should share one geometric
+definition.
 
-A source-local exception remains preferable when global normalization creates a topology defect.
+The governing restored-intent invariant is:
+
+**Corners are sharp single-vertex intersections; curves are smooth and contiguous everywhere between
+intentional corners.**
+
+A source-local exception remains preferable only when clean normalization would remove independently
+supported design evidence.
 
 Classify local geometry explicitly:
 
@@ -47,14 +54,18 @@ Classify local geometry explicitly:
 
 Before retaining two adjacent fitted circles, test whether the complete span is better explained by one
 single circle. A small curvature bump at their join is evidence to investigate, not a reason to preserve
-two primitives automatically.
+two primitives automatically. If one circle is not supported but the intended visible edge is still
+smooth, reconstruct one continuous smooth curve rather than preserving exporter segmentation or a
+non-smooth internal vertex.
 
 ## Publication topology
 
 The preferred Morat publication representation follows the faction-symbol v10.1 model:
 
 - one owner for each visible boundary;
-- clean shared intersections instead of overlapping caps or blobs;
+- intended corners are exact sharp single-vertex intersections;
+- every visible curve between corners is smooth and contiguous, with no exporter-induced kink or bulge;
+- clean shared intersections instead of overlapping caps, blobs, or short bridge segments;
 - oversized flat-color underlays behind foreground white/black construction;
 - cutout-driven visible color islands;
 - no subpixel seam dependence between neighboring colors;
@@ -65,10 +76,10 @@ The preferred Morat publication representation follows the faction-symbol v10.1 
 
 ### Treitak Anyat
 
-Status: **reference reconstruction complete**.
+Status: **reference reconstruction current**.
 
-Use **v7** as the geometric master and **v7.3** as the restored-intent publication candidate. Anyat is the
-first full reference implementation of the Morat-family method.
+Use **v10** as the geometric master and **v10.1** as the restored-intent publication candidate. Anyat is
+the reference implementation of the Morat-family method.
 
 The decisive corrections were:
 
@@ -79,18 +90,23 @@ The decisive corrections were:
   `0.0100`;
 - promote the yellow outer edge and the lower-right white boundary to the exact `r=33.6` inner ring where
   the source supports it;
-- make the top and bottom black lobes actual cuts by the white `r=33.6` circle, removing the tiny
+- make the top and bottom black lobes actual cuts by the white `r=33.6` circle, removing tiny
   exporter-rounding arcs rather than preserving them as design primitives;
-- replace the remaining two-arc lower red boundary with one circle centered near
-  `(47.990352, 17.569258)`, `r=48.369519`. Independent fits give about `0.0769` radial RMSE on the old
-  Anyat source and `0.0728` on the newer Team Ops counterpart;
-- keep the publication colors as oversized underlays exposed by canonical foreground cutouts. v7.3 adds
-  a hidden `0.6` SVG-unit red overscan beneath the white cutout so antialiasing or minute coordinate drift
-  cannot expose black at the red/white seam. The visible boundary is unchanged.
+- replace the earlier two-arc lower red boundary with one circle centered near
+  `(47.990352, 17.569258)`, `r=48.369519`, when the complete span supports one circle;
+- reconstruct the **small red area's lower edge as one smooth circular span**, removing the remaining
+  exporter tip-rounding segmentation;
+- reconstruct the **large red region from the restored-intent invariant**: its white-cut left edge is one
+  uninterrupted smooth curve all the way to the top sharp corner, and its lower edge is one smooth
+  contiguous curve with no internal non-smooth vertex;
+- keep publication colors as oversized underlays behind the canonical foreground cuts. Hidden overscan
+  is seam safety only and must never become the owner of a visible boundary.
 
 The modern Team Ops export remains useful corroboration for the broad circle language and smoothness, but
-its small shapes are not treated as authoritative when older source geometry and clean intersections
-provide a stronger explanation.
+its small shapes are not treated as authoritative when older source geometry, clean intersections, and
+the restored-intent topology provide a stronger explanation. Pixel RMSE is diagnostic rather than an
+optimization target when reproducing exporter damage would violate the sharp-corner/smooth-curve
+invariant.
 
 ### Daturazi
 
@@ -123,10 +139,13 @@ naturally once shared boundaries have one owner.
 
 A Morat unit publication candidate is ready only when:
 
+- every intended corner is one sharp vertex;
+- every visible curve between intentional corners is smooth and contiguous;
 - intended intersections are clean at high magnification;
 - no visible gaps remain between color blocks;
 - one visible boundary is not approximated independently by multiple near-identical paths;
-- no blob, beak, pinhole, or seam patch remains solely because paths failed to share topology;
+- no blob, beak, pinhole, kink, curvature bump, or seam patch remains solely because paths failed to
+  share topology;
 - hidden color underlays extend far enough beneath authoritative foreground cutouts that background color
   cannot leak through at antialiased borders;
 - the geometric master remains unchanged unless a separate evidence-backed geometry review changes it;
