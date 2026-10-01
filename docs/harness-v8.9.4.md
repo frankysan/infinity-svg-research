@@ -1,5 +1,10 @@
 # SVG research harness v8.9.4
 
+> **Historical baseline:** this document preserves terminology from the pre-repository harness.
+> Where it says `third-party` or uses manifest values such as `human-sphere-third-party`, the current
+> repository provenance taxonomy classifies that material as **second-party**. Legacy field names are
+> retained here only to describe the v8.9.4 behavior accurately.
+
 Standalone experimental SVG optimization/validation tooling. This is intentionally outside the InfinityDB repository.
 
 ## Exact transforms currently implemented

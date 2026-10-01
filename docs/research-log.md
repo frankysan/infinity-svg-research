@@ -70,7 +70,7 @@ Status: **experimental / validated batch**, not yet resolved.
 
 Six hard-classified cases were identified. Palette snapping can produce low colour error but does not
 repair the fragmented geometry, so recolouring alone is not considered a solution. Source-render-guided
-boundary reconstruction exists as an experiment; historical/third-party rasters are guardrails only.
+boundary reconstruction exists as an experiment; historical/second-party rasters are guardrails only.
 
 Status: **identified / deferred**.
 

@@ -11,5 +11,7 @@ Research records may identify source assets by filename, URL, byte size, hash, a
 statistics. Those records are included for reproducibility and provenance and do not contain the
 underlying artwork.
 
-Third-party reference sources such as Human Sphere are treated as non-authoritative research inputs.
-They must not silently replace current first-party artwork.
+For research provenance, non-Corvus-Belli reference material such as Human Sphere renders and fan-made
+vectors is categorized as **second-party** evidence. This is a project provenance term, not a statement
+about copyright ownership or licensing. Such material remains non-authoritative supporting evidence and
+must not silently replace first-party artwork.

@@ -16,7 +16,7 @@
 - Investigate Druze/Taowu raster-heavy reconstruction separately.
 - Resume palette-fragmented trace work with source-render-guided geometry reconstruction.
 - Resolve the remaining missing-external-image cases, especially Kaeltar Specialists.
-- Improve provenance tooling for historical first-party assets without treating third-party mirrors as
+- Improve provenance tooling for historical first-party assets without treating second-party mirrors as
   authoritative.
 
 ## Release direction

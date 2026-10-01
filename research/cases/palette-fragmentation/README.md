@@ -10,5 +10,5 @@ trace boundaries and intermediate colours. Palette snapping is useful as an isol
 not reconstruct the original vector structure.
 
 Current preferred research direction is source-render-guided boundary reconstruction. Historical
-first-party images may serve as coarse guardrails. Third-party Human Sphere images may assist matching or
+first-party images may serve as coarse guardrails. Second-party Human Sphere images may assist matching or
 review but are non-authoritative.

@@ -45,6 +45,8 @@ batch-report.csv
 # Packaging/build output
 build/
 dist/
+*.patch
+*.zip
 
 # Curated report summaries are intentionally tracked
 !research/reports/

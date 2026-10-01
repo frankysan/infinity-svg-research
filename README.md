@@ -9,9 +9,17 @@ tooling used to decide whether an SVG can be safely simplified or reconstructed.
 
 ## Project principles
 
-- **Fidelity first.** Byte reduction is useful only when the visual result is understood and reviewed.
-- **Exact and approximate work stay separate.** Exact transforms require pixel-identical validation;
-  approximate/restorative experiments are explicitly review-required.
+- **Clean, minimal, representative.** The target is a compact, maintainable SVG that preserves
+  authorial intent, not every pixel produced by a pathological exporter.
+- **Authorial intent before byte count.** Silhouette, composition, identifying marks, palette, and
+  meaningful shading take priority over absolute minimal element count or file size.
+- **Small fidelity gains can justify small structural costs.** Minimality means removing accidental
+  complexity, not choosing the fewest possible elements regardless of appearance.
+- **Exact and representative work stay separate.** Exact transforms require pixel-identical validation;
+  representative reconstructions are explicitly review-required until accepted.
+- **Provenance is explicit.** First-party Corvus Belli sources are primary evidence; second-party sources
+  such as Human Sphere renders and high-quality fan vectors are supporting evidence and remain identified
+  as such.
 - **Raw assets stay outside Git.** Source SVG/PDF/wiki archives and generated candidates are external
   inputs. Git tracks hashes, source identities, methodology, code, and compact result summaries.
 - **Hard findings and advisories are different.** A hard pathology classification is not equivalent to
@@ -49,7 +57,7 @@ also available after `pip install -e .`.
 src/infinity_svg_research/   implementation
 tools/                       script-compatible CLI wrappers
 tests/                       focused regression tests and synthetic fixtures
-docs/                        methodology, taxonomy, validation, provenance
+docs/                        design goals, methodology, taxonomy, validation, provenance
 research/cases/              durable case records and decisions
 research/reports/            compact source-hash/result summaries safe for Git
 examples/                    provenance and historical-probe examples
@@ -67,8 +75,9 @@ family has a compact three-gradient reconstruction that clears the hard classifi
 source hashes, but remains experimental because high-contrast inner-disc edge differences are still
 being investigated.
 
-See [`research/README.md`](research/README.md) and [`docs/research-log.md`](docs/research-log.md) for the
-current status and evidence.
+See [`docs/design-goals.md`](docs/design-goals.md), [`docs/provenance.md`](docs/provenance.md),
+[`research/README.md`](research/README.md), and [`docs/research-log.md`](docs/research-log.md) for the
+project criteria, evidence policy, current status, and research history.
 
 ## Licensing and asset scope
 

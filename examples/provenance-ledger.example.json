@@ -1,14 +1,45 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "entries": [
     {
-      "png_sha256": "replace-with-png-sha256",
-      "png_relative_path": "optional\\relative\\path.png",
-      "source_authority": "first-party-historical",
-      "independence": "independent",
+      "asset_id": "example-unit-symbol",
+      "source_authority": "first-party",
+      "source_type": "army-svg",
+      "representation": "vector",
+      "source_url": "https://assets.corvusbelli.net/army/img/logo/units/example.svg",
+      "relative_path": "units/example.svg",
+      "sha256": "replace-with-source-sha256",
+      "byte_size": 12345,
+      "temporal_status": "current",
       "provenance_status": "verified",
-      "source_url": "https://example.invalid/verified-source",
-      "note": "Only mark verified after the original first-party provenance has been independently established."
+      "evidence_role": "primary-geometry",
+      "note": "Current first-party Army SVG used as the primary geometry source."
+    },
+    {
+      "asset_id": "example-unit-symbol",
+      "source_authority": "first-party",
+      "source_type": "official-bitmap",
+      "representation": "bitmap",
+      "source_url": "https://example.invalid/corvus-belli-source.png",
+      "sha256": "replace-with-source-sha256",
+      "byte_size": 54321,
+      "width": 1024,
+      "height": 1024,
+      "temporal_status": "historical",
+      "provenance_status": "verified",
+      "evidence_role": "appearance-reference",
+      "note": "Official bitmap used to interpret appearance where the vector export is pathological."
+    },
+    {
+      "asset_id": "example-unit-symbol",
+      "source_authority": "second-party",
+      "source_type": "human-sphere-render",
+      "representation": "bitmap",
+      "source_url": "https://example.invalid/human-sphere-render.png",
+      "sha256": "replace-with-source-sha256",
+      "provenance_status": "verified",
+      "evidence_role": "corroboration",
+      "note": "Supporting render only; it does not override first-party geometry or appearance evidence."
     }
   ]
 }
