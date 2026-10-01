@@ -1,0 +1,685 @@
+{
+  "format": "infinity-svg-vyo-workflow-summary",
+  "version": 1,
+  "review_date": "2026-10-01",
+  "context": "Supplied ChatGPT continuation excerpt plus local repository inventory/case records; no independent earlier-chat access.",
+  "army_snapshot": {
+    "name": "JSON 20260929-114335.zip",
+    "path": "data/raw/JSON 20260929-114335.zip",
+    "sha256": "f103a7afd02e68d845cc9ce38b1948f46914676bbc6a5e6b790d0a04148b6c75"
+  },
+  "input_sha256": {
+    "inventory": "d666df63528b537b34dfe94fc5a7424d008298ba336af82278e44250175c0b80",
+    "army_manifest": "a80c1e3a8ac3af6f01d1922184568f4bb6f3c700f648784d8afbb369a1391e94",
+    "publication_manifest": "0a7f56d706a7d174c930763cd09d47539b6f5ac759579bf168d33f0eac38405a",
+    "decisions": "811d8a0b9f4bfc252e35866da4bada29a23dcf844e51a30cb2ae07ac5897c29a"
+  },
+  "identity_summary": {
+    "canonical_assets": 808,
+    "scope": {
+      "faction": 59,
+      "static": 9,
+      "unit": 740
+    },
+    "identity_status": {
+      "name-candidate": 435,
+      "unresolved": 349,
+      "out-of-scope": 9,
+      "reviewed-match": 14,
+      "reviewed-design-mismatch": 1
+    },
+    "candidate_actions": {
+      "reuse": 545,
+      "minor-cleanup": 27,
+      "reconstruct": 1
+    }
+  },
+  "reviewed_assets": [
+    {
+      "army_path": "units/al-fasid-regiment-1-1.svg",
+      "identity_status": "reviewed-match",
+      "action": "minor-cleanup",
+      "candidates": [
+        {
+          "path": "Haqqislam/Haqqislam - Ahl Fassed Regiment v2 - [Alt] [Vyo].svg",
+          "sha256": "61dd3b1c3e8e270d8bf94933bb4c48d42707c99e2987146519031756bf0aec3b",
+          "subject": "Ahl Fassed Regiment v2",
+          "tags": [
+            "Alt"
+          ],
+          "matched_by": [
+            "explicit-reviewed-match"
+          ],
+          "action": "minor-cleanup",
+          "reasons": [
+            "align-palette-to-first-party",
+            "select-N3-variant"
+          ],
+          "source_authority": "second-party",
+          "source_type": "fan-vector"
+        },
+        {
+          "path": "Haqqislam/Haqqislam - Ahl Fassed Regiment v2 - [N3] [Vyo].svg",
+          "sha256": "5e9c8daffefc76d85b0450e67ef026bfa0e6c76005e923786834d90cce24cfa4",
+          "subject": "Ahl Fassed Regiment v2",
+          "tags": [
+            "N3"
+          ],
+          "matched_by": [
+            "explicit-reviewed-match"
+          ],
+          "action": "minor-cleanup",
+          "reasons": [
+            "align-palette-to-first-party",
+            "select-N3-variant"
+          ],
+          "source_authority": "second-party",
+          "source_type": "fan-vector"
+        }
+      ]
+    },
+    {
+      "army_path": "units/armand-le-muet-freelance-killer-1-1.svg",
+      "identity_status": "reviewed-match",
+      "action": "minor-cleanup",
+      "candidates": [
+        {
+          "path": "Mercs/Mercs - Armand Le Muet, Freelance Killer - [NA2] [Vyo].svg",
+          "sha256": "47df9de1e5d9bef1fe750388a179e99f2b70c5ab49407ef747dc768e514cd2f5",
+          "subject": "Armand Le Muet, Freelance Killer",
+          "tags": [
+            "NA2"
+          ],
+          "matched_by": [
+            "explicit-reviewed-match"
+          ],
+          "action": "minor-cleanup",
+          "reasons": [
+            "align-palette-to-first-party",
+            "resolve-distressed-versus-clean-upper-lettering"
+          ],
+          "source_authority": "second-party",
+          "source_type": "fan-vector"
+        }
+      ]
+    },
+    {
+      "army_path": "units/cassandra-kusanagi-1-1.svg",
+      "identity_status": "reviewed-match",
+      "action": "reuse",
+      "candidates": [
+        {
+          "path": "Nomads/Nomads - Reverend Moiras - [N3] [Vyo].svg",
+          "sha256": "8519824cf296cad35f4ceefee888492c32c42ff29d0a7106a19fd94f5beb4c34",
+          "subject": "Reverend Moiras",
+          "tags": [
+            "N3"
+          ],
+          "matched_by": [
+            "explicit-reviewed-match"
+          ],
+          "action": "reuse",
+          "reasons": [
+            "publication-palette-and-geometry-review-pending"
+          ],
+          "source_authority": "second-party",
+          "source_type": "fan-vector"
+        }
+      ]
+    },
+    {
+      "army_path": "units/der-morlock-gruppe-1-1.svg",
+      "identity_status": "reviewed-match",
+      "action": "minor-cleanup",
+      "candidates": [
+        {
+          "path": "Nomads/Nomads - Die Morlock Gruppe (white) - [N3] [Vyo].svg",
+          "sha256": "82d9654650219564481acf3981242ab06fdc9f2aa6eef1ca0dc5b047df13dd79",
+          "subject": "Die Morlock Gruppe (white)",
+          "tags": [
+            "N3"
+          ],
+          "matched_by": [
+            "explicit-reviewed-match"
+          ],
+          "action": "minor-cleanup",
+          "reasons": [
+            "align-palette-to-first-party",
+            "restore-current-outer-outline"
+          ],
+          "source_authority": "second-party",
+          "source_type": "fan-vector"
+        }
+      ]
+    },
+    {
+      "army_path": "units/fusilier-indigo-bipandra-1-1.svg",
+      "identity_status": "reviewed-match",
+      "action": "minor-cleanup",
+      "candidates": [
+        {
+          "path": "PanOceania/PanOceania - Indigo Spec-Ops v2 - [N3] [Vyo].svg",
+          "sha256": "58a20256ce29d8d36de275bd9ee18c4f2850cf9e8f46be606a2ec5909a3eac35",
+          "subject": "Indigo Spec-Ops v2",
+          "tags": [
+            "N3"
+          ],
+          "matched_by": [
+            "explicit-reviewed-match"
+          ],
+          "action": "minor-cleanup",
+          "reasons": [
+            "Bipandra-green-accent-palette",
+            "Bipandra-specific-lettering"
+          ],
+          "source_authority": "second-party",
+          "source_type": "fan-vector"
+        }
+      ]
+    },
+    {
+      "army_path": "units/hatail-aelis-keesan-1-1.svg",
+      "identity_status": "reviewed-match",
+      "action": "minor-cleanup",
+      "candidates": [
+        {
+          "path": "Tohaa/Tohaa - Hatail Spec-Ops - [N3] [Vyo].svg",
+          "sha256": "bbefa8b8f9717b99e60f0791bc7233236b8fe65283bba27169b5bc4b54095436",
+          "subject": "Hatail Spec-Ops",
+          "tags": [
+            "N3"
+          ],
+          "matched_by": [
+            "explicit-reviewed-match"
+          ],
+          "action": "minor-cleanup",
+          "reasons": [
+            "align-palette-to-first-party",
+            "current-lower-central-region-is-dark"
+          ],
+          "source_authority": "second-party",
+          "source_type": "fan-vector"
+        }
+      ]
+    },
+    {
+      "army_path": "units/indigo-brother-konstantinos-1-1.svg",
+      "identity_status": "reviewed-match",
+      "action": "reuse",
+      "candidates": [
+        {
+          "path": "PanOceania/PanOceania - Indigo Spec-Ops v2 - [N3] [Vyo].svg",
+          "sha256": "58a20256ce29d8d36de275bd9ee18c4f2850cf9e8f46be606a2ec5909a3eac35",
+          "subject": "Indigo Spec-Ops v2",
+          "tags": [
+            "N3"
+          ],
+          "matched_by": [
+            "explicit-reviewed-match"
+          ],
+          "action": "reuse",
+          "reasons": [
+            "publication-palette-and-geometry-review-pending"
+          ],
+          "source_authority": "second-party",
+          "source_type": "fan-vector"
+        }
+      ]
+    },
+    {
+      "army_path": "units/jeanne-d-arc-1-1.svg",
+      "identity_status": "reviewed-match",
+      "action": "minor-cleanup",
+      "candidates": [
+        {
+          "path": "PanOceania/PanOceania - Joan of Arc - [N3] [Vyo].svg",
+          "sha256": "4ef9872168d12bc95d8009f48d89137ec4d176ca04b571458d6e86b98805a5f1",
+          "subject": "Joan of Arc",
+          "tags": [
+            "N3"
+          ],
+          "matched_by": [
+            "explicit-reviewed-match"
+          ],
+          "action": "minor-cleanup",
+          "reasons": [
+            "align-palette-to-first-party",
+            "restore-current-outer-ring"
+          ],
+          "source_authority": "second-party",
+          "source_type": "fan-vector"
+        }
+      ]
+    },
+    {
+      "army_path": "units/neema-saatar-1-1.svg",
+      "identity_status": "reviewed-match",
+      "action": "reuse",
+      "candidates": [
+        {
+          "path": "Tohaa/Tohaa - Ectros Regiment - [N3] [Vyo].svg",
+          "sha256": "8dd6b73abbee1c910ab8137e362235e2037c97bedff6ce0188ace48bf062badf",
+          "subject": "Ectros Regiment",
+          "tags": [
+            "N3"
+          ],
+          "matched_by": [
+            "explicit-reviewed-match"
+          ],
+          "action": "reuse",
+          "reasons": [
+            "publication-palette-and-geometry-review-pending"
+          ],
+          "source_authority": "second-party",
+          "source_type": "fan-vector"
+        }
+      ]
+    },
+    {
+      "army_path": "units/scarface-and-cordelia-1-1.svg",
+      "identity_status": "reviewed-match",
+      "action": "minor-cleanup",
+      "candidates": [
+        {
+          "path": "Mercs/Mercs - Scarface Turner - [N3] [Vyo].svg",
+          "sha256": "14b774e8c7bafb6078bc4f796167f8e9507da65061879f3c88d0ecc90d025f90",
+          "subject": "Scarface Turner",
+          "tags": [
+            "N3"
+          ],
+          "matched_by": [
+            "explicit-reviewed-match"
+          ],
+          "action": "minor-cleanup",
+          "reasons": [
+            "align-palette-to-first-party",
+            "remove-star-inner-outline",
+            "select-N3-variant"
+          ],
+          "source_authority": "second-party",
+          "source_type": "fan-vector"
+        },
+        {
+          "path": "Mercs/Mercs - Scarface Turner - [NA2] [Vyo].svg",
+          "sha256": "fbe58dde9bbaa4ca2d833f9af060396001760bcf099724cf98cf9d29ba5d2fa5",
+          "subject": "Scarface Turner",
+          "tags": [
+            "NA2"
+          ],
+          "matched_by": [
+            "explicit-reviewed-match"
+          ],
+          "action": "minor-cleanup",
+          "reasons": [
+            "align-palette-to-first-party",
+            "remove-star-inner-outline",
+            "select-N3-variant"
+          ],
+          "source_authority": "second-party",
+          "source_type": "fan-vector"
+        }
+      ]
+    },
+    {
+      "army_path": "units/scarface-and-cordelia-3-1.svg",
+      "identity_status": "reviewed-match",
+      "action": "minor-cleanup",
+      "candidates": [
+        {
+          "path": "Mercs/Mercs - Cordelia Turner - [N3] [Vyo].svg",
+          "sha256": "4b739ae53a01095b076f096d76afc18f282ebfdd7ecfffc3d605eb815768e8fc",
+          "subject": "Cordelia Turner",
+          "tags": [
+            "N3"
+          ],
+          "matched_by": [
+            "explicit-reviewed-match"
+          ],
+          "action": "minor-cleanup",
+          "reasons": [
+            "align-palette-to-first-party",
+            "select-N3-variant"
+          ],
+          "source_authority": "second-party",
+          "source_type": "fan-vector"
+        },
+        {
+          "path": "Mercs/Mercs - Cordelia Turner - [NA2] [Vyo].svg",
+          "sha256": "c31f42aabdc4ad4aebcd0036e3bd469c4efc5ae3d2dd8d4c2a6f762bf751a03a",
+          "subject": "Cordelia Turner",
+          "tags": [
+            "NA2"
+          ],
+          "matched_by": [
+            "explicit-reviewed-match"
+          ],
+          "action": "minor-cleanup",
+          "reasons": [
+            "align-palette-to-first-party",
+            "select-N3-variant"
+          ],
+          "source_authority": "second-party",
+          "source_type": "fan-vector"
+        }
+      ]
+    },
+    {
+      "army_path": "units/shasvastii-noctifers-1-1.svg",
+      "identity_status": "reviewed-design-mismatch",
+      "action": "reconstruct",
+      "candidates": [
+        {
+          "path": "Combined Army/Combined Army - Noctifier - [A6] [Vyo].svg",
+          "sha256": "b2391f4aa1f882ec384c922e05d123f1fbc092ea51d820929c20fecfd1f7485b",
+          "subject": "Noctifier",
+          "tags": [
+            "A6"
+          ],
+          "matched_by": [
+            "explicit-reviewed-match"
+          ],
+          "action": "reconstruct",
+          "reasons": [
+            "current-design-differs-from-archive"
+          ],
+          "source_authority": "second-party",
+          "source_type": "fan-vector"
+        }
+      ],
+      "fallback": {
+        "source": "current-army",
+        "action": "reuse",
+        "sha256": "5cd19df66634a49d52db6fb05748b2b824745642b73f2127a0fb7387e50260fe",
+        "evidence": "The repository scanner reports no suspicious structures, hard classifications, advisories, or parse errors for the current 14,310-byte Army source. Reuse/review that current vector; the old Vyo mismatch alone does not justify a new redraw."
+      }
+    },
+    {
+      "army_path": "units/treitak-anyat-1-1.svg",
+      "identity_status": "reviewed-match",
+      "action": "minor-cleanup",
+      "candidates": [
+        {
+          "path": "Combined Army/Combined Army - Treitak Spec-Ops - [N3] [Vyo].svg",
+          "sha256": "6158b2a48963c7782fae46cf4b318e34874ea47d7a74c49bf86ad6e98d8b68e2",
+          "subject": "Treitak Spec-Ops",
+          "tags": [
+            "N3"
+          ],
+          "matched_by": [
+            "explicit-reviewed-match"
+          ],
+          "action": "minor-cleanup",
+          "reasons": [
+            "align-palette-to-first-party",
+            "review-local-boundary-shapes"
+          ],
+          "source_authority": "second-party",
+          "source_type": "fan-vector"
+        }
+      ]
+    },
+    {
+      "army_path": "units/volunteer-intel-isobel-mcgregor-1-1.svg",
+      "identity_status": "reviewed-match",
+      "action": "minor-cleanup",
+      "candidates": [
+        {
+          "path": "Ariadna/Ariadna - Intel Spec-Ops - [N3] [Vyo].svg",
+          "sha256": "a1ccef840b5d408e02d7bed14aa265a01b5da17087cb0cd3043e971944c5a6cc",
+          "subject": "Intel Spec-Ops",
+          "tags": [
+            "N3"
+          ],
+          "matched_by": [
+            "explicit-reviewed-match"
+          ],
+          "action": "minor-cleanup",
+          "reasons": [
+            "align-palette-to-first-party",
+            "current-Cyrillic-upper-lettering"
+          ],
+          "source_authority": "second-party",
+          "source_type": "fan-vector"
+        }
+      ]
+    },
+    {
+      "army_path": "units/zamira-nazarova-1-1.svg",
+      "identity_status": "reviewed-match",
+      "action": "reuse",
+      "candidates": [
+        {
+          "path": "Haqqislam/Haqqislam - Kum Motorized Troops - [N3] [Vyo].svg",
+          "sha256": "7bc8bb68610426c7c9c7948fdf59b925c95a1ca18a18bb2ea399a1f3c8a48341",
+          "subject": "Kum Motorized Troops",
+          "tags": [
+            "N3"
+          ],
+          "matched_by": [
+            "explicit-reviewed-match"
+          ],
+          "action": "reuse",
+          "reasons": [
+            "publication-palette-and-geometry-review-pending"
+          ],
+          "source_authority": "second-party",
+          "source_type": "fan-vector"
+        }
+      ]
+    }
+  ],
+  "confirmed_missing": 0,
+  "unresolved": 349,
+  "reconstruction_queue": 0,
+  "missing_list_warning": "No confirmed absence decisions yet. Unresolved and name-candidate rows are not approved coverage or a true missing list.",
+  "viewport": {
+    "source_count": 565,
+    "status_counts": {
+      "normalized-review-required": 544,
+      "blocked": 21
+    },
+    "source_hashes_match_inventory": true,
+    "only_root_width_height_viewBox_changed": true,
+    "blocked": [
+      {
+        "path": "Ariadna/Ariadna - 45th Highlanders Rifles - [N3] [Vyo].svg",
+        "source_sha256": "83380046591b1acfb6fe531f37a550e32aa444a6d7f20adf824bc3d05866224b",
+        "reasons": [
+          "font-dependent-text"
+        ]
+      },
+      {
+        "path": "Ariadna/Ariadna - Desperadoes - [N3] [Vyo].svg",
+        "source_sha256": "1636c99fe9d84a126b59f3076f848d9fc2b3777d3c9b4742f9c8c4e4a2208a59",
+        "reasons": [
+          "font-dependent-text"
+        ]
+      },
+      {
+        "path": "Ariadna/Ariadna - Unknown Ranger - [A6] [Vyo].svg",
+        "source_sha256": "bce7376c4482447257bc925e43a643ab1c01749b91dfaf31c4639a5898f0aab4",
+        "reasons": [
+          "font-dependent-text"
+        ]
+      },
+      {
+        "path": "Mercs/Mercs - Armand Le Muet Freelance Killer - [N3] [Vyo].svg",
+        "source_sha256": "32e59a4f455a778b0006b1dfca3d4bc56d6d26222395c987f92ce4bc11aac376",
+        "reasons": [
+          "external-reference"
+        ]
+      },
+      {
+        "path": "Mercs/Mercs - Wild Bill - [N4] [Vyo].svg",
+        "source_sha256": "4fb43fe5a1c17c86f9ea50e914e41b15b7e5994d12e54fb46fb601569c6b4e23",
+        "reasons": [
+          "font-dependent-text"
+        ]
+      },
+      {
+        "path": "Nomads/Nomads - Kriza Boracs, Special Crisis Unit - [A6] [Vyo].svg",
+        "source_sha256": "d7e1c50d7a85a57e8993f604225633e9d99f0aa78f74570a19fecaba5508a77b",
+        "reasons": [
+          "font-dependent-text"
+        ]
+      },
+      {
+        "path": "Nomads/Nomads - Taskmasters - [A6] [Vyo].svg",
+        "source_sha256": "20b045439f6c77d67d63704694cd40304239c773bd01988d25ace008ff8aee08",
+        "reasons": [
+          "font-dependent-text"
+        ]
+      },
+      {
+        "path": "O-12/0-12 - Gamma Unit - [N4] [Vyo].svg",
+        "source_sha256": "e60284ce2d0e1a7a470a0f9d69329830837c41a8976c64f2b343accc32a93b8f",
+        "reasons": [
+          "font-dependent-text"
+        ]
+      },
+      {
+        "path": "O-12/0-12 - Kappa Unit - [N4] [Vyo].svg",
+        "source_sha256": "ba97ea7836ae391f6839f66befd76dfe6b5391092d92026aba2465a2f1158020",
+        "reasons": [
+          "font-dependent-text"
+        ]
+      },
+      {
+        "path": "O-12/0-12 - Lynx Unit - [N4] [Vyo].svg",
+        "source_sha256": "5d1ccd6c08565901ad2bb9b34b800b3bf65e941c812c014581c945d57f86b7d6",
+        "reasons": [
+          "font-dependent-text"
+        ]
+      },
+      {
+        "path": "O-12/0-12- Ensign Katherine Cho, Psi Unit - [N4] [Vyo].svg",
+        "source_sha256": "d0861702112b4f6743b405ff11210c0185cfdccfa1dcb73f9e48baea54ef769b",
+        "reasons": [
+          "font-dependent-text"
+        ]
+      },
+      {
+        "path": "Others/Other - AccessTel - [N3] [Vyo].svg",
+        "source_sha256": "a5fb61f709a62388e08bfce7c3f90a91c4de03d6ca5a9b5dc0b0abdfab00a1db",
+        "reasons": [
+          "font-dependent-text"
+        ]
+      },
+      {
+        "path": "Others/Other - Interspace Trust Corporation - [N3] [Vyo].svg",
+        "source_sha256": "633dfb469957d38a4434bc64e06490209bcfa06c58c44d3fdc5a6bb5752fb5f3",
+        "reasons": [
+          "font-dependent-text"
+        ]
+      },
+      {
+        "path": "Others/Other - Moto.tronica - [N3] [Vyo].svg",
+        "source_sha256": "9f800e483a6e3f5c3385a602d8157ef30e20b5b08eda1a5fb986b8f9bfc0b8ff",
+        "reasons": [
+          "font-dependent-text"
+        ]
+      },
+      {
+        "path": "Others/Other - Navajo Outpost - [N3] [Vyo].svg",
+        "source_sha256": "52a4b7df253fc17fb92ffbe7c64ecf7a990de0c7a9e7f8911e9f2e2b24769732",
+        "reasons": [
+          "font-dependent-text"
+        ]
+      },
+      {
+        "path": "Others/Other - Royal Spacer Unlimited - [N3] [Vyo].svg",
+        "source_sha256": "c8e3352b3e796be996c02760fbc8f28993066f0cc0ce1bd90e9bf4c984dc2469",
+        "reasons": [
+          "font-dependent-text"
+        ]
+      },
+      {
+        "path": "Others/Other - Sterling Forge - [N3] [Vyo].svg",
+        "source_sha256": "1e3eae0bb1f898589cfcbf76ebebb35fc9240ab63d7338fb55ba890ff6c4b7e1",
+        "reasons": [
+          "font-dependent-text"
+        ]
+      },
+      {
+        "path": "Others/Other - USARF Logistics Division - [N3] [Vyo].svg",
+        "source_sha256": "ccf247ebb3c7b06b20acc933312283f2ae7b77e0c1f5d6ff6739fe99ffda8586",
+        "reasons": [
+          "font-dependent-text"
+        ]
+      },
+      {
+        "path": "PanOceania/PanOceania - Black Friars - [A6] [Vyo].svg",
+        "source_sha256": "faf134c106bcf1e0720ef2da90f4b62364687dffa19b5388194dee20cd8f7882",
+        "reasons": [
+          "font-dependent-text"
+        ]
+      },
+      {
+        "path": "PanOceania/PanOceania - CrabBots - [A6] [Vyo].svg",
+        "source_sha256": "1335b3674aefea77119e5524c6bb2cea6462bafa06bfc5aca3285fcd25f9eee0",
+        "reasons": [
+          "font-dependent-text"
+        ]
+      },
+      {
+        "path": "PanOceania/PanOceania - Locust Clandestine Action Team - [A6] [Vyo].svg",
+        "source_sha256": "2a380294fb8e54eb498f176533e6f786c7aae079fed3521628b7fb7a29e28960",
+        "reasons": [
+          "font-dependent-text"
+        ]
+      }
+    ]
+  },
+  "viewport_validation_128": {
+    "format": "infinity-svg-vyo-viewport-validation",
+    "version": 1,
+    "inkscape_version": "Inkscape 1.4.4 (dcaf3e7, 2026-05-05)",
+    "size": 128,
+    "input_hashes_verified": true,
+    "normalized": 544,
+    "blocked": 21,
+    "drawing_render_exact": 544,
+    "max_rgba_rmse": 0.0,
+    "max_alpha_rmse": 0.0,
+    "page_border_nonzero": 540,
+    "report_sha256": "a89c75b33bdafb6c99758fba05a5c3dffa535e682cb1690ee59959d66d389a64",
+    "method": "Compare original and normalized drawing-area renders at the same output width. Separately inspect normalized page alpha bounds. This checks unchanged drawing appearance; it does not establish Vyo-to-Army fidelity or publication approval. Nonzero page border alpha can include antialiasing at small padding and is not itself a clipping diagnosis."
+  },
+  "viewport_validation_512_sample": {
+    "format": "infinity-svg-vyo-viewport-validation",
+    "version": 1,
+    "inkscape_version": "Inkscape 1.4.4 (dcaf3e7, 2026-05-05)",
+    "size": 512,
+    "input_hashes_verified": true,
+    "normalized": 6,
+    "blocked": 0,
+    "drawing_render_exact": 6,
+    "max_rgba_rmse": 0.0,
+    "max_alpha_rmse": 0.0,
+    "page_border_nonzero": 0,
+    "report_sha256": "5068b106112177468b8e610d7c13abd88025bb93552eb63cadb132eb24e24975",
+    "method": "Compare original and normalized drawing-area renders at the same output width. Separately inspect normalized page alpha bounds. This checks unchanged drawing appearance; it does not establish Vyo-to-Army fidelity or publication approval. Nonzero page border alpha can include antialiasing at small padding and is not itself a clipping diagnosis."
+  },
+  "noctifers_current_army_scan": {
+    "source_sha256": "5cd19df66634a49d52db6fb05748b2b824745642b73f2127a0fb7387e50260fe",
+    "scan_report_sha256": "3d2399c1aac34fe49fa313145d96c4e6518dc0c95c62056e4406852516dc99dd",
+    "size_bytes": 14310,
+    "flagged": 0,
+    "parse_errors": 0,
+    "decision": "Reuse/review current Army vector; obsolete Vyo device does not mandate a new redraw."
+  },
+  "validation": {
+    "unit_tests_passed": 45,
+    "ruff_check": "passed",
+    "git_diff_check": "passed"
+  },
+  "source_authority": "Vyo remains second-party fan-vector evidence; Army manifest source methods are retained, including overrides.",
+  "publication_approved": false,
+  "outputs": {
+    "identity_map": "output/vyo-identity-v1/vyo-army-identity-map.json",
+    "missing_list": "output/vyo-identity-v1/missing-vyo.json",
+    "normalized_svg_root": "output/vyo-viewport-v1/svg",
+    "identity_contact_sheets": "output/vyo-review-v1",
+    "bundle": "final/vyo-workflow-v1.zip"
+  }
+}

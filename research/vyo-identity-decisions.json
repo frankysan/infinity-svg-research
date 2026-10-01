@@ -1,0 +1,1174 @@
+{
+  "format": "infinity-svg-vyo-identity-decisions",
+  "version": 1,
+  "policy": "Reviewed matches and confirmed absence must name explicit Army profile paths. Aliases only propose candidates.",
+  "rules": [
+    {
+      "army_subjects": [
+        "jeanne-d-arc",
+        "jeanne-d-arc-v2-mobility-armor"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "PanOceania/PanOceania - Joan of Arc - [N3] [Vyo].svg"
+      ],
+      "evidence": "Identity/rename lead preserved in the supplied ChatGPT continuation excerpt and research/vyo-full-inventory-v1.md; profile variants still need visual review."
+    },
+    {
+      "army_subjects": [
+        "al-fasid-regiment"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Haqqislam/Haqqislam - Ahl Fassed Regiment - [Alt] [Vyo].svg",
+        "Haqqislam/Haqqislam - Ahl Fassed Regiment - [N3] [Vyo].svg",
+        "Haqqislam/Haqqislam - Ahl Fassed Regiment v2 - [Alt] [Vyo].svg",
+        "Haqqislam/Haqqislam - Ahl Fassed Regiment v2 - [N3] [Vyo].svg"
+      ],
+      "evidence": "Identity/rename lead preserved in the supplied ChatGPT continuation excerpt and research/vyo-full-inventory-v1.md; profile variants still need visual review."
+    },
+    {
+      "army_subjects": [
+        "shasvastii-noctifers"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Combined Army/Combined Army - Noctifier - [A6] [Vyo].svg"
+      ],
+      "evidence": "Identity/rename lead preserved in the supplied ChatGPT continuation excerpt and research/vyo-full-inventory-v1.md; profile variants still need visual review."
+    },
+    {
+      "army_subjects": [
+        "treitak-anyat",
+        "morat-team-ops"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Combined Army/Combined Army - Treitak Spec-Ops - [N3] [Vyo].svg"
+      ],
+      "evidence": "Identity/rename lead preserved in the supplied ChatGPT continuation excerpt and research/vyo-full-inventory-v1.md; profile variants still need visual review."
+    },
+    {
+      "army_subjects": [
+        "der-morlock-gruppe"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Nomads/Nomads - Die Morlock Gruppe (transparent) - [N3] [Vyo].svg",
+        "Nomads/Nomads - Die Morlock Gruppe (white) - [N3] [Vyo].svg"
+      ],
+      "evidence": "Identity/rename lead preserved in the supplied ChatGPT continuation excerpt and research/vyo-full-inventory-v1.md; profile variants still need visual review."
+    },
+    {
+      "army_subjects": [
+        "hatail-aelis-keesan",
+        "tohaa-team-ops"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Tohaa/Tohaa - Hatail Spec-Ops - [N3] [Vyo].svg"
+      ],
+      "evidence": "Historical inventory explicitly flags this as an identity check; do not assume the character and generic Spec-Ops emblem are equivalent."
+    },
+    {
+      "army_subjects": [
+        "scarface-and-cordelia"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Mercs/Mercs - Scarface Turner - [N3] [Vyo].svg",
+        "Mercs/Mercs - Scarface Turner - [NA2] [Vyo].svg"
+      ],
+      "evidence": "Inventory composition lead only. Current Army retains three profile logos; Scarface and Cordelia must be assessed separately."
+    },
+    {
+      "army_subjects": [
+        "scarface-and-cordelia"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Mercs/Mercs - Cordelia Turner - [N3] [Vyo].svg",
+        "Mercs/Mercs - Cordelia Turner - [NA2] [Vyo].svg"
+      ],
+      "evidence": "Inventory composition lead only. Current Army retains three profile logos; Scarface and Cordelia must be assessed separately."
+    },
+    {
+      "army_subjects": [
+        "gu-feng-spec-ops",
+        "gu-feng-xi-zhuang",
+        "yu-jing-team-ops"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Yu Jing/Yu Jing - Gui Feng Spec-Ops - [N3] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "indigo-team-ops"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "PanOceania/PanOceania - Indigo Spec-Ops v2 - [N3] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "ariadnateam-ops"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Ariadna/Ariadna - Intel Spec-Ops - [N3] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "aleph-team-ops"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Aleph/Aleph - Chandra Spec-Ops - [N3] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "k-nren-counter-insurgency-group"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Yu Jing/Yu Jing - Kanren Counter-Insurgency Group - [A6] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "miyamoto-mushashi"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Mercs/Mercs - Miyamoto Musashi - [N3] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "kumotail-bioingeneers"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Tohaa/Tohaa - Kumotail Bioengineers - [N3] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "zhayedan"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Haqqislam/Haqqislam - Zhayden Intervention Troops - [N3] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "zuy-ng-invincibles"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Yu Jing/Yu Jing - Zuyong Invincibles Teraacotta Soldiers - [A6] [Vyo].svg",
+        "Yu Jing/Yu Jing - Zuyong Invincibles Teraacotta Soldiers - [N3] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "yan-hu-invicibles"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Yu Jing/Yu Jing - Yan Huo Invincibles, Fire Support Heavy Regiment - [A6] [Vyo].svg",
+        "Yu Jing/Yu Jing - Yan Huo Invincibles, Fire Support Heavy Regiment - [N3] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "lei-g-ng-invincibles-lord-of-thunder"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Yu Jing/Yu Jing - Lei Gong Invincibles Lord of Thunder - [N4] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "med-tech-obsidon-medchanoid"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Combined Army/Combined Army - Med-Tech Obsidon Mechanoids - [N3] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "the-anathematics"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Combined Army/Combined Army - Anathematic - [A6] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "proxy"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Aleph/Aleph - Post-Humans - [N3] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "metros"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Ariadna/Ariadna - Troupes Metropolitaines - [N3] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "anaconda-merc-tag-squad",
+        "anaconda-mercenary-tag-squad"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Mercs/Mercs - Anaconda Mercenary TAG Squadron - [N3] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "daiy-kai-dengekitai"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Mercs/Mercs - Daiyokai Dengekitai - [JSA] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "tank-zensenbutai"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Mercs/Mercs - Tanko Zensenbutai - [JSA] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "cube-jaeger"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Mercs/Mercs - Cube Jager, Mercenary Recoverers - [A6] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "bakunin-ueberfallkommando"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Nomads/Nomads - Bakunin Uberfallkommando - [N3] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "zoe-and-p-well"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Nomads/Nomads - Zoe - [N3] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "zoe-and-p-well"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Nomads/Nomads - Pi-Well - [N3] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "valkyrie-elite-bodyguard"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Aristeia/Aristeia - Valkyrie (Logo) [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_subjects": [
+        "s-a-s"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Ariadna/Ariadna - SAS - [N3] [Vyo].svg"
+      ],
+      "evidence": "Spelling/descriptor identity lead from local Vyo inventory and the 2026-09-29 Army snapshot. Visual/profile review pending."
+    },
+    {
+      "army_paths": [
+        "factions/aleph.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Aleph/Aleph - Main Logo - [N3] [Vyo].svg"
+      ],
+      "evidence": "Archive faction folder/Main Logo routing; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/ariadna.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Ariadna/Ariadna - Main Logo - [N3] [Vyo].svg"
+      ],
+      "evidence": "Archive faction folder/Main Logo routing; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/combined-army.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Combined Army/Combined Army - Main Logo - [N3] [Vyo].svg"
+      ],
+      "evidence": "Archive faction folder/Main Logo routing; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/haqqislam.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Haqqislam/Haqqislam - Main Logo - [N3] [Vyo].svg"
+      ],
+      "evidence": "Archive faction folder/Main Logo routing; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/nomads.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Nomads/Nomads - Main Logo v2 - [N3] [Vyo].svg"
+      ],
+      "evidence": "Archive faction folder/Main Logo routing; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/panoceania.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "PanOceania/PanOceania - Main Logo - [N3] [Vyo].svg"
+      ],
+      "evidence": "Archive faction folder/Main Logo routing; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/tohaa.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Tohaa/Tohaa - Main Logo v2 - [N3] [Vyo].svg"
+      ],
+      "evidence": "Archive faction folder/Main Logo routing; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/yu-jing.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Yu Jing/Yu Jing - Main Logo - [N3] [Vyo].svg"
+      ],
+      "evidence": "Archive faction folder/Main Logo routing; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/morat.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Combined Army/Combined Army - Sectorial - Morat Aggression Force - [N3] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/onyx.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Combined Army/Combined Army - Sectorial - Onyx Contact Force - [HS] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/shasvastii.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Combined Army/Combined Army - Sectorial - Shasvastii Expeditionary Force - [N3] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/military-orders.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "PanOceania/PanOceania - Sectorial - Military Orders - [N3] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/neoterran-capitaline-army.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "PanOceania/PanOceania - Sectorial - Neoterran Capitaline Army v2 - [N3] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/shock-army-of-acontecimento.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "PanOceania/PanOceania - Sectorial - Shock Army of Acontecimento - [N3] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/varuna-immediate-reaction-division.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "PanOceania/PanOceania - Sectorial - Varuna Immediate Reaction Division - [3rdOff] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/imperial-service.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Yu Jing/Yu Jing - Sectorial - Imperial Service - [N3] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/invincible-army.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Yu Jing/Yu Jing - Sectorial - Invincible Army [3rdOff] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/jsa.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Yu Jing/Yu Jing - Sectorial - Japanese Sectorial Army - [N3] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/hassassin-bahram.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Haqqislam/Haqqislam - Sectorial - Hassassin Bahram - [N3] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/qapu-khalqi.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Haqqislam/Haqqislam - Sectorial - Qapu Khalqi - [N3] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/ramah-taskforce.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Haqqislam/Haqqislam - Sectorial - Ramah Taskforce - [DF] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/bakunin.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Nomads/Nomads - Sectorial - Jurisdictional Command of Bakunin - [N3] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/corregidor.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Nomads/Nomads - Sectorial - Jurisdictional Command of Corregidor - [A6] [Vyo].svg",
+        "Nomads/Nomads - Sectorial - Jurisdictional Command of Corregidor - [N3] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/tunguska.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Nomads/Nomads - Sectorial - Jurisdictional Command of Tunguska - [A6] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/steel-phalanx.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Aleph/Aleph - Sectorial - Assault Subsection - [N3] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/operations.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Aleph/Aleph - Sectorial - Operations Subsection of the SSS - [NA2] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/caledonian-highlander-army.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Ariadna/Ariadna - Sectorial - Caledonian Highlander Army v2 - [N3] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/force-de-reponse-rapide-merovingienne.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Ariadna/Ariadna - Sectorial - Force de RR Merovingienne v3 - [N3] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/tartary.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Ariadna/Ariadna - Sectorial - Tartary Army Corps - [NA2] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/usariadna.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Ariadna/Ariadna - Sectorial - USAriadna - [N3] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/dahshat.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Mercs/Mercs - Sectorial - Dashhat Company - [DF] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/foreign-company.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Mercs/Mercs - Sectorial - Foreign Company - [DF] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/spiral-corps.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Mercs/Mercs - Sectorial - Spiral Corps - [DF] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/white-company.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Mercs/Mercs - Sectorial - White Company - [N4] [Vyo].svg"
+      ],
+      "evidence": "Explicit sectorial-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/druze.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Mercs/Mercs - Druze Bayram Security - [NA2] [Vyo].svg"
+      ],
+      "evidence": "Explicit faction-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/ikari.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Mercs/Mercs - Ikari Company - [NA2] [Vyo].svg"
+      ],
+      "evidence": "Explicit faction-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/starco-free-company-of-the-star.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Mercs/Mercs - StarCo - [NA2] [Vyo].svg"
+      ],
+      "evidence": "Explicit faction-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "factions/non-aligned-armies.svg"
+      ],
+      "status": "alias-candidate",
+      "vyo_paths": [
+        "Mercs/Mercs - Non-Aligned Armies - [NA2] [Vyo].svg"
+      ],
+      "evidence": "Explicit faction-name routing from archive inventory; current design/variant review pending."
+    },
+    {
+      "army_paths": [
+        "units/armand-le-muet-freelance-killer-1-1.svg"
+      ],
+      "status": "reviewed-match",
+      "vyo_paths": [
+        "Mercs/Mercs - Armand Le Muet, Freelance Killer - [NA2] [Vyo].svg"
+      ],
+      "action": "minor-cleanup",
+      "reasons": [
+        "align-palette-to-first-party",
+        "resolve-distressed-versus-clean-upper-lettering"
+      ],
+      "evidence": "2026-10-01 visual identity review of Inkscape drawing-area renders at 256 px. The 2018 NA2 version is entirely vector and shares the current skull/ring/composition. The 2015 N3 file has an external PNG, glow/noise, and remains unsuitable. Prefer the newer vector base; a whole-emblem reconstruction is not justified by the older defect.",
+      "review_source_assets": [
+        {
+          "path": "units/armand-le-muet-freelance-killer-1-1.svg",
+          "sha256": "988749537e81ddbfb97d300a5f4a7c9e471914178c28a1bc25ec29cf9eeed223"
+        }
+      ],
+      "review_contact_sheet": "output/vyo-review-v1/armand-renames.png",
+      "publication_approved": false,
+      "review_vyo_assets": [
+        {
+          "path": "Mercs/Mercs - Armand Le Muet, Freelance Killer - [NA2] [Vyo].svg",
+          "sha256": "47df9de1e5d9bef1fe750388a179e99f2b70c5ab49407ef747dc768e514cd2f5"
+        }
+      ]
+    },
+    {
+      "army_paths": [
+        "units/jeanne-d-arc-1-1.svg"
+      ],
+      "status": "reviewed-match",
+      "vyo_paths": [
+        "PanOceania/PanOceania - Joan of Arc - [N3] [Vyo].svg"
+      ],
+      "action": "minor-cleanup",
+      "reasons": [
+        "align-palette-to-first-party",
+        "restore-current-outer-ring"
+      ],
+      "evidence": "2026-10-01 visual identity review of Inkscape drawing-area renders at 256 px. Both Army mobility/standard references map to this canonical emblem. The central Joan/Jeanne device matches; current Army has an additional outer dark/ring treatment.",
+      "review_source_assets": [
+        {
+          "path": "units/jeanne-d-arc-1-1.svg",
+          "sha256": "385de4b080c64fe9a69714bc19908b4bc6ae36e214a8c9d1a3b22e2cefd48d03"
+        }
+      ],
+      "review_contact_sheet": "output/vyo-review-v1/armand-renames.png",
+      "publication_approved": false,
+      "review_vyo_assets": [
+        {
+          "path": "PanOceania/PanOceania - Joan of Arc - [N3] [Vyo].svg",
+          "sha256": "4ef9872168d12bc95d8009f48d89137ec4d176ca04b571458d6e86b98805a5f1"
+        }
+      ]
+    },
+    {
+      "army_paths": [
+        "units/al-fasid-regiment-1-1.svg"
+      ],
+      "status": "reviewed-match",
+      "vyo_paths": [
+        "Haqqislam/Haqqislam - Ahl Fassed Regiment v2 - [Alt] [Vyo].svg",
+        "Haqqislam/Haqqislam - Ahl Fassed Regiment v2 - [N3] [Vyo].svg"
+      ],
+      "action": "minor-cleanup",
+      "reasons": [
+        "select-N3-variant",
+        "align-palette-to-first-party"
+      ],
+      "evidence": "2026-10-01 visual identity review of Inkscape drawing-area renders at 256 px. The v2 N3 geometry matches the current star/spear badge. Alt versions add a yellow perimeter and the earlier N3 palette differs. Do not choose Alt merely because it is a vector.",
+      "review_source_assets": [
+        {
+          "path": "units/al-fasid-regiment-1-1.svg",
+          "sha256": "97a898829d3e2aab5d92c7cf54317cc5abb80ffd8d1b69081c4845b9b41677df"
+        }
+      ],
+      "review_contact_sheet": "output/vyo-review-v1/armand-renames.png",
+      "publication_approved": false,
+      "review_vyo_assets": [
+        {
+          "path": "Haqqislam/Haqqislam - Ahl Fassed Regiment v2 - [Alt] [Vyo].svg",
+          "sha256": "61dd3b1c3e8e270d8bf94933bb4c48d42707c99e2987146519031756bf0aec3b"
+        },
+        {
+          "path": "Haqqislam/Haqqislam - Ahl Fassed Regiment v2 - [N3] [Vyo].svg",
+          "sha256": "5e9c8daffefc76d85b0450e67ef026bfa0e6c76005e923786834d90cce24cfa4"
+        }
+      ]
+    },
+    {
+      "army_paths": [
+        "units/der-morlock-gruppe-1-1.svg"
+      ],
+      "status": "reviewed-match",
+      "vyo_paths": [
+        "Nomads/Nomads - Die Morlock Gruppe (white) - [N3] [Vyo].svg"
+      ],
+      "action": "minor-cleanup",
+      "reasons": [
+        "restore-current-outer-outline",
+        "align-palette-to-first-party"
+      ],
+      "evidence": "2026-10-01 visual identity review of Inkscape drawing-area renders at 256 px. Shared text, diagonal division, and red device. The white variant supplies the intended opaque background; current Army also has a thin outline.",
+      "review_source_assets": [
+        {
+          "path": "units/der-morlock-gruppe-1-1.svg",
+          "sha256": "d1214ba40470307bac858a5455d110b698fd12c7c2f910a4d2cb0b5aaeaa4bf4"
+        }
+      ],
+      "review_contact_sheet": "output/vyo-review-v1/armand-renames.png",
+      "publication_approved": false,
+      "review_vyo_assets": [
+        {
+          "path": "Nomads/Nomads - Die Morlock Gruppe (white) - [N3] [Vyo].svg",
+          "sha256": "82d9654650219564481acf3981242ab06fdc9f2aa6eef1ca0dc5b047df13dd79"
+        }
+      ]
+    },
+    {
+      "army_paths": [
+        "units/shasvastii-noctifers-1-1.svg"
+      ],
+      "status": "reviewed-design-mismatch",
+      "vyo_paths": [
+        "Combined Army/Combined Army - Noctifier - [A6] [Vyo].svg"
+      ],
+      "action": "reconstruct",
+      "reasons": [
+        "current-design-differs-from-archive"
+      ],
+      "evidence": "2026-10-01 visual identity review of Inkscape drawing-area renders at 256 px. A spelling/identity relationship exists, but the current two-part angular device is different from the older rounded stacked Vyo glyph. Review of all 65 Combined Army archive drawings found no matching current device. This is a current-design gap, not a spelling-only substitution.",
+      "review_source_assets": [
+        {
+          "path": "units/shasvastii-noctifers-1-1.svg",
+          "sha256": "5cd19df66634a49d52db6fb05748b2b824745642b73f2127a0fb7387e50260fe"
+        }
+      ],
+      "review_contact_sheet": "output/vyo-review-v1/armand-renames.png",
+      "publication_approved": false,
+      "review_vyo_assets": [
+        {
+          "path": "Combined Army/Combined Army - Noctifier - [A6] [Vyo].svg",
+          "sha256": "b2391f4aa1f882ec384c922e05d123f1fbc092ea51d820929c20fecfd1f7485b"
+        }
+      ],
+      "fallback": {
+        "source": "current-army",
+        "action": "reuse",
+        "sha256": "5cd19df66634a49d52db6fb05748b2b824745642b73f2127a0fb7387e50260fe",
+        "evidence": "The repository scanner reports no suspicious structures, hard classifications, advisories, or parse errors for the current 14,310-byte Army source. Reuse/review that current vector; the old Vyo mismatch alone does not justify a new redraw."
+      }
+    },
+    {
+      "army_paths": [
+        "units/treitak-anyat-1-1.svg"
+      ],
+      "status": "reviewed-match",
+      "vyo_paths": [
+        "Combined Army/Combined Army - Treitak Spec-Ops - [N3] [Vyo].svg"
+      ],
+      "action": "minor-cleanup",
+      "reasons": [
+        "align-palette-to-first-party",
+        "review-local-boundary-shapes"
+      ],
+      "evidence": "2026-10-01 visual identity review of Inkscape drawing-area renders at 256 px. The shared Anyat/Treitak construction is present. This establishes a source base, not acceptance of the Vyo curves or replacement of the prior Anyat v10/v10.1 research decision.",
+      "review_source_assets": [
+        {
+          "path": "units/treitak-anyat-1-1.svg",
+          "sha256": "4efcff81999efb63c579465d2b993245cd5de5aefd36e1a302772b2314c32401"
+        }
+      ],
+      "review_contact_sheet": "output/vyo-review-v1/armand-renames.png",
+      "publication_approved": false,
+      "review_vyo_assets": [
+        {
+          "path": "Combined Army/Combined Army - Treitak Spec-Ops - [N3] [Vyo].svg",
+          "sha256": "6158b2a48963c7782fae46cf4b318e34874ea47d7a74c49bf86ad6e98d8b68e2"
+        }
+      ]
+    },
+    {
+      "army_paths": [
+        "units/fusilier-indigo-bipandra-1-1.svg"
+      ],
+      "status": "reviewed-match",
+      "vyo_paths": [
+        "PanOceania/PanOceania - Indigo Spec-Ops v2 - [N3] [Vyo].svg"
+      ],
+      "action": "minor-cleanup",
+      "reasons": [
+        "Bipandra-specific-lettering",
+        "Bipandra-green-accent-palette"
+      ],
+      "evidence": "2026-10-01 visual identity review of Inkscape drawing-area renders at 256 px. The central Indigo device and upper text match; Bipandra changes the cyan accents to green and replaces the lower motto with FUSILIER BIPANDRA.",
+      "review_source_assets": [
+        {
+          "path": "units/fusilier-indigo-bipandra-1-1.svg",
+          "sha256": "e5e658be34a9ce9f6edc589d2f28d939a66d7fcbbcf6a45852ce446b1ef6a158"
+        }
+      ],
+      "review_contact_sheet": "output/vyo-review-v1/historical-gaps.png",
+      "publication_approved": false,
+      "review_vyo_assets": [
+        {
+          "path": "PanOceania/PanOceania - Indigo Spec-Ops v2 - [N3] [Vyo].svg",
+          "sha256": "58a20256ce29d8d36de275bd9ee18c4f2850cf9e8f46be606a2ec5909a3eac35"
+        }
+      ]
+    },
+    {
+      "army_paths": [
+        "units/indigo-brother-konstantinos-1-1.svg"
+      ],
+      "status": "reviewed-match",
+      "vyo_paths": [
+        "PanOceania/PanOceania - Indigo Spec-Ops v2 - [N3] [Vyo].svg"
+      ],
+      "action": "reuse",
+      "reasons": [
+        "publication-palette-and-geometry-review-pending"
+      ],
+      "evidence": "2026-10-01 visual identity review of Inkscape drawing-area renders at 256 px. Current Konstantinos uses the generic Indigo Spec-Ops emblem including Ad Utrumque, not a distinct character badge.",
+      "review_source_assets": [
+        {
+          "path": "units/indigo-brother-konstantinos-1-1.svg",
+          "sha256": "769b575d6a40f828356c1b49c7356b9f040bce81103bf1353ea5187bb36fe4cb"
+        }
+      ],
+      "review_contact_sheet": "output/vyo-review-v1/historical-gaps.png",
+      "publication_approved": false,
+      "review_vyo_assets": [
+        {
+          "path": "PanOceania/PanOceania - Indigo Spec-Ops v2 - [N3] [Vyo].svg",
+          "sha256": "58a20256ce29d8d36de275bd9ee18c4f2850cf9e8f46be606a2ec5909a3eac35"
+        }
+      ]
+    },
+    {
+      "army_paths": [
+        "units/volunteer-intel-isobel-mcgregor-1-1.svg"
+      ],
+      "status": "reviewed-match",
+      "vyo_paths": [
+        "Ariadna/Ariadna - Intel Spec-Ops - [N3] [Vyo].svg"
+      ],
+      "action": "minor-cleanup",
+      "reasons": [
+        "current-Cyrillic-upper-lettering",
+        "align-palette-to-first-party"
+      ],
+      "evidence": "2026-10-01 visual identity review of Inkscape drawing-area renders at 256 px. Current Isobel and Rosie share this canonical logo. The swords/arrows and lower ARIADNA are shared, but the upper Cyrillic text differs. A name gap is not a missing geometry base.",
+      "review_source_assets": [
+        {
+          "path": "units/volunteer-intel-isobel-mcgregor-1-1.svg",
+          "sha256": "d80b542f9cf28a00300f3733fb7a56fa79058813eff0b65c1590c59b89c0006d"
+        }
+      ],
+      "review_contact_sheet": "output/vyo-review-v1/historical-gaps.png",
+      "publication_approved": false,
+      "review_vyo_assets": [
+        {
+          "path": "Ariadna/Ariadna - Intel Spec-Ops - [N3] [Vyo].svg",
+          "sha256": "a1ccef840b5d408e02d7bed14aa265a01b5da17087cb0cd3043e971944c5a6cc"
+        }
+      ]
+    },
+    {
+      "army_paths": [
+        "units/zamira-nazarova-1-1.svg"
+      ],
+      "status": "reviewed-match",
+      "vyo_paths": [
+        "Haqqislam/Haqqislam - Kum Motorized Troops - [N3] [Vyo].svg"
+      ],
+      "action": "reuse",
+      "reasons": [
+        "publication-palette-and-geometry-review-pending"
+      ],
+      "evidence": "2026-10-01 visual identity review of Inkscape drawing-area renders at 256 px. Army Kum, Zamira, and Zuleyka references share one canonical emblem. The archive has that Kum emblem; there is no separate missing Zamira geometry.",
+      "review_source_assets": [
+        {
+          "path": "units/zamira-nazarova-1-1.svg",
+          "sha256": "27c3eed1822595a5cf0e5b97e310fedd05390fa1b471fe0958db76269d0ef8d4"
+        }
+      ],
+      "review_contact_sheet": "output/vyo-review-v1/historical-gaps.png",
+      "publication_approved": false,
+      "review_vyo_assets": [
+        {
+          "path": "Haqqislam/Haqqislam - Kum Motorized Troops - [N3] [Vyo].svg",
+          "sha256": "7bc8bb68610426c7c9c7948fdf59b925c95a1ca18a18bb2ea399a1f3c8a48341"
+        }
+      ]
+    },
+    {
+      "army_paths": [
+        "units/cassandra-kusanagi-1-1.svg"
+      ],
+      "status": "reviewed-match",
+      "vyo_paths": [
+        "Nomads/Nomads - Reverend Moiras - [N3] [Vyo].svg"
+      ],
+      "action": "reuse",
+      "reasons": [
+        "publication-palette-and-geometry-review-pending"
+      ],
+      "evidence": "2026-10-01 visual identity review of Inkscape drawing-area renders at 256 px. Current Kusanagi uses the Reverend Moiras Bakunin badge already in the archive.",
+      "review_source_assets": [
+        {
+          "path": "units/cassandra-kusanagi-1-1.svg",
+          "sha256": "2c2e37e90dcf1834efef8f653b3436e0348dd7a5cf2e0e37c00018dc55e9764a"
+        }
+      ],
+      "review_contact_sheet": "output/vyo-review-v1/historical-gaps.png",
+      "publication_approved": false,
+      "review_vyo_assets": [
+        {
+          "path": "Nomads/Nomads - Reverend Moiras - [N3] [Vyo].svg",
+          "sha256": "8519824cf296cad35f4ceefee888492c32c42ff29d0a7106a19fd94f5beb4c34"
+        }
+      ]
+    },
+    {
+      "army_paths": [
+        "units/neema-saatar-1-1.svg"
+      ],
+      "status": "reviewed-match",
+      "vyo_paths": [
+        "Tohaa/Tohaa - Ectros Regiment - [N3] [Vyo].svg"
+      ],
+      "action": "reuse",
+      "reasons": [
+        "publication-palette-and-geometry-review-pending"
+      ],
+      "evidence": "2026-10-01 visual identity review of Inkscape drawing-area renders at 256 px. Neema and Ectros references share the canonical source group; the current emblem is the archive Ectros device.",
+      "review_source_assets": [
+        {
+          "path": "units/neema-saatar-1-1.svg",
+          "sha256": "afadb033e37e484692f1c8de295f9ec30b7d9c5990d527dd0c613e77be3bc7ca"
+        }
+      ],
+      "review_contact_sheet": "output/vyo-review-v1/historical-gaps.png",
+      "publication_approved": false,
+      "review_vyo_assets": [
+        {
+          "path": "Tohaa/Tohaa - Ectros Regiment - [N3] [Vyo].svg",
+          "sha256": "8dd6b73abbee1c910ab8137e362235e2037c97bedff6ce0188ace48bf062badf"
+        }
+      ]
+    },
+    {
+      "army_paths": [
+        "units/hatail-aelis-keesan-1-1.svg"
+      ],
+      "status": "reviewed-match",
+      "vyo_paths": [
+        "Tohaa/Tohaa - Hatail Spec-Ops - [N3] [Vyo].svg"
+      ],
+      "action": "minor-cleanup",
+      "reasons": [
+        "current-lower-central-region-is-dark",
+        "align-palette-to-first-party"
+      ],
+      "evidence": "2026-10-01 visual identity review of Inkscape drawing-area renders at 256 px. The Hatail construction is related, but Vyo fills the lower central teardrop with orange and the current Aelis emblem leaves it dark. Do not substitute the archive file unchanged.",
+      "review_source_assets": [
+        {
+          "path": "units/hatail-aelis-keesan-1-1.svg",
+          "sha256": "3b5c380446498d9a034d883c3eab1c67435382b106cc963bb7a7a3358c3d7d4e"
+        }
+      ],
+      "review_contact_sheet": "output/vyo-review-v1/historical-gaps.png",
+      "publication_approved": false,
+      "review_vyo_assets": [
+        {
+          "path": "Tohaa/Tohaa - Hatail Spec-Ops - [N3] [Vyo].svg",
+          "sha256": "bbefa8b8f9717b99e60f0791bc7233236b8fe65283bba27169b5bc4b54095436"
+        }
+      ]
+    },
+    {
+      "army_paths": [
+        "units/scarface-and-cordelia-1-1.svg"
+      ],
+      "status": "reviewed-match",
+      "vyo_paths": [
+        "Mercs/Mercs - Scarface Turner - [N3] [Vyo].svg",
+        "Mercs/Mercs - Scarface Turner - [NA2] [Vyo].svg"
+      ],
+      "action": "minor-cleanup",
+      "reasons": [
+        "select-N3-variant",
+        "remove-star-inner-outline",
+        "align-palette-to-first-party"
+      ],
+      "evidence": "2026-10-01 visual identity review of Inkscape drawing-area renders at 256 px. Army profile 1 is the older Scarface star/skull badge. N3 matches; NA2 is a different ring/text palette treatment.",
+      "review_source_assets": [
+        {
+          "path": "units/scarface-and-cordelia-1-1.svg",
+          "sha256": "851e374575bad5369ce2ae23ae97489c098dadb4f7202aae7eaf1b291e1bb772"
+        }
+      ],
+      "review_contact_sheet": "output/vyo-review-v1/scarface.png",
+      "publication_approved": false,
+      "review_vyo_assets": [
+        {
+          "path": "Mercs/Mercs - Scarface Turner - [N3] [Vyo].svg",
+          "sha256": "14b774e8c7bafb6078bc4f796167f8e9507da65061879f3c88d0ecc90d025f90"
+        },
+        {
+          "path": "Mercs/Mercs - Scarface Turner - [NA2] [Vyo].svg",
+          "sha256": "fbe58dde9bbaa4ca2d833f9af060396001760bcf099724cf98cf9d29ba5d2fa5"
+        }
+      ]
+    },
+    {
+      "army_paths": [
+        "units/scarface-and-cordelia-3-1.svg"
+      ],
+      "status": "reviewed-match",
+      "vyo_paths": [
+        "Mercs/Mercs - Cordelia Turner - [N3] [Vyo].svg",
+        "Mercs/Mercs - Cordelia Turner - [NA2] [Vyo].svg"
+      ],
+      "action": "minor-cleanup",
+      "reasons": [
+        "select-N3-variant",
+        "align-palette-to-first-party"
+      ],
+      "evidence": "2026-10-01 visual identity review of Inkscape drawing-area renders at 256 px. Army profile 3 is the separate Cordelia skull/crossbones badge, supplied by Vyo N3. Profile 2 is the distinct Turtlemen TAG badge and remains unresolved.",
+      "review_source_assets": [
+        {
+          "path": "units/scarface-and-cordelia-3-1.svg",
+          "sha256": "8a90a2cfa6dbcb76cdfa8eaa841c2f066fa3956620d5f3d1fd70cd7e643c045c"
+        }
+      ],
+      "review_contact_sheet": "output/vyo-review-v1/scarface.png",
+      "publication_approved": false,
+      "review_vyo_assets": [
+        {
+          "path": "Mercs/Mercs - Cordelia Turner - [N3] [Vyo].svg",
+          "sha256": "4b739ae53a01095b076f096d76afc18f282ebfdd7ecfffc3d605eb815768e8fc"
+        },
+        {
+          "path": "Mercs/Mercs - Cordelia Turner - [NA2] [Vyo].svg",
+          "sha256": "c31f42aabdc4ad4aebcd0036e3bd469c4efc5ae3d2dd8d4c2a6f762bf751a03a"
+        }
+      ]
+    }
+  ]
+}

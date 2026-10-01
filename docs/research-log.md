@@ -3,6 +3,21 @@
 This file records recovered research history that predates the Git repository. It is intentionally a
 summary of known evidence, not a synthetic commit history.
 
+## Vyo-first continuation — 2026-10-01
+
+Implemented the identity, action, viewport, and missing-list workflow proposed in the supplied ChatGPT
+continuation context. The 808-emblem Army publication manifest now has a reproducible identity ledger
+with preserved profile references and 15 reviewed identities. Six historical archive-name gaps resolve
+to shared or adaptable emblem bases; Armand's newer NA2 vector avoids the older N3 image dependency.
+Noctifier/Noctifers has a current-design mismatch, and Scarface/Cordelia retains three separate profiles.
+
+The viewport batch derived bounds independently for each source rather than applying one Morat
+rectangle. It produced 544 metadata-only candidates and held back 20 text-dependent files plus the
+older Armand image reference. All 544 original/candidate drawing-area renders were pixel-identical at
+128 px. The ledger still has 349 unresolved identities and no confirmed-absence decisions; neither
+these candidates nor the reviewed bases have been approved for publication. See
+[`vyo-workflow.md`](vyo-workflow.md) and the compact Vyo workflow report for source hashes and details.
+
 ## Corpus baseline — scanner v8.6
 
 Snapshot: `SYMBOLS 20260929-114338`.

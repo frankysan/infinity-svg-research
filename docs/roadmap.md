@@ -2,6 +2,13 @@
 
 ## Near term
 
+Prioritize the [Vyo-first workflow](vyo-workflow.md): finish identity and variant review, use existing
+vector bases where the current design matches, and direct reconstruction toward reviewed current-design
+defects or confirmed absences. Keep the remaining reconstruction studies below as research work,
+without assuming every pathological Army export requires new geometry. The first ledger has 349
+unresolved identities; those are not a confirmed missing list. Noctifers is a reviewed design mismatch;
+Armand has a usable newer vector base.
+
 1. Re-run all six unique raw gradient-mask families with the concentric-circle model and record both
    normal full-image metrics and an edge-excluded representative-fidelity metric.
 2. Review the concentric candidates visually at native/vector scale and normal UI sizes; do not tune the

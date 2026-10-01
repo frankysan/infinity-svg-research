@@ -15,3 +15,8 @@ Current cases:
 - `raster-heavy/` — Druze/Taowu embedded raster investigation.
 
 Machine-readable compact summaries are under `research/reports/`.
+
+The Vyo corpus inventory is in `vyo-full-inventory-v1.json` and `.md`. Source identity rules and
+profile-scoped visual decisions are in `vyo-identity-decisions.json`. See
+[`../docs/vyo-workflow.md`](../docs/vyo-workflow.md) for the reproducible map, viewport, and validation
+workflow; full generated ledgers, SVG candidates, and contact sheets stay under ignored `output/`.

@@ -37,6 +37,9 @@ infinity-svg-human-sphere-match = "infinity_svg_research.human_sphere_match:main
 infinity-svg-human-sphere-review = "infinity_svg_research.human_sphere_review:main"
 infinity-svg-historical-army-probe = "infinity_svg_research.historical_army_probe:main"
 infinity-svg-historical-probe-analyze = "infinity_svg_research.historical_probe_analyze:main"
+infinity-svg-vyo-identity = "infinity_svg_research.vyo_identity:main"
+infinity-svg-viewport-normalize = "infinity_svg_research.viewport_normalize:main"
+infinity-svg-viewport-validate = "infinity_svg_research.viewport_validate:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
