@@ -1,0 +1,173 @@
+{
+  "cases": [
+    {
+      "byte_reduction_fraction": 0.9864914093837485,
+      "candidate_advisories": [],
+      "candidate_classification": null,
+      "candidate_size_bytes": 6823,
+      "gradient_count": 3,
+      "largest_render": {
+        "alpha_rmse": 0.0,
+        "changed_pixel_fraction": 0.29073125,
+        "max_channel_diff": 242,
+        "rgba_rmse": 5.2584756361159455,
+        "size": 1600,
+        "white_background_rgb_rmse": 6.07196464807726
+      },
+      "match_mode": "relationship",
+      "palette_colors": [
+        "#ffb669",
+        "#ff6b00"
+      ],
+      "paths": [
+        "units/blue-wolf-mongol-cavalry-2-1.svg",
+        "units/guijia-squadrons-2-1.svg",
+        "units/longwang-imperial-tag-police-2-1.svg"
+      ],
+      "sha256": "a847157884ddf725bd7ff445cfcd2ab91093ea29e99dbc02d5c4b84eb4d3346f",
+      "source_size_bytes": 505086,
+      "status": "ok"
+    },
+    {
+      "byte_reduction_fraction": 0.9858511766715208,
+      "candidate_advisories": [],
+      "candidate_classification": null,
+      "candidate_size_bytes": 7083,
+      "gradient_count": 3,
+      "largest_render": {
+        "alpha_rmse": 0.0,
+        "changed_pixel_fraction": 0.29347421875,
+        "max_channel_diff": 242,
+        "rgba_rmse": 7.126106897298044,
+        "size": 1600,
+        "white_background_rgb_rmse": 8.228519470858147
+      },
+      "match_mode": "relationship",
+      "palette_colors": [
+        "#ff876a",
+        "#ff1a00"
+      ],
+      "paths": [
+        "units/gecko-squad-2-1.svg"
+      ],
+      "sha256": "e351a957390d62a9483b0c94307357767e735aabd6c6aaa4ecabf714c165ea95",
+      "source_size_bytes": 500607,
+      "status": "ok"
+    },
+    {
+      "byte_reduction_fraction": 0.9888250031542329,
+      "candidate_advisories": [],
+      "candidate_classification": null,
+      "candidate_size_bytes": 5580,
+      "gradient_count": 3,
+      "largest_render": {
+        "alpha_rmse": 0.0,
+        "changed_pixel_fraction": 0.295010546875,
+        "max_channel_diff": 246,
+        "rgba_rmse": 7.691797039653266,
+        "size": 1600,
+        "white_background_rgb_rmse": 8.88172218279156
+      },
+      "match_mode": "relationship",
+      "palette_colors": [
+        "#103e65",
+        "#000102"
+      ],
+      "paths": [
+        "units/juggernauts-armored-assault-cavalry-2-1.svg"
+      ],
+      "sha256": "8cf141e684931e9d6f19dc8c3f89a7e407d159e0192ff96d55ccaffb713da559",
+      "source_size_bytes": 499329,
+      "status": "ok"
+    },
+    {
+      "byte_reduction_fraction": 0.983439449992855,
+      "candidate_advisories": [],
+      "candidate_classification": null,
+      "candidate_size_bytes": 8344,
+      "gradient_count": 3,
+      "largest_render": {
+        "alpha_rmse": 0.0,
+        "changed_pixel_fraction": 0.31985078125,
+        "max_channel_diff": 226,
+        "rgba_rmse": 4.9642307474635485,
+        "size": 1600,
+        "white_background_rgb_rmse": 5.732199916734993
+      },
+      "match_mode": "relationship",
+      "palette_colors": [
+        "#faff5f",
+        "#a29a13"
+      ],
+      "paths": [
+        "units/maghariba-guard-2-1.svg",
+        "units/shakush-light-armored-unit-2-1.svg"
+      ],
+      "sha256": "dcfd55413cc79f9dc857677140e5184a0c0adbcee164d87d7dcaeb9283ae42d6",
+      "source_size_bytes": 503848,
+      "status": "ok"
+    },
+    {
+      "byte_reduction_fraction": 0.9878385605836852,
+      "candidate_advisories": [],
+      "candidate_classification": null,
+      "candidate_size_bytes": 6094,
+      "gradient_count": 3,
+      "largest_render": {
+        "alpha_rmse": 0.0,
+        "changed_pixel_fraction": 0.2863421875,
+        "max_channel_diff": 243,
+        "rgba_rmse": 6.267040574193992,
+        "size": 1600,
+        "white_background_rgb_rmse": 7.236555125066415
+      },
+      "match_mode": "relationship",
+      "palette_colors": [
+        "#ff2e1c",
+        "#ff0009"
+      ],
+      "paths": [
+        "units/mechazoid-sokorentai-2-1.svg",
+        "units/o-yoroi-kidobutai-2-1.svg"
+      ],
+      "sha256": "aea85c0b0088cfdbd414b914423edabb7df98e62c9f09e0c8ab48f9c5be0fad9",
+      "source_size_bytes": 501092,
+      "status": "ok"
+    },
+    {
+      "byte_reduction_fraction": 0.9753431807712003,
+      "candidate_advisories": [],
+      "candidate_classification": null,
+      "candidate_size_bytes": 12471,
+      "gradient_count": 3,
+      "largest_render": {
+        "alpha_rmse": 0.0,
+        "changed_pixel_fraction": 0.30938671875,
+        "max_channel_diff": 193,
+        "rgba_rmse": 4.6065687326122955,
+        "size": 1600,
+        "white_background_rgb_rmse": 5.319207395628444
+      },
+      "match_mode": "relationship",
+      "palette_colors": [
+        "#7fd4c1",
+        "#39a572"
+      ],
+      "paths": [
+        "units/scarface-and-cordelia-2-1.svg",
+        "units/triphammers-repurposed-industrial-tags-2-1.svg"
+      ],
+      "sha256": "9cb040ad51fad1202a11dd94e502e192883210a33be792b9c4133d2f35dec156",
+      "source_size_bytes": 505783,
+      "status": "ok"
+    }
+  ],
+  "classification": "flattened-gradient-mask",
+  "experiment": "gradient-mask-family-batch-v8.9.4",
+  "rejected_groups": 0,
+  "schema_version": 1,
+  "semantic_paths": 11,
+  "source_snapshot": "SYMBOLS 20260929-114338",
+  "successful_groups": 6,
+  "unique_source_groups": 6
+}

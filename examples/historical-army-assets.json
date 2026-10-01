@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "purpose": "Historical first-party Infinity Army asset provenance targets for palette-fragmented Yu Jing symbols",
+  "policy": {
+    "automatic_acceptance": false,
+    "first_party_domain_required": true,
+    "direct_current_fetch_does_not_prove_historical_content": true,
+    "wayback_snapshot_of_first_party_url_can_verify_historical_bytes": true,
+    "inferred_url_pattern_is_not_equivalent_to_observed_exact_url": true,
+    "note": "The identity mapping and URL provenance are tracked separately. Historical first-party bytes are suitable as restoration evidence only after an archived first-party URL snapshot has been retrieved and validated."
+  },
+  "common_evidence": [
+    {
+      "kind": "army-svg-access-documentation",
+      "date": "2020-08-17",
+      "url": "https://forum.corvusbelli.com/threads/high-res-logo-vectors.380/page-5",
+      "note": "Vyo states that the Army web app uses SVG vectors and documents opening the asset link from the Army app."
+    },
+    {
+      "kind": "army-svg-direct-url-example",
+      "date": "2020-02-18",
+      "url": "https://forum.corvusbelli.com/threads/dahshat-logo-wanted.36597/",
+      "note": "Corvus Belli forum users identify assets.infinitythegame.net/infinityarmy/img/logos/logo_908.svg as a logo obtained directly from Army Builder, confirming the official SVG endpoint family."
+    }
+  ],
+  "targets": [
+    {
+      "slug": "zhanshi",
+      "current_svg": "units/zhanshi-1-1.svg",
+      "faction_id": 201,
+      "legacy_logo_id": 1,
+      "identity_confidence": "high",
+      "identity_evidence": [
+        {
+          "date": "2016-10-05",
+          "url": "https://forums.warforge.ru/topic/74714-yu-jing-%D0%B4%D0%BB%D1%8F-%D0%BD%D0%BE%D0%B2%D0%B8%D1%87%D0%BA%D0%B0/page/19/",
+          "note": "Old Infinity Army list output pairs Yu Jing logo_1.png with ZHANSHI profiles."
+        },
+        {
+          "date": "2018-06-07",
+          "url": "https://warmania.com/forum/printthread.php?tid=51",
+          "note": "Independent old list reproduction also pairs Yu Jing logo_1.png with ZHANSHI profiles."
+        }
+      ],
+      "assets": [
+        {
+          "kind": "png",
+          "url": "https://assets.infinitythegame.net/infinityarmy/img/_logosweb/201/logo_1.png",
+          "url_status": "army-generated-path-inferred-from-corroborated-id",
+          "wayback_from": 2016,
+          "wayback_to": 2020
+        },
+        {
+          "kind": "svg",
+          "url": "https://assets.infinitythegame.net/infinityarmy/img/logos/logos_201/logo_1.svg",
+          "url_status": "official-army-svg-pattern-inferred",
+          "wayback_from": 2020,
+          "wayback_to": 2022
+        }
+      ]
+    },
+    {
+      "slug": "shaolin-warrior-monks",
+      "current_svg": "units/shaolin-warrior-monks-1-1.svg",
+      "faction_id": 201,
+      "legacy_logo_id": 13,
+      "identity_confidence": "high",
+      "identity_evidence": [
+        {
+          "date": "2018-09-17",
+          "url": "https://www.mercrecon.net/2018/09/17/60-c-50-dkp/",
+          "note": "An Infinity Army-generated Yu Jing list hotlinks assets.infinitythegame.net ... /201/logo_13.png immediately before SHAOLIN profiles."
+        }
+      ],
+      "assets": [
+        {
+          "kind": "png",
+          "url": "https://assets.infinitythegame.net/infinityarmy/img/_logosweb/201/logo_13.png",
+          "url_status": "exact-first-party-url-observed-in-army-generated-list",
+          "wayback_from": 2017,
+          "wayback_to": 2020
+        },
+        {
+          "kind": "svg",
+          "url": "https://assets.infinitythegame.net/infinityarmy/img/logos/logos_201/logo_13.svg",
+          "url_status": "official-army-svg-pattern-inferred",
+          "wayback_from": 2020,
+          "wayback_to": 2022
+        }
+      ]
+    },
+    {
+      "slug": "zhanshi-yisheng",
+      "current_svg": "units/zhanshi-yisheng-1-1.svg",
+      "faction_id": 201,
+      "legacy_logo_id": 14,
+      "identity_confidence": "high",
+      "identity_evidence": [
+        {
+          "date": "2018-09-17",
+          "url": "https://www.mercrecon.net/2018/09/17/60-c-50-dkp/",
+          "note": "An Infinity Army-generated Yu Jing list hotlinks assets.infinitythegame.net ... /201/logo_14.png immediately before Zhanshi YISHENG."
+        }
+      ],
+      "assets": [
+        {
+          "kind": "png",
+          "url": "https://assets.infinitythegame.net/infinityarmy/img/_logosweb/201/logo_14.png",
+          "url_status": "exact-first-party-url-observed-in-army-generated-list",
+          "wayback_from": 2017,
+          "wayback_to": 2020
+        },
+        {
+          "kind": "svg",
+          "url": "https://assets.infinitythegame.net/infinityarmy/img/logos/logos_201/logo_14.svg",
+          "url_status": "official-army-svg-pattern-inferred",
+          "wayback_from": 2020,
+          "wayback_to": 2022
+        }
+      ]
+    },
+    {
+      "slug": "chaiyi-yaokong",
+      "current_svg": "units/chaiyi-yaokong-1-1.svg",
+      "faction_id": 201,
+      "legacy_logo_id": 19,
+      "identity_confidence": "high",
+      "identity_evidence": [
+        {
+          "date": "2018-09-17",
+          "url": "https://www.mercrecon.net/2018/09/17/60-c-50-dkp/",
+          "note": "An Infinity Army-generated Yu Jing list hotlinks assets.infinitythegame.net ... /201/logo_19.png immediately before CHAIYI Yaokong."
+        }
+      ],
+      "assets": [
+        {
+          "kind": "png",
+          "url": "https://assets.infinitythegame.net/infinityarmy/img/_logosweb/201/logo_19.png",
+          "url_status": "exact-first-party-url-observed-in-army-generated-list",
+          "wayback_from": 2017,
+          "wayback_to": 2020
+        },
+        {
+          "kind": "svg",
+          "url": "https://assets.infinitythegame.net/infinityarmy/img/logos/logos_201/logo_19.svg",
+          "url_status": "official-army-svg-pattern-inferred",
+          "wayback_from": 2020,
+          "wayback_to": 2022
+        }
+      ]
+    }
+  ]
+}

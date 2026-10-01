@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Raw/proprietary source corpora and downloaded references
+data/raw/
+data/wiki/
+raw/
+sources/
+references/
+
+# Generated experiment output
+output/
+outputs/
+run/
+runs/
+research/runs/
+render-compare/
+*.candidate.svg
+*.reconstructed.svg
+*.scour.svg
+
+# Full scanner/batch artifacts belong outside Git; curated summaries live in research/reports/
+scan-*.json
+scan-*.csv
+batch-report.json
+batch-report.csv
+
+# Packaging/build output
+build/
+dist/
+
+# Curated report summaries are intentionally tracked
+!research/reports/
+!research/reports/*.json

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "png_sha256": "replace-with-png-sha256",
+      "png_relative_path": "optional\\relative\\path.png",
+      "source_authority": "first-party-historical",
+      "independence": "independent",
+      "provenance_status": "verified",
+      "source_url": "https://example.invalid/verified-source",
+      "note": "Only mark verified after the original first-party provenance has been independently established."
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "advisories": {
+    "large-path-payload": 1,
+    "missing-external-image": 3,
+    "palette-fragmentation": 28,
+    "subpixel-detail-heavy": 28
+  },
+  "classifications": {
+    "duplicate-fill-stroke-geometry": 1,
+    "embedded-raster-heavy": 2,
+    "flattened-blend-stack": 1,
+    "flattened-gradient-mask": 11,
+    "micro-contour-explosion": 2,
+    "off-artboard-content": 1,
+    "palette-fragmented-trace": 6
+  },
+  "exact_duplicate_groups": 212,
+  "flagged_files": 81,
+  "parse_errors": 0,
+  "source_snapshot": "SYMBOLS 20260929-114338",
+  "svg_files": 1101
+}

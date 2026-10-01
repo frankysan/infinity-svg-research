@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "infinity-svg-research"
+version = "0.1.0"
+description = "Experimental SVG pathology analysis, reconstruction, and validation tooling for Infinity graphical assets"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+  { name = "Johannes Haglund" },
+]
+dependencies = [
+  "lxml>=6.0",
+  "numpy>=2.0",
+  "Pillow>=12.0",
+  "scour>=0.38",
+  "opencv-python-headless>=4.10",
+]
+
+[project.scripts]
+infinity-svg-scan = "infinity_svg_research.scan:main"
+infinity-svg-optimize = "infinity_svg_research.optimize:main"
+infinity-svg-render-compare = "infinity_svg_research.render_compare:main"
+infinity-svg-blend-reconstruct = "infinity_svg_research.blend_use_reconstruct:main"
+infinity-svg-gradient-mask-reconstruct = "infinity_svg_research.gradient_mask_reconstruct:main"
+infinity-svg-gradient-mask-batch = "infinity_svg_research.gradient_mask_batch:main"
+infinity-svg-micro-contour-prune = "infinity_svg_research.micro_contour_prune:main"
+infinity-svg-palette-repair = "infinity_svg_research.palette_repair:main"
+infinity-svg-palette-consolidate = "infinity_svg_research.palette_consolidate:main"
+infinity-svg-reference-reconstruct = "infinity_svg_research.reference_reconstruct:main"
+infinity-svg-source-reconstruct = "infinity_svg_research.source_reconstruct:main"
+infinity-svg-human-sphere-match = "infinity_svg_research.human_sphere_match:main"
+infinity-svg-human-sphere-review = "infinity_svg_research.human_sphere_review:main"
+infinity-svg-historical-army-probe = "infinity_svg_research.historical_army_probe:main"
+infinity-svg-historical-probe-analyze = "infinity_svg_research.historical_probe_analyze:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.setuptools.package-data]
+infinity_svg_research = ["historical-army-assets.json"]
