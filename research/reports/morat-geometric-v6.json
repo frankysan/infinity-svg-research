@@ -1,0 +1,63 @@
+{
+  "experiment": "morat-geometric-candidate-v6",
+  "status": "experimental",
+  "source_policy": "numeric research evidence only; source and candidate artwork remain outside Git",
+  "baseline": "morat-geometric-candidate-v5b",
+  "shared_construction": {
+    "badge_center": [56.7, 56.7],
+    "badge_radii": [56.7, 41.1, 33.48],
+    "common_ribbon_width": 5.67,
+    "common_ribbon_width_relation": "113.4 / 20",
+    "upper_long_band": {
+      "center": [25.6, 107.4],
+      "outer_radius": 82.2,
+      "inner_radius": 76.53,
+      "classification": "established"
+    },
+    "upper_secondary_band": {
+      "center": [50.088029, 87.919398],
+      "outer_radius": 51.718624,
+      "inner_radius": 46.048624,
+      "joint_radial_rmse": 0.17293181962957727,
+      "max_abs_residual": 0.6774346333212904,
+      "classification": "strong single-export hypothesis"
+    }
+  },
+  "red_region_finding": {
+    "interpretation": "The three substantive red islands require no independent free-form boundary. Their raw cubic boundaries track the already recovered ribbon-edge circles and their vertices track pairwise circle intersections.",
+    "regions": [
+      {
+        "boundary_families": ["path5-inner", "path7-inner", "path8-inner"],
+        "assigned_radial_rmse": [0.203965, 0.145785, 0.138784],
+        "intersection_vertex_delta": [0.114872, 0.462619, 0.112316]
+      },
+      {
+        "boundary_families": ["path7-inner", "path9-inner", "path5-inner", "path8-outer"],
+        "assigned_radial_rmse": [0.202823, 0.07813, 0.187342, 0.10597],
+        "intersection_vertex_delta": [0.088241, 0.251799, 0.162423, 0.233639]
+      },
+      {
+        "boundary_families": ["path9-outer", "path7-inner", "path3-inner", "path5-inner"],
+        "assigned_radial_rmse": [0.158048, 0.145947, 0.399365, 0.074531],
+        "intersection_vertex_delta": [0.167054, 0.190095, 0.518955, 0.465604]
+      }
+    ],
+    "micro_sliver": {
+      "location": [42.6, 42.6],
+      "classification": "export/overlap artifact candidate; not promoted to authored red geometry"
+    }
+  },
+  "validation": {
+    "visual_effect": "essentially unchanged from v5b",
+    "1600px_raw_red_mask_jaccard_v5b": 0.9187414659655443,
+    "1600px_raw_red_mask_jaccard_v6": 0.9187467271775179,
+    "1600px_raw_red_mask_xor_pixels_v5b": 2797,
+    "1600px_raw_red_mask_xor_pixels_v6": 2793,
+    "note": "Pixel metrics are secondary. The v6 change is preferred as a structural hypothesis because it removes an independent hand-fitted red Bézier field and derives the visible red regions from already supported circle families."
+  },
+  "remaining_uncertainty": [
+    "The secondary upper band still lacks an independent historical/first-party Morat SVG instance for cross-source confirmation.",
+    "The source export contains small endpoint and overlap drift, so intersection deltas are expected and must not be optimized away blindly."
+  ],
+  "next_step": "Cross-check the secondary upper band against an independent first-party Morat instance if one can be recovered; otherwise continue endpoint/tangency analysis without treating the single-export fit as canonical."
+}
