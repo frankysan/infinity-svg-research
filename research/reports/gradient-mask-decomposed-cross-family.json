@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "experiment": "gradient-mask-decomposed-cross-family",
+  "status": "experimental",
+  "basis": {
+    "structural_comparison": "current InfinityDB-published processed SVGs",
+    "fidelity_comparison": "raw-source 1600 px renders archived by the v8.9.4 batch",
+    "full_raw_pipeline_validation": "pending user batch for five non-Guijia unique source hashes"
+  },
+  "model": {
+    "primitives": [
+      "gray linear field",
+      "gray radial edge shadow",
+      "accent rim circle",
+      "accent linear base",
+      "accent radial highlight 1",
+      "accent radial highlight 2"
+    ],
+    "shared_geometry": true,
+    "source_specific": [
+      "accent two-stop palette",
+      "gray palette recovered from outer strips",
+      "strong gray-shadow fit when source-render evidence exceeds threshold"
+    ],
+    "strong_shadow_p99_threshold": 0.2,
+    "automatic_acceptance": false
+  },
+  "structural_evidence": {
+    "all_six": {
+      "linear_gradients": 83,
+      "masks": 3,
+      "filters": 3,
+      "clip_paths": 2,
+      "embedded_images": 3,
+      "inner_circle_radius": 24.69,
+      "inner_circle_center_x_range": [41.1, 41.27],
+      "inner_circle_center_y_range": [41.06, 41.11],
+      "circle_geometry_sequence_equivalent": true,
+      "gradient_coordinate_sequence_effectively_equivalent": true
+    },
+    "families": [
+      {
+        "name": "Guijia / Blue Wolf / Longwang",
+        "accent_palette": ["#ffb669", "#ff6b00"],
+        "gray_mask_png_native_size": [2181, 2173],
+        "accent_mask_png_native_sizes": [[1699, 1683], [1697, 1685]]
+      },
+      {
+        "name": "Scarface / Triphammers",
+        "accent_palette": ["#7fd4c1", "#39a572"],
+        "gray_mask_png_native_size": [2167, 2173],
+        "accent_mask_png_native_sizes": [[1685, 1683], [1683, 1685]],
+        "note": "one gradient uses an equivalent transform spelling rather than the common serialization"
+      },
+      {
+        "name": "Maghariba / Shakush",
+        "accent_palette": ["#faff5f", "#a29a13"],
+        "gray_mask_png_native_size": [2178, 2173],
+        "accent_mask_png_native_sizes": [[1696, 1683], [1694, 1685]]
+      },
+      {
+        "name": "Mechazoid / O-Yoroi",
+        "accent_palette": ["#ff2e1c", "#ff0009"],
+        "gray_mask_png_native_size": [2172, 2173],
+        "accent_mask_png_native_sizes": [[1690, 1683], [1688, 1685]]
+      },
+      {
+        "name": "Gecko",
+        "accent_palette": ["#ff876a", "#ff1a00"],
+        "gray_mask_png_native_size": [2194, 2173],
+        "accent_mask_png_native_sizes": [[1678, 1683], [1676, 1685]]
+      },
+      {
+        "name": "Juggernauts",
+        "accent_palette": ["#103e65", "#000102"],
+        "gray_mask_png_native_size": [2172, 2173],
+        "accent_mask_png_native_sizes": [[1690, 1683], [1688, 1685]]
+      }
+    ]
+  },
+  "raw_render_1600_rgba_rmse": [
+    {
+      "family": "Guijia / Blue Wolf / Longwang",
+      "v8_9_4_three_gradient": 5.2585,
+      "shared_decomposed_geometry": 1.71145,
+      "current_weak_shadow_model": 1.62155,
+      "current_model_evidence": "full raw-source pipeline validated on Guijia"
+    },
+    {
+      "family": "Scarface / Triphammers",
+      "v8_9_4_three_gradient": 4.6066,
+      "shared_decomposed_geometry": 1.56522,
+      "current_weak_shadow_model": 1.61811,
+      "current_model_evidence": "offline raw-render experiment; full raw-source pipeline pending"
+    },
+    {
+      "family": "Maghariba / Shakush",
+      "v8_9_4_three_gradient": 4.9642,
+      "shared_decomposed_geometry": 1.6806,
+      "current_weak_shadow_model": 1.65941,
+      "current_model_evidence": "offline raw-render experiment; full raw-source pipeline pending"
+    },
+    {
+      "family": "Mechazoid / O-Yoroi",
+      "v8_9_4_three_gradient": 6.267,
+      "shared_decomposed_geometry": 1.77827,
+      "current_weak_shadow_model": 1.81951,
+      "current_model_evidence": "offline raw-render experiment; full raw-source pipeline pending"
+    },
+    {
+      "family": "Gecko",
+      "v8_9_4_three_gradient": 7.1261,
+      "shared_decomposed_geometry": 4.00971,
+      "current_weak_shadow_model": 3.76843,
+      "fitted_strong_shadow_model": 1.8154,
+      "current_model_evidence": "offline raw-render fit; full raw-source pipeline pending"
+    },
+    {
+      "family": "Juggernauts",
+      "v8_9_4_three_gradient": 7.6918,
+      "shared_decomposed_geometry": 2.00434,
+      "current_weak_shadow_model": 2.04101,
+      "current_model_evidence": "offline raw-render experiment; full raw-source pipeline pending"
+    }
+  ],
+  "gecko_gray_shadow": {
+    "interpretation": "strong shifted radial crescent in the current first-party Army export",
+    "fitted_parameters_approx": {
+      "cx": 41.756,
+      "cy": 41.389,
+      "r": 32.684,
+      "start_offset": 0.9837,
+      "max_opacity": 0.498
+    },
+    "outer_gray_boundary_rmse_after_fit": 2.97,
+    "authorial_intent_status": "unresolved",
+    "reason": "the raster placement is shared but native mask widths vary by family; an independent first-party appearance reference is needed before treating the unusually strong Gecko crescent as intentional rather than exporter variance"
+  }
+}

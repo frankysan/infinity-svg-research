@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "experiment": "guijia-edge-gray-decomposition",
+  "status": "experimental",
+  "source": {
+    "relative_path": "units/guijia-squadrons-2-1.svg",
+    "sha256": "a847157884ddf725bd7ff445cfcd2ab91093ea29e99dbc02d5c4b84eb4d3346f",
+    "bytes": 505086,
+    "authority": "first-party",
+    "source_type": "army-svg"
+  },
+  "accent_edge_stack": {
+    "source_circles": 44,
+    "blend_positions": 22,
+    "radius": 24.69,
+    "center_start": [
+      41.27,
+      41.06
+    ],
+    "center_end": [
+      41.21,
+      41.11
+    ],
+    "parent_compositing": "mix-blend-mode:multiply",
+    "ablation_1600": {
+      "remove_stack_rgba_rmse": 4.780485518948363,
+      "changed_pixel_fraction": 0.002130078125,
+      "max_channel_diff": 244
+    },
+    "sampled_sweep_1600": {
+      "2_circles_rgba_rmse": 1.1888351868793672,
+      "3_circles_rgba_rmse": 1.0960163127492675,
+      "4_circles_rgba_rmse": 0.9964292204698987,
+      "5_circles_rgba_rmse": 0.9406911313962197,
+      "6_circles_rgba_rmse": 0.8479934381195117,
+      "8_circles_rgba_rmse": 0.733335833920926,
+      "11_circles_rgba_rmse": 0.59798995993871,
+      "16_circles_rgba_rmse": 0.38809845420492206,
+      "22_circles_rgba_rmse": 0.2788067487077743
+    },
+    "single_fitted_circle_1600": {
+      "cx": 41.24689127,
+      "cy": 41.07557904,
+      "r": 24.73722119,
+      "rgba_rmse": 0.9109636038283857,
+      "rgb_rmse": 1.0518901637845401,
+      "changed_pixel_fraction": 0.001240625,
+      "max_channel_diff": 148
+    },
+    "interpretation": "expanded directional blend/sweep forming a narrow accent rim, not 44 independent shading layers"
+  },
+  "gray_field": {
+    "stripe_elements": 44,
+    "polygons": 34,
+    "rotated_rectangles": 10,
+    "regular_rect_width": 1.43,
+    "gradient_axis_degrees": -83.03,
+    "light_color": "#ffffff",
+    "dark_color": "#dbdddf",
+    "ablation_1600": {
+      "remove_stripes_rgba_rmse": 30.410940462351498,
+      "remove_stripes_changed_pixel_fraction": 0.17705,
+      "remove_masked_circle_rgba_rmse": 0.636867409792847,
+      "remove_masked_circle_changed_pixel_fraction": 0.00284375,
+      "remove_masked_circle_max_channel_diff": 38
+    },
+    "structural_linear_gradient_1600": {
+      "rgba_rmse": 1.2747512778234427,
+      "rgb_rmse": 1.4719559868023682,
+      "max_channel_diff": 55
+    },
+    "mask_source": {
+      "bitmap_dimensions": [
+        2181,
+        2173
+      ],
+      "effect": "blurred offset circle inverted by feColorMatrix and applied to #040505 circle at 0.75 opacity",
+      "fitted_center_svg": [
+        41.266,
+        41.027
+      ]
+    },
+    "linear_plus_radial_shadow_1600": {
+      "radial_stops": [
+        {
+          "radius": 31.9,
+          "opacity": 0.0
+        },
+        {
+          "radius": 32.05,
+          "opacity": 0.02509772270833016
+        },
+        {
+          "radius": 32.2,
+          "opacity": 0.10813600574555574
+        }
+      ],
+      "rgba_rmse": 1.2300221510962719,
+      "rgb_rmse": 1.4203072400892702,
+      "max_channel_diff": 48
+    },
+    "low_frequency_rgb_rmse": {
+      "sigma_0": {
+        "linear_only": 1.4719560146331787,
+        "with_radial_shadow": 1.4203072786331177
+      },
+      "sigma_4": {
+        "linear_only": 0.5170532464981079,
+        "with_radial_shadow": 0.47170335054397583
+      },
+      "sigma_16": {
+        "linear_only": 0.28832533955574036,
+        "with_radial_shadow": 0.25688636302948
+      }
+    }
+  },
+  "combined_candidate": {
+    "description": "structural gray linear gradient + three-stop radial gray shadow + one fitted multiply accent-rim circle + previously recorded one-linear/two-radial accent interior",
+    "pruned_bytes": 8491,
+    "scoured_bytes": 7582,
+    "byte_reduction_fraction": 0.9849886949945158,
+    "scan": {
+      "classification": null,
+      "advisories": [],
+      "paths": 12,
+      "circles": 6,
+      "groups": 3,
+      "linear_gradients": 3,
+      "radial_gradients": 3,
+      "masks": 0,
+      "filters": 0,
+      "clip_paths": 0,
+      "images": 0
+    },
+    "render_validation": [
+      {
+        "size": 64,
+        "rgba_rmse": 10.013683874883096,
+        "white_background_rgb_rmse": 11.562806161487142,
+        "changed_pixel_fraction": 0.346435546875,
+        "max_channel_diff": 183,
+        "alpha_rmse": 0.0
+      },
+      {
+        "size": 128,
+        "rgba_rmse": 6.965521778900971,
+        "white_background_rgb_rmse": 8.043091748189353,
+        "changed_pixel_fraction": 0.28179931640625,
+        "max_channel_diff": 194,
+        "alpha_rmse": 0.0
+      },
+      {
+        "size": 256,
+        "rgba_rmse": 4.53291532234831,
+        "white_background_rgb_rmse": 5.234159763143151,
+        "changed_pixel_fraction": 0.2539215087890625,
+        "max_channel_diff": 180,
+        "alpha_rmse": 0.0
+      },
+      {
+        "size": 512,
+        "rgba_rmse": 2.8385507192671495,
+        "white_background_rgb_rmse": 3.277676043754589,
+        "changed_pixel_fraction": 0.24170303344726562,
+        "max_channel_diff": 144,
+        "alpha_rmse": 0.0
+      },
+      {
+        "size": 1024,
+        "rgba_rmse": 1.8035930270745704,
+        "white_background_rgb_rmse": 2.0826098393800705,
+        "changed_pixel_fraction": 0.23648834228515625,
+        "max_channel_diff": 96,
+        "alpha_rmse": 0.0
+      },
+      {
+        "size": 1600,
+        "rgba_rmse": 1.6792131888458206,
+        "white_background_rgb_rmse": 1.938988373213809,
+        "changed_pixel_fraction": 0.2344953125,
+        "max_channel_diff": 149,
+        "alpha_rmse": 0.0
+      }
+    ],
+    "previous_compact_guijia_rgba_rmse_1600": 5.075231973993282,
+    "decision": "preferred Guijia-only experimental baseline; production transform unchanged pending family validation"
+  }
+}

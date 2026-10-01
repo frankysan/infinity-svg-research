@@ -46,7 +46,12 @@ The scripts under `tools/` are thin wrappers around the package modules. For exa
 ```powershell
 python .\tools\scan.py "C:\path\to\SYMBOLS snapshot" --json .\scan.json --csv .\scan.csv
 python .\tools\gradient_mask_batch.py "C:\path\to\SYMBOLS snapshot" .\scan.json --scour --output-dir .\run
+python .\tools\gradient_mask_batch.py "C:\path\to\SYMBOLS snapshot" .\scan.json --model decomposed --fit-gray-shadow --scour --output-dir .\decomposed-run
 ```
+
+The decomposed gradient-mask model is experimental and always review-required. `--fit-gray-shadow` uses
+the source render only to fit materially strong gray-mask crescents; weak cases retain the shared compact
+shadow rather than overfitting raster/export noise.
 
 Installed console entry points such as `infinity-svg-scan` and `infinity-svg-gradient-mask-batch` are
 also available after `pip install -e .`.

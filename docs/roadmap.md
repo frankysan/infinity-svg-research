@@ -2,17 +2,15 @@
 
 ## Near term
 
-1. Validate the Guijia-derived one-linear + two-radial-highlight interior model against all six unique
-   flattened-gradient-mask source families before changing the production reconstruction.
-2. Decompose and approximate the effective inner-disc edge stack separately from the interior field; do
-   not recreate the original 44-circle export unless the visual evidence requires it.
-3. Revisit the gray annulus with the same layer-decomposition method instead of assuming one fitted
-   linear gradient is the final model.
-4. Re-run the full gradient-mask batch after each accepted model change and record per-hash fidelity
-   deltas.
-5. Exercise the exact optimizer across the current raw corpus and promote case records only where
+1. Run the new decomposed gradient-mask model against all six unique raw source hashes with gray-shadow
+   fitting enabled and record per-family manifests/renders.
+2. Review any strong fitted gray-mask crescent as a provenance question rather than automatically
+   preserving it; Gecko specifically needs an independent first-party appearance reference if possible.
+3. Compare the raw six-family batch against the legacy three-gradient baseline and promote the new model
+   to the default only if the family-wide results support it.
+4. Exercise the exact optimizer across the current raw corpus and promote case records only where
    pixel-identical validation is reproduced from the repository tooling.
-6. Add reduced/synthetic fixtures for every hard pathology so detector contracts do not depend on the
+5. Add reduced/synthetic fixtures for every hard pathology so detector contracts do not depend on the
    private/raw corpus.
 
 ## Medium term

@@ -80,6 +80,47 @@ roughly the same twofold advantage, so the improvement is not dependent on repro
 artifacts. The production transformer remains unchanged pending tests on the other five unique source
 families.
 
+### Guijia edge and gray decomposition
+
+The 44-circle accent boundary was subsequently identified as an expanded 22-position blend/sweep. The
+parent group is multiplied with the backdrop once; the repeated opaque circles mainly create a narrow
+directional rim. A single fitted circle approximates that effect at 0.9110 RGBA RMSE at 1600 px, while
+one circle retained from each source blend position gives 0.2788.
+
+The gray field is 44 nearly uniform bands aligned at about -83.03 degrees with a monotonic
+`#ffffff`-to-`#dbdddf` palette, strongly supporting one intended linear gradient. Its separate embedded
+mask is a blurred offset circle used to create a subtle directional inner-edge shadow. A structural
+linear gradient plus a three-stop radial-opacity shadow gives 1.2300 RGBA RMSE for the gray reconstruction
+at 1600 px.
+
+Combining those results with the improved accent interior yields a 7,582-byte Scoured Guijia candidate
+with 1.6792 full-image RGBA RMSE at 1600 px, zero alpha error, and no scanner findings. This is the new
+Guijia-only experimental baseline; it has not yet been generalized into the production transform.
+
+
+### Cross-family decomposed-model experiment
+
+Comparison of the six current published badge SVGs found a common exporter scaffold: 83 gradients,
+3 masks, 3 filters, 2 clip paths, 3 embedded images, and the same inner-circle geometry sequence. Five
+families use the same gradient coordinate serialization; Scarface differs only by one mathematically
+equivalent transform spelling. Accent palettes differ as expected.
+
+Applying the Guijia-derived six-element structural model to the raw-source renders archived by the
+v8.9.4 batch improved every family. Five families reached roughly 1.57–2.00 RGBA RMSE at 1600 px with
+shared geometry. Gecko remained at about 4.01 because its current Army gray-mask crescent is much
+stronger. Fitting that crescent as one shifted radial-opacity field lowered Gecko to about 1.82.
+
+The mask placement metadata is shared, but the embedded PNG native widths vary between families while
+the heights stay fixed. This makes the exact mask-strength differences provenance-sensitive: they are
+first-party evidence of the current export, but may reflect raster cropping/export variance rather than
+authorial intent. The experimental implementation therefore uses a shared weak shadow by default and
+only performs a strong source-render fit above a conservative measured threshold; all results remain
+review-required.
+
+The generalized decomposed model is implemented separately from the legacy three-gradient model. An
+end-to-end raw Guijia run produced a 7,910-byte Scoured candidate, no scanner findings, zero alpha RMSE,
+and 1.62155 RGBA RMSE at 1600 px. Full raw-source validation of the other five unique hashes is pending.
+
 ## Palette-fragmented traces
 
 Six hard-classified cases were identified. Palette snapping can produce low colour error but does not

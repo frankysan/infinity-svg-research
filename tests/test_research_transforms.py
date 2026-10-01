@@ -3,12 +3,17 @@ from __future__ import annotations
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
+from unittest import mock
 
+import numpy as np
 from lxml import etree
+from PIL import Image
 
 from infinity_svg_research import blend_use_reconstruct
 from infinity_svg_research import micro_contour_prune
 from infinity_svg_research import gradient_mask_reconstruct
+from infinity_svg_research import gradient_mask_model
 from infinity_svg_research import gradient_mask_batch
 from infinity_svg_research import scan
 
@@ -302,6 +307,51 @@ class GradientMaskReconstructTests(unittest.TestCase):
         self.assertEqual(result["accent_base_gradient"]["colors"], ["#7fd4c1", "#39a572"])
         self.assertEqual(result["accent_highlight_gradient"]["color"], "#7fd4c1")
 
+    def test_decomposed_gradient_mask_model_adds_six_purposeful_primitives(self) -> None:
+        root = etree.fromstring(self._source())
+        result = gradient_mask_model.reconstruct_decomposed_tree(etree.ElementTree(root))
+        self.assertEqual(result["model"], "decomposed-six-element")
+        self.assertEqual(result["gradient_count"], 6)
+        self.assertEqual(result["circle_count"], 6)
+        self.assertEqual(result["accent_colors"], ["#ffb669", "#ff6b00"])
+        self.assertEqual(result["gray_shadow"]["mode"], "shared-weak")
+        self.assertEqual(len(root.xpath(".//s:linearGradient", namespaces=scan.NS)), 3)
+        self.assertEqual(len(root.xpath(".//s:radialGradient", namespaces=scan.NS)), 3)
+        self.assertEqual(len(root.xpath(".//s:mask", namespaces=scan.NS)), 0)
+        self.assertEqual(len(root.xpath(".//s:filter", namespaces=scan.NS)), 0)
+        self.assertEqual(len(root.xpath(".//s:clipPath", namespaces=scan.NS)), 0)
+        self.assertEqual(len(root.xpath(".//s:image", namespaces=scan.NS)), 0)
+
+    def test_gray_shadow_fit_detects_strong_shifted_radial_crescent(self) -> None:
+        size = 256
+        yy, xx = np.mgrid[0:size, 0:size]
+        x = (xx + 0.5) * 82.2 / size
+        y = (yy + 0.5) * 82.2 / size
+        baseline = np.full((size, size, 3), 240.0, dtype=np.float64)
+        distance = np.hypot(x - 41.75, y - 41.39) / 32.68
+        alpha = 0.50 * np.clip((distance - 0.984) / (1.0 - 0.984), 0.0, 1.0)
+        disc = np.hypot(x - 41.1, y - 41.1) <= 32.02
+        alpha = np.where(disc, alpha, 0.0)
+        source = np.clip(baseline * (1.0 - alpha[..., None]), 0, 255).astype(np.uint8)
+        baseline_uint8 = baseline.astype(np.uint8)
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            directory = Path(temporary_directory)
+            source_path = directory / "source.png"
+            baseline_path = directory / "baseline.png"
+            Image.fromarray(source, mode="RGB").save(source_path)
+            Image.fromarray(baseline_uint8, mode="RGB").save(baseline_path)
+            result = gradient_mask_model.fit_gray_shadow_from_renders(
+                source_path,
+                baseline_path,
+                view_box=(0.0, 0.0, 82.2, 82.2),
+                gray_geometry=(41.1, 41.1, 32.02),
+            )
+        self.assertEqual(result["mode"], "fitted-strong")
+        self.assertGreater(result["target_alpha_p99"], 0.2)
+        self.assertAlmostEqual(result["cx"], 41.75, delta=0.25)
+        self.assertAlmostEqual(result["cy"], 41.39, delta=0.25)
+        self.assertAlmostEqual(result["max_opacity"], 0.50, delta=0.15)
+
 
 class GradientMaskBatchTests(unittest.TestCase):
     def test_load_groups_deduplicates_flattened_gradient_mask_rows(self) -> None:
@@ -332,6 +382,36 @@ class GradientMaskBatchTests(unittest.TestCase):
             gradient_mask_batch._source_path(root, "units\\scarface-and-cordelia-2-1.svg"),
             root / "units" / "scarface-and-cordelia-2-1.svg",
         )
+
+    def test_run_reconstruction_module_forces_no_render(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            directory = Path(temporary_directory)
+            source = directory / "source.svg"
+            source.write_text("<svg/>", encoding="utf-8")
+            output_dir = directory / "case"
+
+            def fake_run(command, **_kwargs):
+                self.assertIn("--no-render", command)
+                output_index = command.index("--output-dir") + 1
+                manifest_dir = Path(command[output_index])
+                manifest_dir.mkdir(parents=True, exist_ok=True)
+                (manifest_dir / "manifest.json").write_text(
+                    '{"candidate":"candidate.svg"}\n',
+                    encoding="utf-8",
+                )
+                return SimpleNamespace(returncode=0, stdout="", stderr="")
+
+            with mock.patch.object(gradient_mask_batch.subprocess, "run", side_effect=fake_run):
+                manifest, error = gradient_mask_batch._run_reconstruction_module(
+                    module="example.module",
+                    source=source,
+                    output_dir=output_dir,
+                    sizes=(64,),
+                    scour=False,
+                )
+
+        self.assertIsNone(error)
+        self.assertEqual(manifest, {"candidate": "candidate.svg"})
 
 if __name__ == "__main__":
     unittest.main()
