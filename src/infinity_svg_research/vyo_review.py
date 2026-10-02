@@ -12,6 +12,7 @@ import tempfile
 import threading
 import time
 import webbrowser
+from collections import Counter
 from dataclasses import dataclass
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -26,6 +27,22 @@ from .render_compare import _shell_path
 
 REVIEWED_STATUSES = {"reviewed-match", "reviewed-design-mismatch", "confirmed-missing"}
 DECISIONS = {"reuse", "cleanup", "mismatch", "unresolved", "missing"}
+ACTIONABLE_ADVISORIES = {"missing-external-image"}
+ISSUE_STATUS_ORDER = (
+    "uninvestigated",
+    "research-active",
+    "solution-identified",
+    "candidate-validated",
+    "ready-for-publication",
+    "no-action-required",
+)
+ISSUE_STATUSES = set(ISSUE_STATUS_ORDER)
+ISSUE_NOTE_REQUIRED = {
+    "solution-identified",
+    "candidate-validated",
+    "ready-for-publication",
+    "no-action-required",
+}
 
 
 @dataclass(frozen=True)
@@ -33,7 +50,9 @@ class ReviewConfig:
     inventory: Path
     army_manifest: Path
     publication_manifest: Path
+    scan: Path | None
     decisions: Path
+    issue_review: Path
     army_root: Path
     vyo_root: Path
     output: Path
@@ -276,6 +295,186 @@ def render_review_png(
     return destination
 
 
+def _empty_issue_review() -> dict:
+    return {"format": "infinity-svg-army-issue-review", "version": 1, "issues": {}}
+
+
+def load_issue_review(path: Path) -> dict:
+    if not path.is_file():
+        return _empty_issue_review()
+    data = load_json(path)
+    if data.get("format") != "infinity-svg-army-issue-review" or data.get("version") != 1:
+        raise ValueError(f"unsupported Army issue review file: {path}")
+    if not isinstance(data.get("issues"), dict):
+        raise ValueError("Army issue review file must contain an issues object")
+    for key, review in data["issues"].items():
+        if not isinstance(key, str) or not isinstance(review, dict):
+            raise ValueError("invalid Army issue review entry")
+        if review.get("status") not in ISSUE_STATUSES:
+            raise ValueError(f"invalid Army issue status for {key}")
+    return data
+
+
+def _normalise_relative(path: str) -> str:
+    return path.replace("\\", "/")
+
+
+def _issue_source_labels(report: dict) -> dict[str, set[str]]:
+    labels: dict[str, set[str]] = {}
+    for row in report.get("assets", []):
+        row_labels = set(row.get("subjects", [])) or set(row.get("unit_slugs", []))
+        for source in row.get("source_assets", []):
+            path = _normalise_relative(str(source.get("path", "")))
+            if path:
+                labels.setdefault(path, set()).update(row_labels)
+    return labels
+
+
+def build_issue_groups(
+    scan: dict | None,
+    issue_review: dict,
+    *,
+    report: dict | None = None,
+    army_root: Path | None = None,
+) -> list[dict]:
+    """Collapse actionable current-Army scanner findings by exact source hash."""
+    if not scan:
+        return []
+    files = scan.get("files")
+    if not isinstance(files, list):
+        raise ValueError("scan report must contain a files array")
+    labels_by_path = _issue_source_labels(report or {})
+    groups: dict[str, dict] = {}
+    severity_rank = {"error": 0, "high": 1, "medium": 2, "low": 3, None: 4}
+
+    for row in files:
+        if not isinstance(row, dict):
+            raise ValueError("scan file rows must be objects")
+        path = _normalise_relative(str(row.get("path", "")))
+        if not path:
+            continue
+        issue_types: list[str] = []
+        if row.get("parse_error"):
+            issue_types.append("parse-error")
+        classification = row.get("classification")
+        if isinstance(classification, str) and classification:
+            issue_types.append(classification)
+        advisories = {
+            str(value) for value in row.get("advisories", []) if isinstance(value, str)
+        }
+        issue_types.extend(sorted(advisories.intersection(ACTIONABLE_ADVISORIES)))
+        if not issue_types:
+            continue
+
+        digest = str(row.get("sha256", "")).strip()
+        key = digest or "path:" + path
+        group = groups.setdefault(
+            key,
+            {
+                "issue_key": key,
+                "sha256": digest or None,
+                "paths": [],
+                "labels": set(),
+                "issue_types": set(),
+                "advisories": set(),
+                "signals": [],
+                "parse_errors": [],
+                "severity": row.get("severity") or ("error" if row.get("parse_error") else None),
+                "size_bytes": int(row.get("size_bytes") or 0),
+            },
+        )
+        group["paths"].append(path)
+        group["labels"].update(labels_by_path.get(path, set()))
+        group["issue_types"].update(issue_types)
+        group["advisories"].update(advisories)
+        for signal in row.get("signals", []):
+            if isinstance(signal, str) and signal not in group["signals"]:
+                group["signals"].append(signal)
+        if row.get("parse_error"):
+            group["parse_errors"].append(str(row["parse_error"]))
+        severity = row.get("severity") or ("error" if row.get("parse_error") else None)
+        if severity_rank.get(severity, 9) < severity_rank.get(group["severity"], 9):
+            group["severity"] = severity
+        group["size_bytes"] = max(group["size_bytes"], int(row.get("size_bytes") or 0))
+
+    saved = issue_review.get("issues", {})
+    result = []
+    for key, group in groups.items():
+        group["paths"] = sorted(set(group["paths"]))
+        group["labels"] = sorted(group["labels"])
+        group["issue_types"] = sorted(group["issue_types"])
+        group["advisories"] = sorted(group["advisories"])
+        group["parse_errors"] = sorted(set(group["parse_errors"]))
+        group["semantic_count"] = len(group["paths"])
+        group["representative_path"] = group["paths"][0]
+        review = saved.get(key, {})
+        group["review"] = {
+            "status": review.get("status", "uninvestigated"),
+            "note": review.get("note", ""),
+        }
+        group["source_missing"] = False
+        group["missing_paths"] = []
+        group["scan_stale"] = False
+        group["stale_paths"] = []
+        if army_root is not None:
+            representative = None
+            for path in group["paths"]:
+                try:
+                    source = safe_svg_path(army_root, path)
+                except FileNotFoundError:
+                    group["missing_paths"].append(path)
+                    continue
+                if representative is None:
+                    representative = path
+                if group["sha256"]:
+                    current = hashlib.sha256(source.read_bytes()).hexdigest()
+                    if current != group["sha256"]:
+                        group["stale_paths"].append(path)
+            if representative is not None:
+                group["representative_path"] = representative
+            group["source_missing"] = representative is None
+            group["scan_stale"] = bool(group["missing_paths"] or group["stale_paths"])
+        result.append(group)
+
+    status_rank = {status: index for index, status in enumerate(ISSUE_STATUS_ORDER)}
+    result.sort(
+        key=lambda group: (
+            status_rank.get(group["review"]["status"], 99),
+            severity_rank.get(group["severity"], 9),
+            group["issue_types"],
+            group["representative_path"],
+        )
+    )
+    return result
+
+
+def update_issue_review(issue_groups: list[dict], review: dict, payload: dict) -> dict:
+    key = str(payload.get("issue_key", ""))
+    status = str(payload.get("status", ""))
+    if status not in ISSUE_STATUSES:
+        raise ValueError("invalid Army issue status")
+    group = next((item for item in issue_groups if item["issue_key"] == key), None)
+    if group is None:
+        raise ValueError("unknown Army issue group")
+    note = str(payload.get("note", "")).strip()
+    if status in ISSUE_NOTE_REQUIRED and not note:
+        raise ValueError("this Army issue status requires a note")
+
+    updated = json.loads(json.dumps(review))
+    updated.setdefault("issues", {})
+    if status == "uninvestigated" and not note:
+        updated["issues"].pop(key, None)
+        return updated
+    updated["issues"][key] = {
+        "status": status,
+        "note": note,
+        "sha256": group["sha256"],
+        "paths": group["paths"],
+        "issue_types": group["issue_types"],
+    }
+    return updated
+
+
 def _rule_applies(rule: dict, row: dict) -> bool:
     if rule.get("army_paths"):
         return row["army_path"] in rule["army_paths"]
@@ -388,7 +587,14 @@ def _exact_reviews(decisions: dict) -> dict[str, dict]:
     return result
 
 
-def public_state(report: dict, decisions: dict) -> dict:
+def public_state(
+    report: dict,
+    decisions: dict,
+    *,
+    scan: dict | None = None,
+    issue_review: dict | None = None,
+    army_root: Path | None = None,
+) -> dict:
     reviews = _exact_reviews(decisions)
     assets = []
     for row in report["assets"]:
@@ -418,7 +624,25 @@ def public_state(report: dict, decisions: dict) -> dict:
                 "review": reviews.get(row["army_path"]),
             }
         )
-    return {"summary": report["summary"], "assets": assets}
+    issue_groups = build_issue_groups(
+        scan,
+        issue_review or _empty_issue_review(),
+        report=report,
+        army_root=army_root,
+    )
+    issue_types = Counter(
+        issue_type for group in issue_groups for issue_type in group["issue_types"]
+    )
+    return {
+        "summary": report["summary"],
+        "assets": assets,
+        "issue_groups": issue_groups,
+        "issue_summary": {
+            "groups": len(issue_groups),
+            "semantic_files": sum(group["semantic_count"] for group in issue_groups),
+            "by_type": dict(sorted(issue_types.items())),
+        },
+    }
 
 
 def _run_identity(config: ReviewConfig, decisions_path: Path, output: Path) -> int:
@@ -466,6 +690,8 @@ class ReviewApplication:
         self.config = config
         self.lock = threading.RLock()
         self.token = secrets.token_urlsafe(32)
+        self.scan = load_json(config.scan) if config.scan else None
+        self.issue_review = load_issue_review(config.issue_review)
         self.renderer = PersistentInkscapeShell(
             config.inkscape,
             log_path=config.cache / "inkscape-shell.log",
@@ -480,18 +706,37 @@ class ReviewApplication:
             self.renderer.close()
             raise
 
+    def _state_locked(self) -> dict:
+        state = public_state(
+            self.report,
+            load_json(self.config.decisions),
+            scan=self.scan,
+            issue_review=self.issue_review,
+            army_root=self.config.army_root,
+        )
+        state["review_token"] = self.token
+        return state
+
     def state(self) -> dict:
         with self.lock:
-            state = public_state(self.report, load_json(self.config.decisions))
-            state["review_token"] = self.token
-            return state
+            return self._state_locked()
 
     def save(self, payload: dict) -> dict:
         with self.lock:
             self.report = save_review(self.config, self.report, payload)
-            state = public_state(self.report, load_json(self.config.decisions))
-            state["review_token"] = self.token
-            return state
+            return self._state_locked()
+
+    def save_issue(self, payload: dict) -> dict:
+        with self.lock:
+            groups = build_issue_groups(
+                self.scan,
+                self.issue_review,
+                report=self.report,
+                army_root=self.config.army_root,
+            )
+            self.issue_review = update_issue_review(groups, self.issue_review, payload)
+            atomic_write_json(self.config.issue_review, self.issue_review)
+            return self._state_locked()
 
     def render(self, source_kind: str, relative: str) -> Path:
         root = self.config.army_root if source_kind == "army" else self.config.vyo_root
@@ -576,7 +821,8 @@ class ReviewHandler(BaseHTTPRequestHandler):
             self._error(HTTPStatus.BAD_REQUEST, str(exc))
 
     def do_POST(self) -> None:  # noqa: N802
-        if urlparse(self.path).path != "/api/review":
+        path = urlparse(self.path).path
+        if path not in {"/api/review", "/api/issue-review"}:
             self._error(HTTPStatus.NOT_FOUND, "not found")
             return
         try:
@@ -589,7 +835,12 @@ class ReviewHandler(BaseHTTPRequestHandler):
             payload = json.loads(self.rfile.read(length))
             if not isinstance(payload, dict):
                 raise ValueError("review payload must be an object")
-            self._json(self.app.save(payload))
+            response = (
+                self.app.save_issue(payload)
+                if path == "/api/issue-review"
+                else self.app.save(payload)
+            )
+            self._json(response)
         except (json.JSONDecodeError, RuntimeError, ValueError) as exc:
             self._error(HTTPStatus.BAD_REQUEST, str(exc))
 
@@ -613,7 +864,18 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("inventory", type=_existing_file)
     parser.add_argument("army_manifest", type=_existing_file)
     parser.add_argument("publication_manifest", type=_existing_file)
+    parser.add_argument(
+        "--scan",
+        type=_existing_file,
+        help="scanner JSON; enables the Current Army issues scope",
+    )
     parser.add_argument("--decisions", type=_existing_file, required=True)
+    parser.add_argument(
+        "--issue-review",
+        type=Path,
+        default=Path("research/army-issue-review.json"),
+        help="Git-tracked current-Army issue triage state",
+    )
     parser.add_argument("--army-root", type=_existing_directory, required=True)
     parser.add_argument("--vyo-root", type=_existing_directory, required=True)
     parser.add_argument("--output", type=Path, default=Path("output/vyo-review"))
@@ -637,7 +899,9 @@ def main(argv: list[str] | None = None) -> int:
         inventory=args.inventory,
         army_manifest=args.army_manifest,
         publication_manifest=args.publication_manifest,
+        scan=args.scan,
         decisions=args.decisions,
+        issue_review=args.issue_review.resolve(),
         army_root=args.army_root,
         vyo_root=args.vyo_root,
         output=output,
@@ -650,7 +914,7 @@ def main(argv: list[str] | None = None) -> int:
     server = ThreadingHTTPServer(("127.0.0.1", args.port), ReviewHandler)
     server.app = app  # type: ignore[attr-defined]
     address = f"http://127.0.0.1:{server.server_address[1]}/"
-    print(f"Vyo visual reviewer: {address}")
+    print(f"Infinity SVG visual reviewer: {address}")
     print("Press Ctrl+C to stop.")
     if not args.no_browser:
         webbrowser.open(address)

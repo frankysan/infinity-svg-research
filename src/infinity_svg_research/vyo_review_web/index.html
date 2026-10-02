@@ -1,16 +1,24 @@
 <!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vyo / Army visual reviewer</title>
+<title>Infinity SVG visual reviewer</title>
 <link rel="stylesheet" href="/review.css">
 <header class="topbar">
   <div>
-    <h1>Vyo / Army visual reviewer</h1>
-    <p id="summary">Loading identity map…</p>
+    <h1>Infinity SVG visual reviewer</h1>
+    <p id="summary">Loading review data…</p>
   </div>
   <div class="toolbar">
-    <label>Search <input id="search" type="search" placeholder="unit, profile, Vyo name"></label>
-    <label>Status
+    <label>Scope
+      <select id="scope-filter">
+        <option value="issues">Current Army issues</option>
+        <option value="vyo">Vyo matches</option>
+        <option value="unresolved">Unresolved identities</option>
+        <option value="all">All assets</option>
+      </select>
+    </label>
+    <label>Search <input id="search" type="search" placeholder="unit, issue, profile, Vyo name"></label>
+    <label id="identity-status-wrap">Status
       <select id="status-filter">
         <option value="pending">Pending review</option>
         <option value="name-candidate">Name candidates</option>
@@ -19,7 +27,7 @@
         <option value="all">All</option>
       </select>
     </label>
-    <label>Action
+    <label id="identity-action-wrap">Action
       <select id="action-filter">
         <option value="all">Any</option>
         <option value="reuse">Reuse</option>
@@ -27,12 +35,28 @@
         <option value="reconstruct">Reconstruct</option>
       </select>
     </label>
+    <label id="issue-status-wrap" class="hidden">Issue state
+      <select id="issue-status-filter">
+        <option value="all">Any</option>
+        <option value="uninvestigated">Uninvestigated</option>
+        <option value="research-active">Research active</option>
+        <option value="solution-identified">Solution identified</option>
+        <option value="candidate-validated">Candidate validated</option>
+        <option value="ready-for-publication">Ready for publication</option>
+        <option value="no-action-required">No action required</option>
+      </select>
+    </label>
+    <label id="issue-type-wrap" class="hidden">Issue type
+      <select id="issue-type-filter">
+        <option value="all">Any</option>
+      </select>
+    </label>
   </div>
 </header>
 <main>
   <aside class="queue-panel" aria-label="Review queue">
     <div class="queue-head">
-      <strong id="queue-count">0 matches</strong>
+      <strong id="queue-count">0 shown</strong>
       <span id="position">0 / 0</span>
     </div>
     <div id="queue" class="queue"></div>
@@ -49,7 +73,7 @@
       </div>
     </div>
 
-    <div class="modebar" aria-label="Comparison mode">
+    <div id="modebar" class="modebar" aria-label="Comparison mode">
       <button type="button" class="mode active" data-mode="side">Side by side</button>
       <button type="button" class="mode" data-mode="overlay">Overlay</button>
       <button type="button" class="mode" data-mode="blink">Blink</button>
@@ -61,7 +85,27 @@
 
     <div id="comparison" class="comparison"></div>
 
-    <form id="decision-form" class="decision-panel">
+    <form id="issue-form" class="decision-panel hidden">
+      <label>Research state
+        <select id="issue-state">
+          <option value="uninvestigated">Uninvestigated</option>
+          <option value="research-active">Research active</option>
+          <option value="solution-identified">Solution identified</option>
+          <option value="candidate-validated">Candidate validated</option>
+          <option value="ready-for-publication">Ready for publication</option>
+          <option value="no-action-required">No action required</option>
+        </select>
+      </label>
+      <label>Issue note
+        <textarea id="issue-note" rows="3" placeholder="What is known, what remains, or why no action is required"></textarea>
+      </label>
+      <div class="save-row">
+        <span id="issue-message" role="status" aria-live="polite"></span>
+        <button id="issue-save" type="submit">Save + next</button>
+      </div>
+    </form>
+
+    <form id="decision-form" class="decision-panel hidden">
       <fieldset>
         <legend>Review decision</legend>
         <div class="decision-options">

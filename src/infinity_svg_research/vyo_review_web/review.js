@@ -2,17 +2,24 @@
   "use strict";
   const $ = (id) => document.getElementById(id);
   const els = {
-    summary: $("summary"), search: $("search"), status: $("status-filter"), action: $("action-filter"),
-    queue: $("queue"), queueCount: $("queue-count"), position: $("position"), title: $("asset-title"),
-    meta: $("asset-meta"), previous: $("previous"), next: $("next"), comparison: $("comparison"),
-    opacityWrap: $("opacity-wrap"), opacity: $("opacity"), blinkPause: $("blink-pause"),
+    summary: $("summary"), scope: $("scope-filter"), search: $("search"),
+    status: $("status-filter"), action: $("action-filter"),
+    identityStatusWrap: $("identity-status-wrap"), identityActionWrap: $("identity-action-wrap"),
+    issueStatusWrap: $("issue-status-wrap"), issueTypeWrap: $("issue-type-wrap"),
+    issueStatus: $("issue-status-filter"), issueType: $("issue-type-filter"),
+    queue: $("queue"), queueCount: $("queue-count"), position: $("position"),
+    title: $("asset-title"), meta: $("asset-meta"), previous: $("previous"), next: $("next"),
+    modebar: $("modebar"), comparison: $("comparison"), opacityWrap: $("opacity-wrap"),
+    opacity: $("opacity"), blinkPause: $("blink-pause"),
     form: $("decision-form"), reasons: $("reasons"), evidence: $("evidence"),
     confirmWrap: $("confirm-missing-wrap"), confirmMissing: $("confirm-missing"),
-    save: $("save"), message: $("message")
+    save: $("save"), message: $("message"),
+    issueForm: $("issue-form"), issueState: $("issue-state"), issueNote: $("issue-note"),
+    issueSave: $("issue-save"), issueMessage: $("issue-message")
   };
-  let state = {summary: {}, assets: []};
+  let state = {summary: {}, assets: [], issue_groups: [], issue_summary: {}};
   let filtered = [];
-  let currentPath = null;
+  let currentKey = null;
   let mode = "side";
   let activeCandidate = 0;
   let blinkTimer = null;
@@ -25,14 +32,12 @@
     return String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"})[ch]);
   }
   function imageUrl(kind, path) { return `/render/${kind}?path=${encodeURIComponent(path)}`; }
-  function current() { return filtered.find(row => row.army_path === currentPath) || filtered[0] || null; }
+  function issueScope() { return els.scope.value === "issues"; }
+  function rowKey(row) { return issueScope() ? row.issue_key : row.army_path; }
+  function current() { return filtered.find(row => rowKey(row) === currentKey) || filtered[0] || null; }
   function reviewed(status) { return ["reviewed-match", "reviewed-design-mismatch", "confirmed-missing"].includes(status); }
-  function selectedPaths() {
-    return [...selectedCandidates];
-  }
-  function decisionValue() {
-    return document.querySelector('input[name="decision"]:checked')?.value || "unresolved";
-  }
+  function selectedPaths() { return [...selectedCandidates]; }
+  function decisionValue() { return document.querySelector('input[name="decision"]:checked')?.value || "unresolved"; }
   function stopBlink() {
     if (blinkTimer) clearInterval(blinkTimer);
     blinkTimer = null;
@@ -47,7 +52,6 @@
     }, 650);
     els.blinkPause.textContent = "Pause blink";
   }
-
 
   function cancelPrefetch() {
     if (prefetchTimer) clearTimeout(prefetchTimer);
@@ -64,8 +68,12 @@
     if (!next) return;
     prefetchTimer = setTimeout(() => {
       const paths = [];
-      if (next.army_source) paths.push(["army", next.army_source.path]);
-      next.candidates.slice(0, 3).forEach(candidate => paths.push(["vyo", candidate.path]));
+      if (issueScope()) {
+        if (!next.source_missing) paths.push(["army", next.representative_path]);
+      } else {
+        if (next.army_source) paths.push(["army", next.army_source.path]);
+        next.candidates.slice(0, 3).forEach(candidate => paths.push(["vyo", candidate.path]));
+      }
       prefetchImages = paths.map(([kind, path]) => {
         const image = new Image();
         image.decoding = "async";
@@ -75,44 +83,106 @@
     }, 250);
   }
 
+  function refreshFilterVisibility() {
+    const issues = issueScope();
+    els.identityStatusWrap.classList.toggle("hidden", issues);
+    els.identityActionWrap.classList.toggle("hidden", issues);
+    els.issueStatusWrap.classList.toggle("hidden", !issues);
+    els.issueTypeWrap.classList.toggle("hidden", !issues);
+  }
+
+  function populateIssueTypes() {
+    const currentValue = els.issueType.value || "all";
+    const types = Object.keys(state.issue_summary?.by_type || {}).sort();
+    els.issueType.innerHTML = '<option value="all">Any</option>' +
+      types.map(type => `<option value="${esc(type)}">${esc(type)}</option>`).join("");
+    els.issueType.value = types.includes(currentValue) ? currentValue : "all";
+  }
+
+  function identityRowsForScope() {
+    const scope = els.scope.value;
+    if (scope === "vyo") return state.assets.filter(row => row.candidates.length > 0);
+    if (scope === "unresolved") return state.assets.filter(row => row.identity_status === "unresolved");
+    return state.assets;
+  }
+
   function applyFilters() {
+    refreshFilterVisibility();
     const query = els.search.value.trim().toLowerCase();
-    const status = els.status.value;
-    const action = els.action.value;
-    filtered = state.assets.filter(row => {
-      const haystack = [row.army_path, ...row.subjects, ...row.unit_slugs, ...row.profile_names,
-        ...row.candidates.flatMap(c => [c.path, c.subject, ...c.tags])].join(" ").toLowerCase();
-      if (query && !haystack.includes(query)) return false;
-      if (status === "pending" && !["name-candidate", "unresolved"].includes(row.identity_status)) return false;
-      if (status === "reviewed" && !reviewed(row.identity_status)) return false;
-      if (!["pending", "reviewed", "all"].includes(status) && row.identity_status !== status) return false;
-      if (action !== "all" && row.action !== action && !row.candidates.some(c => c.action === action)) return false;
-      return true;
-    });
-    if (!filtered.some(row => row.army_path === currentPath)) currentPath = filtered[0]?.army_path || null;
+    if (issueScope()) {
+      const issueStatus = els.issueStatus.value;
+      const issueType = els.issueType.value;
+      filtered = state.issue_groups.filter(row => {
+        const haystack = [row.representative_path, ...row.paths, ...row.labels,
+          ...row.issue_types, ...row.advisories, ...row.signals].join(" ").toLowerCase();
+        if (query && !haystack.includes(query)) return false;
+        if (issueStatus !== "all" && row.review.status !== issueStatus) return false;
+        if (issueType !== "all" && !row.issue_types.includes(issueType)) return false;
+        return true;
+      });
+    } else {
+      const status = els.status.value;
+      const action = els.action.value;
+      filtered = identityRowsForScope().filter(row => {
+        const haystack = [row.army_path, ...row.subjects, ...row.unit_slugs, ...row.profile_names,
+          ...row.candidates.flatMap(c => [c.path, c.subject, ...c.tags])].join(" ").toLowerCase();
+        if (query && !haystack.includes(query)) return false;
+        if (status === "pending" && !["name-candidate", "unresolved"].includes(row.identity_status)) return false;
+        if (status === "reviewed" && !reviewed(row.identity_status)) return false;
+        if (!["pending", "reviewed", "all"].includes(status) && row.identity_status !== status) return false;
+        if (action !== "all" && row.action !== action && !row.candidates.some(c => c.action === action)) return false;
+        return true;
+      });
+    }
+    if (!filtered.some(row => rowKey(row) === currentKey)) currentKey = filtered[0] ? rowKey(filtered[0]) : null;
     renderQueue();
     renderCurrent();
   }
 
-  function renderQueue() {
-    const row = current();
+  function renderSummary() {
+    if (issueScope()) {
+      const groups = state.issue_summary?.groups || 0;
+      const files = state.issue_summary?.semantic_files || 0;
+      els.summary.textContent = `${groups} unique issue groups · ${files} affected Army SVG paths · hard findings + missing dependencies`;
+      return;
+    }
     const reviewedCount = state.assets.filter(item => reviewed(item.identity_status)).length;
     els.summary.textContent = `${reviewedCount} reviewed · ${state.assets.length} canonical assets · ${state.summary.identity_status?.["name-candidate"] || 0} name candidates`;
+  }
+
+  function issueQueueItem(item, active) {
+    const label = item.labels[0] || item.representative_path.replace(/^.*\//, "");
+    const extra = item.labels.length > 1 ? ` +${item.labels.length - 1}` : "";
+    const stale = item.scan_stale || item.source_missing ? " · rescan/source check needed" : "";
+    return `<button type="button" class="queue-item ${active ? "active" : ""}" data-key="${esc(item.issue_key)}">
+      <span class="name"><span class="status issue-${esc(item.review.status)}"></span>${esc(label)}${esc(extra)}</span>
+      <span class="sub">${esc(item.issue_types.join(", "))} · ${item.semantic_count} path${item.semantic_count === 1 ? "" : "s"}${esc(stale)}</span>
+    </button>`;
+  }
+
+  function identityQueueItem(item, active) {
+    const label = item.subjects[0] || item.army_path;
+    return `<button type="button" class="queue-item ${active ? "active" : ""}" data-key="${esc(item.army_path)}">
+      <span class="name"><span class="status ${esc(item.identity_status)}"></span>${esc(label)}</span>
+      <span class="sub">${esc(item.identity_status)} · ${item.candidates.length} candidate${item.candidates.length === 1 ? "" : "s"}</span>
+    </button>`;
+  }
+
+  function renderQueue() {
+    const row = current();
+    renderSummary();
     els.queueCount.textContent = `${filtered.length} shown`;
-    els.queue.innerHTML = filtered.map(item => {
-      const label = item.subjects[0] || item.army_path;
-      return `<button type="button" class="queue-item ${row?.army_path === item.army_path ? "active" : ""}" data-path="${esc(item.army_path)}">
-        <span class="name"><span class="status ${esc(item.identity_status)}"></span>${esc(label)}</span>
-        <span class="sub">${esc(item.identity_status)} · ${item.candidates.length} candidate${item.candidates.length === 1 ? "" : "s"}</span>
-      </button>`;
-    }).join("") || '<div class="empty">No assets match these filters.</div>';
+    els.queue.innerHTML = filtered.map(item => issueScope()
+      ? issueQueueItem(item, row?.issue_key === item.issue_key)
+      : identityQueueItem(item, row?.army_path === item.army_path)
+    ).join("") || '<div class="empty">No entries match these filters.</div>';
     els.queue.querySelectorAll(".queue-item").forEach(button => button.addEventListener("click", () => {
-      currentPath = button.dataset.path;
+      currentKey = button.dataset.key;
       activeCandidate = 0;
       renderQueue();
       renderCurrent();
     }));
-    const index = row ? filtered.findIndex(item => item.army_path === row.army_path) : -1;
+    const index = row ? filtered.findIndex(item => rowKey(item) === rowKey(row)) : -1;
     els.position.textContent = index >= 0 ? `${index + 1} / ${filtered.length}` : "0 / 0";
   }
 
@@ -155,6 +225,26 @@
     if (mode === "blink" && row.candidates.length) startBlink();
   }
 
+  function issueDetail(row) {
+    const image = row.source_missing
+      ? '<div class="empty">The representative SVG is missing from the configured Army root.</div>'
+      : `<article class="image-card"><header><div><strong>Current Army source</strong><small>${esc(row.representative_path)}</small></div></header><div class="image-wrap"><img src="${imageUrl("army", row.representative_path)}" alt="Current Army issue source"></div></article>`;
+    const warnings = [
+      row.scan_stale ? '<p class="warning">The representative file hash no longer matches this scan. Re-scan before making conclusions from the recorded issue.</p>' : "",
+      row.source_missing ? '<p class="warning">The configured Army root does not contain this scanned source.</p>' : ""
+    ].join("");
+    const signals = row.signals.length
+      ? `<h3>Scanner evidence</h3><ul>${row.signals.map(signal => `<li>${esc(signal)}</li>`).join("")}</ul>`
+      : "";
+    const parseErrors = row.parse_errors.length
+      ? `<h3>Parse errors</h3><ul>${row.parse_errors.map(error => `<li>${esc(error)}</li>`).join("")}</ul>`
+      : "";
+    const paths = `<h3>Affected semantic paths</h3><ul class="issue-paths">${row.paths.map(path => `<li>${esc(path)}</li>`).join("")}</ul>`;
+    return `<div class="issue-layout">${image}<article class="issue-details">${warnings}
+      <dl><dt>Issue</dt><dd>${esc(row.issue_types.join(", "))}</dd><dt>Severity</dt><dd>${esc(row.severity || "advisory")}</dd><dt>Source hash</dt><dd class="mono">${esc(row.sha256 || "unavailable")}</dd><dt>Semantic paths</dt><dd>${row.semantic_count}</dd></dl>
+      ${signals}${parseErrors}${paths}</article></div>`;
+  }
+
   function prefillDecision(row) {
     const review = row.review;
     let value = "unresolved";
@@ -175,25 +265,45 @@
     const row = current();
     if (!row) {
       stopBlink();
-      els.title.textContent = "No asset selected";
+      els.title.textContent = "No item selected";
       els.meta.textContent = "";
-      els.comparison.innerHTML = '<div class="empty">Adjust the filters to show review candidates.</div>';
+      els.comparison.innerHTML = '<div class="empty">Adjust the filters to show review work.</div>';
       els.form.classList.add("hidden");
+      els.issueForm.classList.add("hidden");
+      els.modebar.classList.add("hidden");
       return;
     }
-    els.form.classList.remove("hidden");
-    els.title.textContent = row.subjects.join(" / ") || row.army_path;
-    els.meta.textContent = `${row.army_path} · ${row.identity_status}${row.profile_names.length ? " · profiles: " + row.profile_names.join(", ") : ""}`;
-    activeCandidate = Math.min(activeCandidate, Math.max(0, row.candidates.length - 1));
-    selectedCandidates = new Set(row.review?.vyo_paths || (row.candidates.length === 1 ? [row.candidates[0].path] : []));
-    renderComparison(row);
-    prefillDecision(row);
+
+    if (issueScope()) {
+      stopBlink();
+      els.modebar.classList.add("hidden");
+      els.form.classList.add("hidden");
+      els.issueForm.classList.remove("hidden");
+      els.title.textContent = row.labels.join(" / ") || row.representative_path;
+      els.meta.textContent = `${row.issue_types.join(", ")} · ${row.semantic_count} semantic path${row.semantic_count === 1 ? "" : "s"}`;
+      els.comparison.innerHTML = issueDetail(row);
+      els.issueState.value = row.review.status;
+      els.issueNote.value = row.review.note || "";
+      els.issueMessage.textContent = "";
+      els.issueMessage.classList.remove("error");
+    } else {
+      els.modebar.classList.remove("hidden");
+      els.issueForm.classList.add("hidden");
+      els.form.classList.remove("hidden");
+      els.title.textContent = row.subjects.join(" / ") || row.army_path;
+      els.meta.textContent = `${row.army_path} · ${row.identity_status}${row.profile_names.length ? " · profiles: " + row.profile_names.join(", ") : ""}`;
+      activeCandidate = Math.min(activeCandidate, Math.max(0, row.candidates.length - 1));
+      selectedCandidates = new Set(row.review?.vyo_paths || (row.candidates.length === 1 ? [row.candidates[0].path] : []));
+      renderComparison(row);
+      prefillDecision(row);
+      els.message.textContent = "";
+      els.message.classList.remove("error");
+    }
+
     const index = filtered.indexOf(row);
     els.previous.disabled = index <= 0;
     els.next.disabled = index < 0 || index >= filtered.length - 1;
     els.position.textContent = `${index + 1} / ${filtered.length}`;
-    els.message.textContent = "";
-    els.message.classList.remove("error");
     schedulePrefetch();
   }
 
@@ -202,7 +312,7 @@
     const index = row ? filtered.indexOf(row) : -1;
     const next = filtered[index + delta];
     if (!next) return;
-    currentPath = next.army_path;
+    currentKey = rowKey(next);
     activeCandidate = 0;
     renderQueue();
     renderCurrent();
@@ -219,7 +329,7 @@
   async function saveReview(event) {
     event.preventDefault();
     const row = current();
-    if (!row) return;
+    if (!row || issueScope()) return;
     els.save.disabled = true;
     els.message.textContent = "Saving…";
     els.message.classList.remove("error");
@@ -241,11 +351,10 @@
       if (!response.ok) throw new Error(body.error || `HTTP ${response.status}`);
       const oldIndex = filtered.indexOf(row);
       state = body;
-      els.message.textContent = "Saved.";
       applyFilters();
       const nextRow = filtered[Math.min(Math.max(oldIndex, 0), Math.max(filtered.length - 1, 0))];
       if (nextRow) {
-        currentPath = nextRow.army_path;
+        currentKey = rowKey(nextRow);
         activeCandidate = 0;
         renderQueue();
         renderCurrent();
@@ -258,26 +367,75 @@
     }
   }
 
+  async function saveIssue(event) {
+    event.preventDefault();
+    const row = current();
+    if (!row || !issueScope()) return;
+    els.issueSave.disabled = true;
+    els.issueMessage.textContent = "Saving…";
+    els.issueMessage.classList.remove("error");
+    try {
+      const response = await fetch("/api/issue-review", {
+        method: "POST",
+        headers: {"Content-Type": "application/json", "X-Review-Token": state.review_token},
+        body: JSON.stringify({
+          issue_key: row.issue_key,
+          status: els.issueState.value,
+          note: els.issueNote.value.trim()
+        })
+      });
+      const body = await response.json();
+      if (!response.ok) throw new Error(body.error || `HTTP ${response.status}`);
+      const oldIndex = filtered.indexOf(row);
+      state = body;
+      populateIssueTypes();
+      applyFilters();
+      const nextRow = filtered[Math.min(Math.max(oldIndex, 0), Math.max(filtered.length - 1, 0))];
+      if (nextRow) {
+        currentKey = rowKey(nextRow);
+        renderQueue();
+        renderCurrent();
+      }
+    } catch (error) {
+      els.issueMessage.textContent = error.message;
+      els.issueMessage.classList.add("error");
+    } finally {
+      els.issueSave.disabled = false;
+    }
+  }
+
   async function load() {
     try {
       const response = await fetch("/api/state");
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       state = await response.json();
+      populateIssueTypes();
+      const issueOption = els.scope.querySelector('option[value="issues"]');
+      if (!state.issue_groups.length) {
+        issueOption.disabled = true;
+        issueOption.textContent = "Current Army issues (no scan loaded)";
+        els.scope.value = "vyo";
+      } else {
+        els.scope.value = "issues";
+      }
       applyFilters();
     } catch (error) {
       els.summary.textContent = `Failed to load: ${error.message}`;
     }
   }
 
+  els.scope.addEventListener("change", () => { currentKey = null; activeCandidate = 0; applyFilters(); });
   els.search.addEventListener("input", applyFilters);
   els.status.addEventListener("change", applyFilters);
   els.action.addEventListener("change", applyFilters);
+  els.issueStatus.addEventListener("change", applyFilters);
+  els.issueType.addEventListener("change", applyFilters);
   els.previous.addEventListener("click", () => navigate(-1));
   els.next.addEventListener("click", () => navigate(1));
   document.querySelectorAll(".mode").forEach(button => button.addEventListener("click", () => {
     mode = button.dataset.mode;
     document.querySelectorAll(".mode").forEach(item => item.classList.toggle("active", item === button));
-    const row = current(); if (row) renderComparison(row);
+    const row = current(); if (row && !issueScope()) renderComparison(row);
   }));
   els.opacity.addEventListener("input", () => { const top = document.querySelector(".overlay-top"); if (top) top.style.opacity = String(Number(els.opacity.value) / 100); });
   els.blinkPause.addEventListener("click", () => {
@@ -286,6 +444,7 @@
   });
   document.querySelectorAll('input[name="decision"]').forEach(input => input.addEventListener("change", updateMissingControl));
   els.form.addEventListener("submit", saveReview);
+  els.issueForm.addEventListener("submit", saveIssue);
   document.addEventListener("keydown", event => {
     if (event.target.matches("input, textarea, select")) return;
     if (event.key === "j") navigate(1);

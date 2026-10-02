@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import subprocess
 import tempfile
@@ -327,6 +328,152 @@ class PersistentRendererTests(unittest.TestCase):
             ]
             self.assertEqual(len(commands), 1)
             renderer.close()
+
+
+class IssueQueueTests(unittest.TestCase):
+    def test_groups_only_actionable_current_army_issues_by_source_hash(self):
+        scan = {
+            "files": [
+                {
+                    "path": r"units\a.svg",
+                    "sha256": "same",
+                    "size_bytes": 100,
+                    "classification": "flattened-gradient-mask",
+                    "severity": "high",
+                    "advisories": ["subpixel-detail-heavy"],
+                    "signals": ["many repeated gradients"],
+                },
+                {
+                    "path": "units/b.svg",
+                    "sha256": "same",
+                    "size_bytes": 100,
+                    "classification": "flattened-gradient-mask",
+                    "severity": "high",
+                    "advisories": [],
+                    "signals": [],
+                },
+                {
+                    "path": "units/advisory-only.svg",
+                    "sha256": "advisory",
+                    "size_bytes": 10,
+                    "classification": None,
+                    "severity": "low",
+                    "advisories": ["subpixel-detail-heavy"],
+                    "signals": [],
+                },
+                {
+                    "path": "units/missing-image.svg",
+                    "sha256": "missing",
+                    "size_bytes": 20,
+                    "classification": None,
+                    "severity": "medium",
+                    "advisories": ["missing-external-image"],
+                    "signals": ["sidecar is absent"],
+                },
+                {
+                    "path": "units/broken.svg",
+                    "sha256": "broken",
+                    "size_bytes": 30,
+                    "parse_error": "bad XML",
+                    "classification": None,
+                    "severity": None,
+                    "advisories": [],
+                    "signals": [],
+                },
+            ]
+        }
+        report = {
+            "assets": [
+                {
+                    "subjects": ["Alpha"],
+                    "unit_slugs": ["alpha"],
+                    "source_assets": [{"path": "units/a.svg"}, {"path": "units/b.svg"}],
+                }
+            ]
+        }
+        groups = vyo_review.build_issue_groups(
+            scan,
+            vyo_review._empty_issue_review(),
+            report=report,
+        )
+        self.assertEqual(len(groups), 3)
+        hard = next(group for group in groups if group["sha256"] == "same")
+        self.assertEqual(hard["semantic_count"], 2)
+        self.assertEqual(hard["paths"], ["units/a.svg", "units/b.svg"])
+        self.assertEqual(hard["labels"], ["Alpha"])
+        self.assertEqual(hard["issue_types"], ["flattened-gradient-mask"])
+        self.assertFalse(any(group["sha256"] == "advisory" for group in groups))
+        missing = next(group for group in groups if group["sha256"] == "missing")
+        self.assertEqual(missing["issue_types"], ["missing-external-image"])
+        broken = next(group for group in groups if group["sha256"] == "broken")
+        self.assertEqual(broken["issue_types"], ["parse-error"])
+        self.assertEqual(broken["severity"], "error")
+
+    def test_issue_group_marks_stale_scan_hash(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "units" / "a.svg"
+            source.parent.mkdir()
+            source.write_text("<svg/>", encoding="utf-8")
+            digest = hashlib.sha256(source.read_bytes()).hexdigest()
+            scan = {
+                "files": [
+                    {
+                        "path": "units/a.svg",
+                        "sha256": digest,
+                        "size_bytes": source.stat().st_size,
+                        "classification": "off-artboard-content",
+                        "severity": "high",
+                        "advisories": [],
+                        "signals": [],
+                    }
+                ]
+            }
+            groups = vyo_review.build_issue_groups(
+                scan,
+                vyo_review._empty_issue_review(),
+                army_root=root,
+            )
+            self.assertFalse(groups[0]["scan_stale"])
+            source.write_text("<svg><g/></svg>", encoding="utf-8")
+            groups = vyo_review.build_issue_groups(
+                scan,
+                vyo_review._empty_issue_review(),
+                army_root=root,
+            )
+            self.assertTrue(groups[0]["scan_stale"])
+
+    def test_issue_review_tracks_research_state_and_requires_terminal_note(self):
+        group = {
+            "issue_key": "abc",
+            "sha256": "abc",
+            "paths": ["units/a.svg"],
+            "issue_types": ["embedded-raster-heavy"],
+        }
+        review = vyo_review._empty_issue_review()
+        with self.assertRaisesRegex(ValueError, "requires a note"):
+            vyo_review.update_issue_review(
+                [group],
+                review,
+                {"issue_key": "abc", "status": "no-action-required", "note": ""},
+            )
+        updated = vyo_review.update_issue_review(
+            [group],
+            review,
+            {
+                "issue_key": "abc",
+                "status": "solution-identified",
+                "note": "Use the validated replacement.",
+            },
+        )
+        self.assertEqual(updated["issues"]["abc"]["status"], "solution-identified")
+        self.assertEqual(updated["issues"]["abc"]["paths"], ["units/a.svg"])
+        cleared = vyo_review.update_issue_review(
+            [group],
+            updated,
+            {"issue_key": "abc", "status": "uninvestigated", "note": ""},
+        )
+        self.assertNotIn("abc", cleared["issues"])
 
 
 if __name__ == "__main__":
