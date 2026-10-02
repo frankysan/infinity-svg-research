@@ -10,6 +10,7 @@ import secrets
 import subprocess
 import tempfile
 import threading
+import time
 import webbrowser
 from dataclasses import dataclass
 from http import HTTPStatus
@@ -21,6 +22,7 @@ from urllib.parse import parse_qs, urlparse
 from PIL import Image
 
 from . import vyo_identity
+from .render_compare import _shell_path
 
 REVIEWED_STATUSES = {"reviewed-match", "reviewed-design-mismatch", "confirmed-missing"}
 DECISIONS = {"reuse", "cleanup", "mismatch", "unresolved", "missing"}
@@ -38,6 +40,7 @@ class ReviewConfig:
     cache: Path
     inkscape: str
     render_size: int = 512
+    render_timeout: float = 60.0
 
 
 def load_json(path: Path) -> dict:
@@ -89,30 +92,187 @@ def _fit_square(source: Path, destination: Path, size: int) -> None:
         canvas.save(destination, format="PNG", optimize=True)
 
 
-def render_review_png(source: Path, cache: Path, *, inkscape: str, size: int) -> Path:
+class PersistentInkscapeShell:
+    """One long-lived Inkscape shell, serialized across HTTP render requests."""
+
+    def __init__(
+        self,
+        inkscape: str,
+        *,
+        log_path: Path,
+        timeout: float = 60.0,
+        process_factory=None,
+    ):
+        if timeout <= 0:
+            raise ValueError("render timeout must be positive")
+        self.inkscape = inkscape
+        self.log_path = log_path
+        self.timeout = timeout
+        self.lock = threading.RLock()
+        self._process_factory = process_factory or subprocess.Popen
+        self._process = None
+        self._log = None
+        self.starts = 0
+        self.restarts = 0
+        self.closed = False
+
+    def start(self) -> None:
+        with self.lock:
+            if self.closed:
+                raise RuntimeError("Inkscape renderer is closed")
+            self._ensure_process_locked()
+
+    def _ensure_process_locked(self) -> None:
+        if self._process is not None and self._process.poll() is None:
+            return
+        if self._process is not None:
+            self._stop_process_locked(graceful=False)
+        self.log_path.parent.mkdir(parents=True, exist_ok=True)
+        if self._log is None:
+            self._log = self.log_path.open("ab", buffering=0)
+        try:
+            self._process = self._process_factory(
+                [self.inkscape, "--shell"],
+                stdin=subprocess.PIPE,
+                stdout=self._log,
+                stderr=subprocess.STDOUT,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+            )
+        except OSError as exc:
+            raise RuntimeError(f"failed to start Inkscape shell: {exc}") from exc
+        if self._process.stdin is None:
+            self._stop_process_locked(graceful=False)
+            raise RuntimeError("Inkscape shell started without stdin")
+        self.starts += 1
+
+    def _stop_process_locked(self, *, graceful: bool) -> None:
+        process = self._process
+        self._process = None
+        if process is None:
+            return
+        if process.poll() is None and graceful and process.stdin is not None:
+            try:
+                process.stdin.write("quit\n")
+                process.stdin.flush()
+                process.wait(timeout=3)
+            except (BrokenPipeError, OSError, subprocess.TimeoutExpired):
+                pass
+        if process.poll() is None:
+            try:
+                process.terminate()
+                process.wait(timeout=2)
+            except (OSError, subprocess.TimeoutExpired):
+                try:
+                    process.kill()
+                    process.wait(timeout=2)
+                except (OSError, subprocess.TimeoutExpired):
+                    pass
+        try:
+            if process.stdin is not None:
+                process.stdin.close()
+        except OSError:
+            pass
+
+    def _wait_for_png_locked(self, destination: Path) -> None:
+        deadline = time.monotonic() + self.timeout
+        while time.monotonic() < deadline:
+            process = self._process
+            if process is None or process.poll() is not None:
+                code = None if process is None else process.returncode
+                raise RuntimeError(f"Inkscape shell exited during render (exit {code})")
+            if destination.is_file() and destination.stat().st_size:
+                try:
+                    with Image.open(destination) as image:
+                        image.verify()
+                    return
+                except (OSError, SyntaxError):
+                    pass
+            time.sleep(0.02)
+        raise RuntimeError(f"Inkscape shell render timed out after {self.timeout:g}s")
+
+    def _render_once_locked(self, source: Path, destination: Path, width: int) -> None:
+        self._ensure_process_locked()
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.unlink(missing_ok=True)
+        actions = "; ".join(
+            [
+                f"file-open:{_shell_path(source)}",
+                "export-area-drawing",
+                "export-background-opacity:0",
+                f"export-width:{width}",
+                f"export-filename:{_shell_path(destination)}",
+                "export-do",
+                "file-close",
+            ]
+        )
+        process = self._process
+        assert process is not None and process.stdin is not None
+        try:
+            process.stdin.write(actions + "\n")
+            process.stdin.flush()
+        except (BrokenPipeError, OSError) as exc:
+            raise RuntimeError("failed to submit render to Inkscape shell") from exc
+        self._wait_for_png_locked(destination)
+
+    def render(self, source: Path, destination: Path, *, width: int) -> None:
+        if width <= 0:
+            raise ValueError("render width must be positive")
+        with self.lock:
+            if self.closed:
+                raise RuntimeError("Inkscape renderer is closed")
+            last_error = None
+            for attempt in range(2):
+                try:
+                    self._render_once_locked(source, destination, width)
+                    return
+                except RuntimeError as exc:
+                    last_error = exc
+                    self._stop_process_locked(graceful=False)
+                    destination.unlink(missing_ok=True)
+                    if attempt == 0:
+                        self.restarts += 1
+                        continue
+            raise RuntimeError(
+                f"Inkscape shell render failed after restart: {last_error}; see {self.log_path}"
+            ) from last_error
+
+    def close(self) -> None:
+        with self.lock:
+            if self.closed:
+                return
+            self.closed = True
+            self._stop_process_locked(graceful=True)
+            if self._log is not None:
+                self._log.close()
+                self._log = None
+
+
+def render_review_png(
+    source: Path,
+    cache: Path,
+    *,
+    renderer: PersistentInkscapeShell,
+    size: int,
+) -> Path:
     digest = hashlib.sha256(source.read_bytes()).hexdigest()
     key = hashlib.sha256(f"review-v1\0{digest}\0{size}".encode()).hexdigest()
     destination = cache / f"{key}.png"
     if destination.is_file():
         return destination
     cache.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix="svg-review-", dir=cache) as directory:
-        raw = Path(directory) / "raw.png"
-        command = [
-            inkscape,
-            str(source),
-            "--export-area-drawing",
-            "--export-background-opacity=0",
-            f"--export-width={size * 2}",
-            f"--export-filename={raw}",
-        ]
-        completed = subprocess.run(command, capture_output=True, text=True, check=False)
-        if completed.returncode != 0 or not raw.is_file():
-            detail = completed.stderr.strip() or completed.stdout.strip() or "no renderer output"
-            raise RuntimeError(f"Inkscape render failed for {source.name}: {detail}")
-        framed = Path(directory) / "framed.png"
-        _fit_square(raw, framed, size)
-        os.replace(framed, destination)
+    # Keep the cache check, Inkscape export, framing and atomic publish under the same
+    # renderer lock so simultaneous HTTP requests cannot render the same source twice.
+    with renderer.lock:
+        if destination.is_file():
+            return destination
+        with tempfile.TemporaryDirectory(prefix="svg-review-", dir=cache) as directory:
+            raw = Path(directory) / "raw.png"
+            renderer.render(source, raw, width=size * 2)
+            framed = Path(directory) / "framed.png"
+            _fit_square(raw, framed, size)
+            os.replace(framed, destination)
     return destination
 
 
@@ -306,7 +466,19 @@ class ReviewApplication:
         self.config = config
         self.lock = threading.RLock()
         self.token = secrets.token_urlsafe(32)
-        self.report = rebuild(config)
+        self.renderer = PersistentInkscapeShell(
+            config.inkscape,
+            log_path=config.cache / "inkscape-shell.log",
+            timeout=config.render_timeout,
+        )
+        # Start before rebuilding the identity map so Inkscape can initialize while
+        # the Python-side report work runs.
+        self.renderer.start()
+        try:
+            self.report = rebuild(config)
+        except BaseException:
+            self.renderer.close()
+            raise
 
     def state(self) -> dict:
         with self.lock:
@@ -327,9 +499,12 @@ class ReviewApplication:
         return render_review_png(
             source,
             self.config.cache,
-            inkscape=self.config.inkscape,
+            renderer=self.renderer,
             size=self.config.render_size,
         )
+
+    def close(self) -> None:
+        self.renderer.close()
 
 
 class ReviewHandler(BaseHTTPRequestHandler):
@@ -357,7 +532,10 @@ class ReviewHandler(BaseHTTPRequestHandler):
 
     def _bytes(self, data: bytes, content_type: str, status: HTTPStatus = HTTPStatus.OK) -> None:
         self._headers(status, content_type, len(data))
-        self.wfile.write(data)
+        try:
+            self.wfile.write(data)
+        except (BrokenPipeError, ConnectionResetError):
+            pass
 
     def _json(self, data: dict, status: HTTPStatus = HTTPStatus.OK) -> None:
         self._bytes(
@@ -442,6 +620,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--cache", type=Path)
     parser.add_argument("--inkscape", default="inkscape")
     parser.add_argument("--render-size", type=int, default=512)
+    parser.add_argument("--render-timeout", type=float, default=60.0)
     parser.add_argument("--port", type=int, default=0)
     parser.add_argument("--no-browser", action="store_true")
     args = parser.parse_args(argv)
@@ -449,6 +628,8 @@ def main(argv: list[str] | None = None) -> int:
         parser.error("--render-size must be between 128 and 2048")
     if not 0 <= args.port <= 65535:
         parser.error("--port must be between 0 and 65535")
+    if args.render_timeout <= 0:
+        parser.error("--render-timeout must be positive")
 
     output = args.output.resolve()
     cache = (args.cache or output / "render-cache").resolve()
@@ -463,6 +644,7 @@ def main(argv: list[str] | None = None) -> int:
         cache=cache,
         inkscape=args.inkscape,
         render_size=args.render_size,
+        render_timeout=args.render_timeout,
     )
     app = ReviewApplication(config)
     server = ThreadingHTTPServer(("127.0.0.1", args.port), ReviewHandler)
@@ -477,6 +659,7 @@ def main(argv: list[str] | None = None) -> int:
     except KeyboardInterrupt:
         print("\nStopping reviewer.")
     finally:
+        app.close()
         server.server_close()
     return 0
 

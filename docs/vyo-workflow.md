@@ -54,10 +54,16 @@ python tools/vyo_review.py research/vyo-full-inventory-v1.json `
 ```
 
 The interface supports queue search/filtering, multiple candidate selection, side-by-side, opacity
-overlay, and blink comparison. `reuse`, `minor-cleanup`, and design-mismatch decisions require an
-evidence note; cleanup/mismatch also require explicit reasons. Confirmed absence is deliberately
-guarded by a separate confirmation and cannot select a Vyo source. Subject-scoped alias rules remain
-read-only hints in the reviewer: only exact Army profile review rules are created or replaced.
+overlay, and blink comparison. The server starts one persistent `inkscape --shell` process and serializes
+all cache misses through it, avoiding a Windows process startup for every image. A failed shell is
+restarted once automatically; shell output is retained in `render-cache/inkscape-shell.log`. The browser
+also warms the next review row after a short delay so normal forward review usually reads from the PNG
+cache. `--render-timeout` controls the per-export timeout and defaults to 60 seconds.
+
+`reuse`, `minor-cleanup`, and design-mismatch decisions require an evidence note; cleanup/mismatch also
+require explicit reasons. Confirmed absence is deliberately guarded by a separate confirmation and
+cannot select a Vyo source. Subject-scoped alias rules remain read-only hints in the reviewer: only exact
+Army profile review rules are created or replaced.
 
 ## Viewports
 

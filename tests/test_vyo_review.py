@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -8,6 +9,69 @@ from pathlib import Path
 from PIL import Image
 
 from infinity_svg_research import vyo_review
+
+
+class _FakeStdin:
+    def __init__(self, process):
+        self.process = process
+        self.closed = False
+
+    def write(self, text):
+        self.process.commands.append(text)
+        if text.strip() == "quit":
+            self.process.returncode = 0
+            return len(text)
+        if self.process.fail_render and "export-do" in text:
+            self.process.returncode = 1
+            return len(text)
+        destination = None
+        for action in text.split(";"):
+            action = action.strip()
+            if action.startswith("export-filename:"):
+                destination = Path(action.split(":", 1)[1])
+        if destination is not None and "export-do" in text:
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            Image.new("RGBA", (96, 48), (255, 255, 255, 255)).save(destination)
+        return len(text)
+
+    def flush(self):
+        return None
+
+    def close(self):
+        self.closed = True
+
+
+class _FakeProcess:
+    def __init__(self, *, fail_render=False):
+        self.returncode = None
+        self.fail_render = fail_render
+        self.commands = []
+        self.stdin = _FakeStdin(self)
+
+    def poll(self):
+        return self.returncode
+
+    def wait(self, timeout=None):
+        if self.returncode is None:
+            raise subprocess.TimeoutExpired("fake-inkscape", timeout)
+        return self.returncode
+
+    def terminate(self):
+        self.returncode = -15
+
+    def kill(self):
+        self.returncode = -9
+
+
+class _FakeProcessFactory:
+    def __init__(self, *, fail_first=False):
+        self.fail_first = fail_first
+        self.processes = []
+
+    def __call__(self, *args, **kwargs):
+        process = _FakeProcess(fail_render=self.fail_first and not self.processes)
+        self.processes.append(process)
+        return process
 
 
 class DecisionTests(unittest.TestCase):
@@ -192,6 +256,77 @@ class AssetTests(unittest.TestCase):
             vyo_review.atomic_write_json(path, {"rules": [{"evidence": "åäö"}]})
             saved = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(saved["rules"][0]["evidence"], "åäö")
+
+
+class PersistentRendererTests(unittest.TestCase):
+    def test_shell_is_reused_for_multiple_exports_and_closed_cleanly(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "source.svg"
+            source.write_text("<svg/>", encoding="utf-8")
+            factory = _FakeProcessFactory()
+            renderer = vyo_review.PersistentInkscapeShell(
+                "inkscape",
+                log_path=root / "inkscape.log",
+                process_factory=factory,
+            )
+            renderer.start()
+            renderer.render(source, root / "one.png", width=256)
+            renderer.render(source, root / "two.png", width=512)
+            self.assertEqual(renderer.starts, 1)
+            self.assertEqual(len(factory.processes), 1)
+            render_commands = [
+                command for command in factory.processes[0].commands if "export-do" in command
+            ]
+            self.assertEqual(len(render_commands), 2)
+            self.assertIn("export-area-drawing", render_commands[0])
+            self.assertIn("file-close", render_commands[0])
+            renderer.close()
+            self.assertIn("quit\n", factory.processes[0].commands)
+
+    def test_dead_shell_is_restarted_once(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "source.svg"
+            source.write_text("<svg/>", encoding="utf-8")
+            destination = root / "render.png"
+            factory = _FakeProcessFactory(fail_first=True)
+            renderer = vyo_review.PersistentInkscapeShell(
+                "inkscape",
+                log_path=root / "inkscape.log",
+                process_factory=factory,
+            )
+            renderer.start()
+            renderer.render(source, destination, width=256)
+            self.assertTrue(destination.is_file())
+            self.assertEqual(renderer.starts, 2)
+            self.assertEqual(renderer.restarts, 1)
+            renderer.close()
+
+    def test_review_cache_avoids_second_shell_export(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "source.svg"
+            source.write_text("<svg/>", encoding="utf-8")
+            factory = _FakeProcessFactory()
+            renderer = vyo_review.PersistentInkscapeShell(
+                "inkscape",
+                log_path=root / "inkscape.log",
+                process_factory=factory,
+            )
+            renderer.start()
+            first = vyo_review.render_review_png(
+                source, root / "cache", renderer=renderer, size=128
+            )
+            second = vyo_review.render_review_png(
+                source, root / "cache", renderer=renderer, size=128
+            )
+            self.assertEqual(first, second)
+            commands = [
+                command for command in factory.processes[0].commands if "export-do" in command
+            ]
+            self.assertEqual(len(commands), 1)
+            renderer.close()
 
 
 if __name__ == "__main__":

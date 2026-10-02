@@ -18,6 +18,8 @@
   let blinkTimer = null;
   let blinkVisible = true;
   let selectedCandidates = new Set();
+  let prefetchTimer = null;
+  let prefetchImages = [];
 
   function esc(value) {
     return String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"})[ch]);
@@ -44,6 +46,33 @@
       if (top) top.style.opacity = blinkVisible ? "1" : "0";
     }, 650);
     els.blinkPause.textContent = "Pause blink";
+  }
+
+
+  function cancelPrefetch() {
+    if (prefetchTimer) clearTimeout(prefetchTimer);
+    prefetchTimer = null;
+    prefetchImages.forEach(image => { image.src = ""; });
+    prefetchImages = [];
+  }
+
+  function schedulePrefetch() {
+    cancelPrefetch();
+    const row = current();
+    const index = row ? filtered.indexOf(row) : -1;
+    const next = index >= 0 ? filtered[index + 1] : null;
+    if (!next) return;
+    prefetchTimer = setTimeout(() => {
+      const paths = [];
+      if (next.army_source) paths.push(["army", next.army_source.path]);
+      next.candidates.slice(0, 3).forEach(candidate => paths.push(["vyo", candidate.path]));
+      prefetchImages = paths.map(([kind, path]) => {
+        const image = new Image();
+        image.decoding = "async";
+        image.src = imageUrl(kind, path);
+        return image;
+      });
+    }, 250);
   }
 
   function applyFilters() {
@@ -142,6 +171,7 @@
   }
 
   function renderCurrent() {
+    cancelPrefetch();
     const row = current();
     if (!row) {
       stopBlink();
@@ -164,6 +194,7 @@
     els.position.textContent = `${index + 1} / ${filtered.length}`;
     els.message.textContent = "";
     els.message.classList.remove("error");
+    schedulePrefetch();
   }
 
   function navigate(delta) {
