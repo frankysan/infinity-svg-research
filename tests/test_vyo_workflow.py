@@ -49,8 +49,10 @@ class ViewportTests(unittest.TestCase):
         self.assertEqual(
             candidate[candidate.index(b"><defs>") + 1 :], data[data.index(b"><defs>") + 1 :]
         )
-        self.assertEqual(metadata["new_viewport"]["width"], "100")
-        self.assertEqual(metadata["new_viewport"]["height"], "100")
+        root = viewport.parse_svg(candidate)
+        self.assertIsNone(root.get("width"))
+        self.assertIsNone(root.get("height"))
+        self.assertEqual(root.get("preserveAspectRatio"), "xMidYMid meet")
         self.assertLess(float(metadata["new_viewport"]["viewBox"].split()[0]), -3937)
 
     def test_example_svg_inside_comment_is_not_modified(self):
@@ -58,7 +60,28 @@ class ViewportTests(unittest.TestCase):
         data = comment + self.document()
         candidate, _ = viewport.normalize(data, [0, 0, 100, 100])
         self.assertTrue(candidate.startswith(comment))
-        self.assertEqual(viewport.parse_svg(candidate).get("width"), "100")
+        self.assertIsNone(viewport.parse_svg(candidate).get("width"))
+
+    def test_rectangular_artwork_keeps_intrinsic_ratio_without_fixed_dimensions(self):
+        candidate, metadata = viewport.normalize(self.document(), [0, 0, 200, 100], padding=0)
+        root = viewport.parse_svg(candidate)
+        _, _, w, h = map(float, root.get("viewBox").split())
+        self.assertIsNone(root.get("width"))
+        self.assertIsNone(root.get("height"))
+        self.assertAlmostEqual(metadata["intrinsic_aspect_ratio"], w / h)
+        self.assertGreater(w / h, 1.99)
+        self.assertEqual(root.get("preserveAspectRatio"), "xMidYMid meet")
+
+    def test_attribute_removal_preserves_child_sizes_and_other_root_attributes(self):
+        data = self.document(content='<rect width="40" height="20"/>')
+        data = viewport.replace_root_attributes(data, {"aria-label": "badge"})
+        candidate = viewport.replace_root_attributes(data, {"width": None, "height": None})
+        root = viewport.parse_svg(candidate)
+        self.assertIsNone(root.get("width"))
+        self.assertIsNone(root.get("height"))
+        self.assertEqual(root.get("aria-label"), "badge")
+        self.assertEqual(root[0].get("width"), "40")
+        self.assertEqual(root[0].get("height"), "20")
 
     def test_query_root_id_and_css_viewport_dependencies_are_blocked(self):
         data = viewport.replace_root_attributes(

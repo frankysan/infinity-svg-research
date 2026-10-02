@@ -37,13 +37,17 @@ rtk proxy python tools/vyo_identity.py research/vyo-full-inventory-v1.json `
 ## Viewports
 
 `tools/viewport_normalize.py` queries each drawing's bounds with Inkscape, converts the returned
-CSS pixels through the original physical size/viewBox mapping, and changes only the root `width`,
-`height`, and `viewBox` attributes. Styles, path data, transforms, gradients, and other content remain
+CSS pixels through the original physical size/viewBox mapping, removes the root `width` and `height`,
+and sets `viewBox` and `preserveAspectRatio="xMidYMid meet"`. Styles, path data, transforms, gradients, and other content remain
 unchanged. This handles the `(0,11000)`, `(3937,7063)`, and `(10000,17940)` conventions without a
 universal Morat rectangle. Non-circular artwork keeps its drawing aspect ratio.
 
-The output width defaults to 100 unitless units; height follows the derived aspect ratio. The
-viewBox includes 0.5% padding plus an outward allowance for Inkscape query rounding. These are
+The output has no fixed display size. Its viewBox provides the intrinsic aspect ratio; the consuming
+page or app supplies the display dimensions. Proportional fitting keeps the whole drawing visible
+when the container has a different shape, with space around it rather than stretching or cropping.
+These behaviors follow the SVG [viewBox](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/viewBox)
+and [preserveAspectRatio](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/preserveAspectRatio) rules.
+The viewBox includes 0.5% padding plus an outward allowance for Inkscape query rounding. These are
 candidate framing choices, not a recovered authorial badge margin or an InfinityDB publication size.
 
 Font-dependent text, external references, percentages that depend on the viewport, and other
@@ -52,9 +56,9 @@ publication outlining stage before retrying text-bearing sources. Do not create 
 pipeline here.
 
 ```powershell
-rtk proxy python tools/viewport_normalize.py "input/svg/Vyo SVG Vectors" output/vyo-viewport-v1 `
+rtk proxy python tools/viewport_normalize.py "input/svg/Vyo SVG Vectors" output/vyo-viewport-v2 `
   --inkscape "C:\Program Files\Inkscape\bin\inkscape.com"
-rtk proxy python tools/viewport_validate.py output/vyo-viewport-v1/report.json `
+rtk proxy python tools/viewport_validate.py output/vyo-viewport-v2/report.json `
   --inkscape "C:\Program Files\Inkscape\bin\inkscape.com" --size 128
 ```
 
@@ -64,6 +68,19 @@ framing inspection. The original page is often clipped, so comparing original-pa
 pixels would test different crops. Drawing-render equality establishes unchanged appearance at the
 tested size; it does not establish Vyo-to-Army fidelity or publication readiness. At small sizes,
 antialiasing can touch the padded page edge without the drawing bounds exceeding the viewport.
+
+For images in a responsive page, let CSS supply the width and keep height automatic:
+
+```html
+<img class="emblem" src="symbols/emblem.svg" alt="Unit emblem">
+<style>
+  .emblem { display: block; width: 100%; height: auto; }
+</style>
+```
+
+For an inline SVG in a slot with both dimensions specified, set its CSS width and height to fill the
+slot. `xMidYMid meet` scales the drawing uniformly and centers it. Root size removal leaves child
+shape sizes unchanged so strokes, paths, and other artwork continue to scale together.
 
 ## First reviewed findings — 2026-10-01
 
@@ -98,3 +115,17 @@ the older Armand external-image source. All 544 drawing-area render pairs were p
 Full run data and render sheets are generated under ignored `output/` directories. Compact durable
 results are in `research/reports/vyo-workflow-v1-summary.json`. Reconstruct confirmed current-design
 defects and reviewed absences; continue identity review before treating unresolved rows as missing.
+
+## Responsive sizing continuation — v2
+
+The first batch used a fixed unitless width of 100. The v2 batch removes both root size attributes
+from all 544 candidates and explicitly preserves proportional fitting. The derived viewBoxes are
+identical to v1. The normalizer no longer accepts `--width`; render output sizes belong to the
+renderer or consuming page.
+
+All 544 original/candidate drawing render pairs match at 128 px. Six varied samples also match at
+512 px. Headless Chrome passed 48 layout checks: image widths of 32, 128, and 512 px with automatic
+height, and inline SVGs in square, wide, and tall containers. Those checks cover intrinsic ratios,
+uniform scaling, centering, and drawing bounds inside the container. The same 21 dependency cases
+remain held back. See `research/reports/vyo-responsive-sizing-v2-summary.json` and
+`final/vyo-workflow-v2.zip` for this continuation.

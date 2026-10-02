@@ -1,0 +1,104 @@
+{
+  "format": "infinity-svg-responsive-sizing-summary",
+  "version": 2,
+  "date": "2026-10-01",
+  "source_count": 565,
+  "normalized": 544,
+  "status_counts": {
+    "normalized-review-required": 544,
+    "blocked": 21
+  },
+  "sizing": {
+    "root_width": "absent",
+    "root_height": "absent",
+    "preserveAspectRatio": "xMidYMid meet",
+    "display_size": "provided by the consuming app/container/CSS",
+    "viewBoxes_identical_to_v1": true,
+    "artwork_and_other_attributes_identical_to_v1": true
+  },
+  "input_hashes": {
+    "v1_report": "a89c75b33bdafb6c99758fba05a5c3dffa535e682cb1690ee59959d66d389a64",
+    "v2_report": "ce3df9616b38e42ae27e85bc71a61b49bbdf124cdc47beba67fbcd3fe1c02642"
+  },
+  "render_validation_128": {
+    "format": "infinity-svg-vyo-viewport-validation",
+    "version": 1,
+    "inkscape_version": "Inkscape 1.4.4 (dcaf3e7, 2026-05-05)",
+    "size": 128,
+    "input_hashes_verified": true,
+    "normalized": 544,
+    "blocked": 21,
+    "drawing_render_exact": 544,
+    "max_rgba_rmse": 0.0,
+    "max_alpha_rmse": 0.0,
+    "page_border_nonzero": 540,
+    "report_sha256": "ce3df9616b38e42ae27e85bc71a61b49bbdf124cdc47beba67fbcd3fe1c02642",
+    "method": "Compare original and normalized drawing-area renders at the same output width. Separately inspect normalized page alpha bounds. This checks unchanged drawing appearance; it does not establish Vyo-to-Army fidelity or publication approval. Nonzero page border alpha can include antialiasing at small padding and is not itself a clipping diagnosis."
+  },
+  "render_validation_512_sample": {
+    "format": "infinity-svg-vyo-viewport-validation",
+    "version": 1,
+    "inkscape_version": "Inkscape 1.4.4 (dcaf3e7, 2026-05-05)",
+    "size": 512,
+    "input_hashes_verified": true,
+    "normalized": 6,
+    "blocked": 0,
+    "drawing_render_exact": 6,
+    "max_rgba_rmse": 0.0,
+    "max_alpha_rmse": 0.0,
+    "page_border_nonzero": 0,
+    "report_sha256": "c9bb1bf53950e7fdedc86605edc9f60fa67df2259866cc0545f86f54448985c0",
+    "method": "Compare original and normalized drawing-area renders at the same output width. Separately inspect normalized page alpha bounds. This checks unchanged drawing appearance; it does not establish Vyo-to-Army fidelity or publication approval. Nonzero page border alpha can include antialiasing at small padding and is not itself a clipping diagnosis."
+  },
+  "browser_validation": {
+    "browser": "Google Chrome  154.0.8037.92",
+    "samples": 6,
+    "checks": 48,
+    "passed": true,
+    "root_dimension_checks": 544,
+    "image_widths": [
+      32,
+      128,
+      512
+    ],
+    "inline_containers": [
+      [
+        32,
+        32
+      ],
+      [
+        128,
+        128
+      ],
+      [
+        512,
+        512
+      ],
+      [
+        320,
+        80
+      ],
+      [
+        80,
+        320
+      ]
+    ],
+    "checks_include": [
+      "intrinsic image aspect ratio",
+      "uniform scaling",
+      "centering",
+      "drawing bounds fit"
+    ],
+    "report_sha256": "9b3468db8304c5077b8f17e3d6d43652d1e0ec594de3a2e58fdcf82847ee44d9"
+  },
+  "validation": {
+    "unit_tests_passed": 47,
+    "ruff_check": "passed",
+    "git_diff_check": "passed"
+  },
+  "publication_approved": false,
+  "outputs": {
+    "normalized_svg_root": "output\\vyo-viewport-v2\\svg",
+    "bundle": "final/vyo-workflow-v2.zip"
+  }
+}

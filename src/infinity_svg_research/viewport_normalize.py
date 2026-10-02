@@ -1,7 +1,7 @@
 """Normalize page metadata without rewriting SVG geometry.
 
 Inkscape queries return CSS-pixel bounds, not viewBox coordinates. Convert through
-the original viewport mapping before changing the three root attributes.
+the original viewport mapping before removing fixed root dimensions.
 """
 
 from __future__ import annotations
@@ -38,7 +38,7 @@ def parse_svg(data: bytes) -> etree._Element:
     return root
 
 
-def replace_root_attributes(data: bytes, attributes: dict[str, str]) -> bytes:
+def replace_root_attributes(data: bytes, attributes: dict[str, str | None]) -> bytes:
     """Preserve every byte outside the attributes being changed."""
     comments = [(m.start(), m.end()) for m in re.finditer(rb"<!--.*?-->", data, re.DOTALL)]
     match = next(
@@ -57,11 +57,16 @@ def replace_root_attributes(data: bytes, attributes: dict[str, str]) -> bytes:
         name = attr.group(1).decode("ascii")
         if name not in pending:
             return attr.group(0)
-        return b" " + attr.group(1) + b'="' + pending.pop(name).encode("ascii") + b'"'
+        value = pending.pop(name)
+        if value is None:
+            return b""
+        return b" " + attr.group(1) + b'="' + value.encode("ascii") + b'"'
 
     tag = ATTRIBUTE.sub(replace, match.group())
     extra = b"".join(
-        b" " + k.encode("ascii") + b'="' + v.encode("ascii") + b'"' for k, v in pending.items()
+        b" " + k.encode("ascii") + b'="' + v.encode("ascii") + b'"'
+        for k, v in pending.items()
+        if v is not None
     )
     tag = tag[:-1] + extra + b">"
     return data[: match.start()] + tag + data[match.end() :]
@@ -173,14 +178,14 @@ def query_bounds(paths: list[Path], *, inkscape: str, staging: Path) -> dict[Pat
 
 
 def normalize(
-    data: bytes, pixel_bounds: list[float], *, padding: float = 0.005, width: float = 100
+    data: bytes, pixel_bounds: list[float], *, padding: float = 0.005
 ) -> tuple[bytes, dict]:
     root = parse_svg(data)
     reasons = blockers(root)
     if reasons:
         raise ValueError(", ".join(reasons))
-    if not math.isfinite(padding) or padding < 0 or not math.isfinite(width) or width <= 0:
-        raise ValueError("padding must be nonnegative and output width positive")
+    if not math.isfinite(padding) or padding < 0:
+        raise ValueError("padding must be nonnegative")
     if len(pixel_bounds) != 4 or not all(math.isfinite(v) for v in pixel_bounds):
         raise ValueError("invalid drawing bounds")
     if pixel_bounds[2] <= 0 or pixel_bounds[3] <= 0:
@@ -192,8 +197,9 @@ def normalize(
     box = [x - pad, y - pad, w + 2 * pad, h + 2 * pad]
     attrs = {
         "viewBox": " ".join(format(v, ".12g") for v in box),
-        "width": format(width, ".12g"),
-        "height": format(width * box[3] / box[2], ".12g"),
+        "width": None,
+        "height": None,
+        "preserveAspectRatio": "xMidYMid meet",
     }
     candidate = replace_root_attributes(data, attrs)
     # Metadata-only invariant: no children, styles, transforms, or root semantic attrs changed.
@@ -203,7 +209,7 @@ def normalize(
             restored.set(key, root.get(key))
         else:
             restored.attrib.pop(key, None)
-    if etree.tostring(restored) != etree.tostring(root):
+    if etree.tostring(restored, method="c14n") != etree.tostring(root, method="c14n"):
         raise RuntimeError("normalization changed non-viewport content")
     return candidate, {
         "old_viewport": {k: root.get(k) for k in attrs},
@@ -212,6 +218,8 @@ def normalize(
         "bounds_method": "inkscape-drawing-bounds-css-pixels-to-user-units",
         "padding_ratio": padding,
         "rounding_allowance_user_units": allowance,
+        "sizing": "responsive-viewBox-only",
+        "intrinsic_aspect_ratio": box[2] / box[3],
     }
 
 
@@ -221,20 +229,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("output_dir", type=Path)
     parser.add_argument("--inkscape", default="inkscape")
     parser.add_argument("--padding", type=float, default=0.005)
-    parser.add_argument("--width", type=float, default=100)
     args = parser.parse_args(argv)
     source, output = args.source_root.resolve(), args.output_dir.resolve()
     if not source.is_dir():
         parser.error("source_root must be a directory")
     if output == source or source in output.parents or output in source.parents:
         parser.error("source and output directories must be separate")
-    if (
-        not math.isfinite(args.padding)
-        or args.padding < 0
-        or not math.isfinite(args.width)
-        or args.width <= 0
-    ):
-        parser.error("padding must be nonnegative and output width positive")
+    if not math.isfinite(args.padding) or args.padding < 0:
+        parser.error("padding must be nonnegative")
     if output.exists() and any(output.iterdir()):
         parser.error("output directory must be empty (use a new run directory)")
     output.mkdir(parents=True, exist_ok=True)
@@ -269,7 +271,7 @@ def main(argv: list[str] | None = None) -> int:
                     row.update(status="blocked", reasons=["missing-or-empty-drawing-bounds"])
                     continue
                 candidate, metadata = normalize(
-                    path.read_bytes(), queried[path], padding=args.padding, width=args.width
+                    path.read_bytes(), queried[path], padding=args.padding
                 )
                 destination = output / "svg" / row["path"]
                 destination.parent.mkdir(parents=True, exist_ok=True)
@@ -285,7 +287,8 @@ def main(argv: list[str] | None = None) -> int:
             )
     report = {
         "format": "infinity-svg-viewport-normalization",
-        "version": 1,
+        "version": 2,
+        "sizing": "responsive-viewBox-only",
         "geometry_unchanged": True,
         "publication_approved": False,
         "source_root": str(source),

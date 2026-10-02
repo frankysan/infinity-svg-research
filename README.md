@@ -77,6 +77,8 @@ The Vyo-first continuation adds a profile-aware Vyo/Army identity ledger and a s
 viewport normalizer. The first run produced 544 candidates, verified unchanged drawing renders at
 128 px, and recorded 15 reviewed source identities. See [`docs/vyo-workflow.md`](docs/vyo-workflow.md)
 for commands, evidence, unresolved coverage, and the distinction between source reuse and publication.
+The v2 sizing pass removes fixed root dimensions, preserves each viewBox, and verifies proportional
+scaling in Chrome at multiple sizes and container shapes.
 
 The initial baseline is derived from scanner v8.6 and harness v8.9.4. The scanner covered 1,101 SVGs,
 flagged 81 for at least one hard/advisory condition, found no parse errors, and identified 212 exact

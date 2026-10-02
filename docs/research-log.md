@@ -5,6 +5,11 @@ summary of known evidence, not a synthetic commit history.
 
 ## Vyo-first continuation — 2026-10-01
 
+The v2 sizing continuation removes root `width`/`height` and explicitly uses `xMidYMid meet`, keeping
+the v1 derived viewBoxes and artwork unchanged. All 544 drawing render pairs match at 128 px; six
+samples match at 512 px. Chrome passed 48 intrinsic-sizing and container-fitting checks, including
+wide and tall slots. See `research/reports/vyo-responsive-sizing-v2-summary.json`.
+
 Implemented the identity, action, viewport, and missing-list workflow proposed in the supplied ChatGPT
 continuation context. The 808-emblem Army publication manifest now has a reproducible identity ledger
 with preserved profile references and 15 reviewed identities. Six historical archive-name gaps resolve
