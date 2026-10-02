@@ -34,6 +34,31 @@ rtk proxy python tools/vyo_identity.py research/vyo-full-inventory-v1.json `
   --decisions research/vyo-identity-decisions.json --output output/vyo-identity-v1
 ```
 
+
+## Local visual reviewer
+
+`tools/vyo_review.py` provides a localhost-only review queue for the identity ledger. It renders Army
+and Vyo sources through Inkscape drawing bounds into cached square PNGs so historical page metadata
+does not affect side-by-side, overlay, or blink comparisons. Review writes remain profile-scoped and
+update `research/vyo-identity-decisions.json`; the normal identity outputs are regenerated only after
+the proposed decision passes the existing hash/provenance validation.
+
+```powershell
+python tools/vyo_review.py research/vyo-full-inventory-v1.json `
+  "C:\path\to\army-symbol-build.json" "C:\path\to\symbol-publication.json" `
+  --decisions research/vyo-identity-decisions.json `
+  --army-root "C:\path\to\Army SVG sources" `
+  --vyo-root "C:\path\to\Vyo SVG Vectors" `
+  --output output/vyo-review `
+  --inkscape "C:\Program Files\Inkscape\bin\inkscape.com"
+```
+
+The interface supports queue search/filtering, multiple candidate selection, side-by-side, opacity
+overlay, and blink comparison. `reuse`, `minor-cleanup`, and design-mismatch decisions require an
+evidence note; cleanup/mismatch also require explicit reasons. Confirmed absence is deliberately
+guarded by a separate confirmation and cannot select a Vyo source. Subject-scoped alias rules remain
+read-only hints in the reviewer: only exact Army profile review rules are created or replaced.
+
 ## Viewports
 
 `tools/viewport_normalize.py` queries each drawing's bounds with Inkscape, converts the returned

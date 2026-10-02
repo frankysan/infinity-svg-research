@@ -38,6 +38,7 @@ infinity-svg-human-sphere-review = "infinity_svg_research.human_sphere_review:ma
 infinity-svg-historical-army-probe = "infinity_svg_research.historical_army_probe:main"
 infinity-svg-historical-probe-analyze = "infinity_svg_research.historical_probe_analyze:main"
 infinity-svg-vyo-identity = "infinity_svg_research.vyo_identity:main"
+infinity-svg-vyo-review = "infinity_svg_research.vyo_review:main"
 infinity-svg-viewport-normalize = "infinity_svg_research.viewport_normalize:main"
 infinity-svg-viewport-validate = "infinity_svg_research.viewport_validate:main"
 
@@ -52,4 +53,4 @@ line-length = 100
 target-version = "py311"
 
 [tool.setuptools.package-data]
-infinity_svg_research = ["historical-army-assets.json"]
+infinity_svg_research = ["historical-army-assets.json", "vyo_review_web/*"]

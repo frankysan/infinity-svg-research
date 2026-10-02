@@ -1,0 +1,90 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vyo / Army visual reviewer</title>
+<link rel="stylesheet" href="/review.css">
+<header class="topbar">
+  <div>
+    <h1>Vyo / Army visual reviewer</h1>
+    <p id="summary">Loading identity map…</p>
+  </div>
+  <div class="toolbar">
+    <label>Search <input id="search" type="search" placeholder="unit, profile, Vyo name"></label>
+    <label>Status
+      <select id="status-filter">
+        <option value="pending">Pending review</option>
+        <option value="name-candidate">Name candidates</option>
+        <option value="unresolved">Unresolved</option>
+        <option value="reviewed">Reviewed</option>
+        <option value="all">All</option>
+      </select>
+    </label>
+    <label>Action
+      <select id="action-filter">
+        <option value="all">Any</option>
+        <option value="reuse">Reuse</option>
+        <option value="minor-cleanup">Cleanup</option>
+        <option value="reconstruct">Reconstruct</option>
+      </select>
+    </label>
+  </div>
+</header>
+<main>
+  <aside class="queue-panel" aria-label="Review queue">
+    <div class="queue-head">
+      <strong id="queue-count">0 matches</strong>
+      <span id="position">0 / 0</span>
+    </div>
+    <div id="queue" class="queue"></div>
+  </aside>
+  <section class="review-panel">
+    <div class="asset-head">
+      <div>
+        <h2 id="asset-title">No asset selected</h2>
+        <p id="asset-meta"></p>
+      </div>
+      <div class="nav-buttons">
+        <button id="previous" type="button">Previous</button>
+        <button id="next" type="button">Next</button>
+      </div>
+    </div>
+
+    <div class="modebar" aria-label="Comparison mode">
+      <button type="button" class="mode active" data-mode="side">Side by side</button>
+      <button type="button" class="mode" data-mode="overlay">Overlay</button>
+      <button type="button" class="mode" data-mode="blink">Blink</button>
+      <label id="opacity-wrap" class="hidden">Vyo opacity
+        <input id="opacity" type="range" min="0" max="100" value="50">
+      </label>
+      <button id="blink-pause" type="button" class="hidden">Pause blink</button>
+    </div>
+
+    <div id="comparison" class="comparison"></div>
+
+    <form id="decision-form" class="decision-panel">
+      <fieldset>
+        <legend>Review decision</legend>
+        <div class="decision-options">
+          <label><input type="radio" name="decision" value="reuse"> Match / reuse</label>
+          <label><input type="radio" name="decision" value="cleanup"> Match / cleanup</label>
+          <label><input type="radio" name="decision" value="mismatch"> Design mismatch</label>
+          <label><input type="radio" name="decision" value="unresolved"> Leave unresolved</label>
+          <label class="danger-choice"><input type="radio" name="decision" value="missing"> Confirmed absent</label>
+        </div>
+      </fieldset>
+      <label>Reasons <input id="reasons" type="text" placeholder="comma-separated review reasons"></label>
+      <label>Evidence / review note
+        <textarea id="evidence" rows="3" placeholder="What you compared and why this decision is justified"></textarea>
+      </label>
+      <label id="confirm-missing-wrap" class="confirm-missing hidden">
+        <input id="confirm-missing" type="checkbox">
+        I checked the relevant Vyo corpus and confirm that no usable source exists for this profile.
+      </label>
+      <div class="save-row">
+        <span id="message" role="status" aria-live="polite"></span>
+        <button id="save" type="submit">Save + next</button>
+      </div>
+    </form>
+  </section>
+</main>
+<script src="/review.js"></script>
