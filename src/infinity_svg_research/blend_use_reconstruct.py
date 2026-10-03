@@ -17,6 +17,8 @@ DEFAULT_SIZES = (64, 128, 256, 512, 1024, 1600)
 CSS_RULE_RE = re.compile(r"(?P<selectors>[^{}]+)\{(?P<body>[^{}]*)\}")
 URL_REF_RE = re.compile(r"url\(\s*#([^)\s]+)\s*\)")
 SIMPLE_CLASS_RE = re.compile(r"^\.([\w-]+)$")
+CSS_DECL_RE = re.compile(r"([\w-]+)\s*:\s*([^;]+)")
+URL_ONLY_RE = re.compile(r"^url\(\s*#([^)\s]+)\s*\)$")
 
 
 def _parse_svg(path: Path) -> etree._ElementTree:
@@ -43,6 +45,167 @@ def _gradients(root: etree._Element) -> dict[str, etree._Element]:
     }
 
 
+def _declarations(text: str | None) -> dict[str, str]:
+    if not text:
+        return {}
+    return {
+        match.group(1).strip().lower(): match.group(2).strip()
+        for match in CSS_DECL_RE.finditer(text)
+    }
+
+
+def _class_declarations(root: etree._Element) -> dict[str, dict[str, str]]:
+    result: dict[str, dict[str, str]] = {}
+    style_text = "\n".join(root.xpath(".//s:style/text()", namespaces=scan.NS))
+    for match in CSS_RULE_RE.finditer(style_text):
+        declarations = _declarations(match.group("body"))
+        for selector in match.group("selectors").split(","):
+            simple = SIMPLE_CLASS_RE.fullmatch(selector.strip())
+            if simple is not None:
+                result.setdefault(simple.group(1), {}).update(declarations)
+    return result
+
+
+def _element_declarations(
+    element: etree._Element, class_declarations: dict[str, dict[str, str]]
+) -> dict[str, str]:
+    declarations: dict[str, str] = {}
+    for class_name in (element.get("class") or "").split():
+        declarations.update(class_declarations.get(class_name, {}))
+    declarations.update(_declarations(element.get("style")))
+    for name in (
+        "fill",
+        "fill-opacity",
+        "opacity",
+        "filter",
+        "mask",
+        "clip-path",
+        "mix-blend-mode",
+    ):
+        value = element.get(name)
+        if value is not None:
+            declarations[name] = value.strip()
+    return declarations
+
+
+def _unit_opacity(value: str | None) -> bool:
+    if value is None:
+        return True
+    text = value.strip().lower()
+    try:
+        if text.endswith("%"):
+            return abs(float(text[:-1]) - 100.0) < 1e-9
+        return abs(float(text) - 1.0) < 1e-9
+    except ValueError:
+        return False
+
+
+def _gradient_is_opaque(
+    gradients: dict[str, etree._Element], gradient_id: str
+) -> bool:
+    if gradient_id not in gradients:
+        return False
+    stops = scan.resolve_gradient_stops(gradients, gradient_id)
+    if not stops:
+        return False
+    for _offset, color, stop_opacity, style in stops:
+        if color is None:
+            return False
+        lower_color = color.strip().lower()
+        if lower_color in {"none", "transparent"} or lower_color.startswith("rgba("):
+            return False
+        if lower_color.startswith("#") and len(lower_color) in {5, 9}:
+            return False
+        style_opacity = _declarations(style).get("stop-opacity")
+        effective_opacity = style_opacity if style_opacity is not None else stop_opacity
+        if not _unit_opacity(effective_opacity):
+            return False
+    return True
+
+
+def _plain_group_compositing(
+    group: etree._Element, class_declarations: dict[str, dict[str, str]]
+) -> bool:
+    declarations = _element_declarations(group, class_declarations)
+    if not _unit_opacity(declarations.get("opacity")):
+        return False
+    if not _unit_opacity(declarations.get("fill-opacity")):
+        return False
+    compositing = {"filter", "mask", "clip-path", "mix-blend-mode"}
+    return not any(name in declarations for name in compositing) and group.get("transform") is None
+
+
+def _opaque_geometry(
+    element: etree._Element,
+    class_fill: dict[str, str],
+    class_declarations: dict[str, dict[str, str]],
+    gradients: dict[str, etree._Element],
+) -> bool:
+    declarations = _element_declarations(element, class_declarations)
+    if not _unit_opacity(declarations.get("opacity")):
+        return False
+    if not _unit_opacity(declarations.get("fill-opacity")):
+        return False
+    compositing = {"filter", "mask", "clip-path", "mix-blend-mode"}
+    if any(name in declarations for name in compositing) or element.get("transform") is not None:
+        return False
+
+    fill = declarations.get("fill")
+    if fill is None:
+        for class_name in (element.get("class") or "").split():
+            gradient_id = class_fill.get(class_name)
+            if gradient_id is not None:
+                return _gradient_is_opaque(gradients, gradient_id)
+        return False
+    match = URL_ONLY_RE.fullmatch(fill)
+    return bool(match) and _gradient_is_opaque(gradients, match.group(1))
+
+
+def _same_geometry(left: etree._Element, right: etree._Element) -> bool:
+    name = scan.local_name(left)
+    if name != scan.local_name(right) or name not in {"path", "polygon"}:
+        return False
+    if left.get("transform") is not None or right.get("transform") is not None:
+        return False
+    attribute = "d" if name == "path" else "points"
+    return left.get(attribute) == right.get(attribute)
+
+
+def _base_has_opaque_exact_later_sibling(
+    stack: etree._Element,
+    base: etree._Element,
+    *,
+    class_fill: dict[str, str],
+    class_declarations: dict[str, dict[str, str]],
+    gradients: dict[str, etree._Element],
+) -> bool:
+    parent = stack.getparent()
+    if parent is None:
+        return False
+    siblings = list(parent)
+    try:
+        stack_index = siblings.index(stack)
+    except ValueError:
+        return False
+
+    base_geometry = list(base)
+    for sibling in siblings[stack_index + 1 :]:
+        if scan.local_name(sibling) != "g":
+            continue
+        if not _plain_group_compositing(sibling, class_declarations):
+            continue
+        occluder_geometry = list(sibling)
+        if len(occluder_geometry) != len(base_geometry):
+            continue
+        if all(
+            _same_geometry(source, occluder)
+            and _opaque_geometry(occluder, class_fill, class_declarations, gradients)
+            for source, occluder in zip(base_geometry, occluder_geometry, strict=True)
+        ):
+            return True
+    return False
+
+
 def _step_translation(base: etree._Element, step: etree._Element) -> tuple[float, float]:
     shifts: list[tuple[float, float]] = []
     for base_geometry, geometry in zip(list(base), list(step), strict=True):
@@ -50,6 +213,43 @@ def _step_translation(base: etree._Element, step: etree._Element) -> tuple[float
         _norm, anchor = scan.normalized_geometry(geometry)
         shifts.append((anchor[0] - base_anchor[0], anchor[1] - base_anchor[1]))
     return median(x for x, _y in shifts), median(y for _x, y in shifts)
+
+
+def _step_paint_translation(
+    step: etree._Element,
+    class_fill: dict[str, str],
+    gradients: dict[str, etree._Element],
+) -> tuple[float, float]:
+    translations: list[tuple[float, float]] = []
+    for geometry in step:
+        gradient_id = class_fill[geometry.get("class") or ""]
+        translation = scan.gradient_translation(
+            scan.resolve_gradient_attr(gradients, gradient_id, "gradientTransform")
+        )
+        if translation is None:
+            raise ValueError(
+                f"unsupported gradient transform in confirmed blend step: {gradient_id}"
+            )
+        translations.append(translation)
+    return median(x for x, _y in translations), median(y for _x, y in translations)
+
+
+def _canonical_base_step(
+    steps: list[etree._Element],
+    class_fill: dict[str, str],
+    gradients: dict[str, etree._Element],
+) -> tuple[int, tuple[float, float]]:
+    paint_translations = [
+        _step_paint_translation(step, class_fill, gradients) for step in steps
+    ]
+    index = min(
+        range(len(steps)),
+        key=lambda item: (
+            paint_translations[item][0] ** 2 + paint_translations[item][1] ** 2,
+            item,
+        ),
+    )
+    return index, paint_translations[index]
 
 
 def _format_number(value: float) -> str:
@@ -78,6 +278,7 @@ def rewrite_blend_stacks(
 ) -> dict[str, Any]:
     root = tree.getroot()
     class_fill = _class_fill(root)
+    class_declarations = _class_declarations(root)
     gradients = _gradients(root)
     candidates: list[tuple[etree._Element, scan.BlendStackEvidence]] = []
     for group in root.xpath(".//s:g", namespaces=scan.NS):
@@ -95,32 +296,56 @@ def rewrite_blend_stacks(
     generated_uses = 0
     replaced_steps = 0
     rejected_group_attributes = 0
+    suppressed_occluded_bases = 0
     stack_stats: list[dict[str, Any]] = []
     for stack, evidence in candidates:
         steps = list(stack)
         if not all(_simple_group_attributes(step) for step in steps):
             rejected_group_attributes += 1
             continue
-        base = steps[0]
+        base_index, base_paint_translation = _canonical_base_step(
+            steps, class_fill, gradients
+        )
+        base = steps[base_index]
+        suppress_occluded_base = _base_has_opaque_exact_later_sibling(
+            stack,
+            base,
+            class_fill=class_fill,
+            class_declarations=class_declarations,
+            gradients=gradients,
+        )
         base_id = base.get("id") or _unique_id(root, "blend-use-base")
         base.set("id", base_id)
         translations: list[tuple[float, float]] = []
-        for step in steps[1:]:
-            translations.append(_step_translation(base, step))
-        for step, (dx, dy) in zip(steps[1:], translations, strict=True):
+        for index, step in enumerate(steps):
+            if index == base_index:
+                continue
+            dx, dy = _step_translation(base, step)
+            translations.append((dx, dy))
             use = etree.Element(f"{{{scan.SVG}}}use")
             use.set("href", f"#{base_id}")
-            use.set(f"{{{scan.XLINK}}}href", f"#{base_id}")
-            use.set("transform", f"translate({_format_number(dx)} {_format_number(dy)})")
+            x, y = _format_number(dx), _format_number(dy)
+            if x != "0":
+                use.set("x", x)
+            if y != "0":
+                use.set("y", y)
             stack.replace(step, use)
             generated_uses += 1
             replaced_steps += 1
+        if suppress_occluded_base:
+            defs = etree.Element(f"{{{scan.SVG}}}defs")
+            stack.replace(base, defs)
+            defs.append(base)
+            suppressed_occluded_bases += 1
         rewritten += 1
         stack_stats.append(
             {
                 "steps": evidence.steps,
                 "glyphs_per_step": evidence.glyphs_per_step,
                 "base_id": base_id,
+                "base_step_index": base_index,
+                "base_paint_translation": list(base_paint_translation),
+                "suppressed_occluded_base": suppress_occluded_base,
                 "uses": len(translations),
                 "translations": [[dx, dy] for dx, dy in translations],
             }
@@ -130,6 +355,7 @@ def rewrite_blend_stacks(
         "detected_stacks": len(candidates),
         "rewritten_stacks": rewritten,
         "rejected_group_attributes": rejected_group_attributes,
+        "suppressed_occluded_bases": suppressed_occluded_bases,
         "replaced_steps": replaced_steps,
         "generated_uses": generated_uses,
         "stacks": stack_stats,

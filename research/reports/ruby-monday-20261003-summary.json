@@ -1,0 +1,370 @@
+{
+  "format": "infinity-svg-ruby-monday-continuation",
+  "version": 3,
+  "date": "2026-10-03",
+  "source": {
+    "path": "units/kazuraba-ruby-monday-1-1.svg",
+    "sha256": "cd4afd324f3e7c4286131d8020ad22264bf1abaa8f19817a0ba51b41007cb07c",
+    "size_bytes": 1875476,
+    "classification": "flattened-blend-stack"
+  },
+  "blend_stacks": [
+    {
+      "stack": 0,
+      "steps": 35,
+      "glyphs_per_step": 4,
+      "full_step_normalized_variants": 2,
+      "per_glyph_normalized_variants": [
+        2,
+        1,
+        2,
+        2
+      ],
+      "max_normalized_geometry_delta": 0.01,
+      "max_anchor_translation_spread": 0.005,
+      "canonical_base_step_index": 34,
+      "canonical_base_paint_translation": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "stack": 1,
+      "steps": 35,
+      "glyphs_per_step": 4,
+      "full_step_normalized_variants": 2,
+      "per_glyph_normalized_variants": [
+        2,
+        1,
+        2,
+        2
+      ],
+      "max_normalized_geometry_delta": 0.01,
+      "max_anchor_translation_spread": 0.0,
+      "canonical_base_step_index": 34,
+      "canonical_base_paint_translation": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "stack": 2,
+      "steps": 35,
+      "glyphs_per_step": 4,
+      "full_step_normalized_variants": 2,
+      "per_glyph_normalized_variants": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "max_normalized_geometry_delta": 0.01,
+      "max_anchor_translation_spread": 0.01,
+      "canonical_base_step_index": 34,
+      "canonical_base_paint_translation": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "stack": 3,
+      "steps": 53,
+      "glyphs_per_step": 6,
+      "full_step_normalized_variants": 10,
+      "per_glyph_normalized_variants": [
+        1,
+        3,
+        1,
+        4,
+        4,
+        1
+      ],
+      "max_normalized_geometry_delta": 0.01,
+      "max_anchor_translation_spread": 0.01,
+      "canonical_base_step_index": 52,
+      "canonical_base_paint_translation": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "stack": 4,
+      "steps": 53,
+      "glyphs_per_step": 6,
+      "full_step_normalized_variants": 11,
+      "per_glyph_normalized_variants": [
+        1,
+        3,
+        1,
+        4,
+        4,
+        1
+      ],
+      "max_normalized_geometry_delta": 0.01,
+      "max_anchor_translation_spread": 0.01,
+      "canonical_base_step_index": 52,
+      "canonical_base_paint_translation": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "stack": 5,
+      "steps": 53,
+      "glyphs_per_step": 6,
+      "full_step_normalized_variants": 10,
+      "per_glyph_normalized_variants": [
+        1,
+        3,
+        1,
+        3,
+        3,
+        1
+      ],
+      "max_normalized_geometry_delta": 0.01,
+      "max_anchor_translation_spread": 0.01,
+      "canonical_base_step_index": 52,
+      "canonical_base_paint_translation": [
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "interpretation": {
+    "source_steps_are_exact_translations": false,
+    "finding": "Expanded Illustrator blend steps contain independent coordinate quantization of up to 0.01 SVG units. Each stack also contains a canonical final/front member whose resolved gradient translation is identity. Using that zero-translation endpoint as the reusable geometry master preserves the authored front bevel boundary and reconstructs the extrusion away from it.",
+    "principal_difference_region": "central RUBY/Monday extrusion edges",
+    "alpha_changed": false
+  },
+  "compact_serialization": {
+    "previous_candidate_size_bytes": 108637,
+    "candidate_size_bytes": 99403,
+    "saved_bytes": 9260,
+    "historical_hand_candidate_size_bytes": 96886,
+    "generated_uses": 258,
+    "change": "Use SVG2 href only and encode pure translations as use x/y rather than duplicate href+xlink:href plus transform=translate(...).",
+    "render_exact_against_previous_candidate_at_sizes": [
+      64,
+      128,
+      256,
+      512,
+      1024,
+      1600
+    ],
+    "compact_back_endpoint_candidate_size_bytes": 96769,
+    "final_byte_reduction_fraction_from_source": 0.9469985219752213,
+    "render_exact_note": "The SVG2 href + use x/y serialization change is pixel-identical to the previous back-endpoint geometry at these sizes; canonical endpoint selection is a separate fidelity change.",
+    "canonical_front_candidate_size_bytes": 99377
+  },
+  "source_vs_candidate": {
+    "renderer": "Inkscape 1.4 (e7c3feb100, 2024-10-09)",
+    "renders": [
+      {
+        "size": 64,
+        "changed_pixels": 104,
+        "changed_pixel_fraction": 0.025390625,
+        "max_channel_diff": 14,
+        "rgba_rmse": 0.5069102561721355,
+        "alpha_rmse": 0.0
+      },
+      {
+        "size": 128,
+        "changed_pixels": 238,
+        "changed_pixel_fraction": 0.0145263671875,
+        "max_channel_diff": 19,
+        "rgba_rmse": 0.47705852771666024,
+        "alpha_rmse": 0.0
+      },
+      {
+        "size": 256,
+        "changed_pixels": 1066,
+        "changed_pixel_fraction": 0.016265869140625,
+        "max_channel_diff": 27,
+        "rgba_rmse": 0.6852574620583425,
+        "alpha_rmse": 0.0
+      },
+      {
+        "size": 512,
+        "changed_pixels": 2870,
+        "changed_pixel_fraction": 0.01094818115234375,
+        "max_channel_diff": 42,
+        "rgba_rmse": 0.6708387323324163,
+        "alpha_rmse": 0.0
+      },
+      {
+        "size": 1024,
+        "changed_pixels": 9230,
+        "changed_pixel_fraction": 0.008802413940429688,
+        "max_channel_diff": 64,
+        "rgba_rmse": 0.8967791303375703,
+        "alpha_rmse": 0.0
+      },
+      {
+        "size": 1600,
+        "changed_pixels": 17339,
+        "changed_pixel_fraction": 0.006773046875,
+        "max_channel_diff": 92,
+        "rgba_rmse": 0.8970679235013367,
+        "alpha_rmse": 0.0
+      }
+    ],
+    "note": "The endpoint-suppressed representative candidate intentionally differs more from raw pixels than the coincident-edge canonical-front candidate because the raw export contains the rejected double-antialiasing seam."
+  },
+  "scour_check": {
+    "version": "0.38.2",
+    "safe_for_this_candidate": false,
+    "candidate_size_bytes": 90943,
+    "gradients_before": 39,
+    "gradients_after": 15,
+    "rgba_rmse_vs_source_at_1600": 41.58393230183497,
+    "reason": "Scour collapses/removes inherited gradients that remain visually significant in this Illustrator export. Do not use Scour as the Ruby Monday size-reduction stage."
+  },
+  "status": "candidate-validated",
+  "publication_approved": false,
+  "source_artwork": {
+    "ruby_front_face_gradient": {
+      "gradient_id": "uuid-3fc68b16-a6a4-48f7-948e-9802d0dd1154",
+      "direction": "vertical",
+      "notable_stops": [
+        {
+          "offset": 0.0,
+          "color": "#00e6ff"
+        },
+        {
+          "offset": 0.11,
+          "color": "#91eeff"
+        },
+        {
+          "offset": 0.48,
+          "color": "#f9f9f9"
+        },
+        {
+          "offset": 0.5,
+          "color": "#320250"
+        },
+        {
+          "offset": 0.62,
+          "color": "#ef24df"
+        },
+        {
+          "offset": 1.0,
+          "color": "#ffcafd"
+        }
+      ]
+    },
+    "ruby_pattern_overlay": {
+      "pattern_id": "uuid-10ad8c9a-e314-4b96-9d6d-4cccbd22c40d",
+      "data_name": "6 lpi 10%",
+      "group_opacity": 0.14,
+      "blend_mode": "overlay",
+      "finding": "The subtle horizontal stripes inside RUBY are explicit source artwork and are not introduced by the reconstruction."
+    },
+    "monday_has_equivalent_pattern_overlay": false
+  },
+  "canonical_base_selection": {
+    "selection_rule": "Choose the confirmed stack member whose resolved gradient translation has the smallest squared distance from (0, 0).",
+    "ruby_base_step_indexes": [
+      34,
+      34,
+      34
+    ],
+    "monday_base_step_indexes": [
+      52,
+      52,
+      52
+    ],
+    "all_base_paint_translations_identity": true,
+    "previous_back_endpoint_1600": {
+      "candidate_size_bytes": 96769,
+      "rgba_rmse": 2.8608186758502803,
+      "changed_pixel_fraction": 0.01537578125,
+      "alpha_rmse": 0.0
+    },
+    "canonical_front_1600": {
+      "candidate_size_bytes": 99377,
+      "rgba_rmse": 0.5254540447317919,
+      "changed_pixel_fraction": 0.00560234375,
+      "alpha_rmse": 0.0
+    },
+    "ruby_crop_1600": {
+      "previous_back_endpoint_rgba_rmse": 7.14103945125949,
+      "canonical_front_rgba_rmse": 1.3376310675415077
+    }
+  },
+  "browser_check": {
+    "renderer": "Chromium 144.0.7559.96 via Playwright",
+    "size": 512,
+    "forward_use_references_rendered": true,
+    "changed_pixels": 1750,
+    "changed_pixel_fraction": 0.00667572021484375,
+    "max_channel_diff": 43,
+    "rgba_rmse": 0.6255605091616306,
+    "alpha_rmse": 0.0,
+    "note": "Endpoint-suppressed candidate rendered correctly with forward href references and local defs masters."
+  },
+  "seam_suppression": {
+    "problem": "A zero-translation dark extrusion endpoint is fully hidden by later, exactly coincident opaque face geometry. Independent raster anti-aliasing of both edges creates a visible fringe.",
+    "full_clip_rejected": true,
+    "selected_method": "Retain the canonical endpoint as a local defs-only use master when a later sibling exactly matches all geometry and is provably fully opaque; do not paint that endpoint directly.",
+    "suppressed_stack_count": 2,
+    "suppressed_stack_indexes": [
+      2,
+      5
+    ],
+    "authored_path_geometry_changed": false,
+    "candidate_size_bytes": 99403,
+    "canonical_front_candidate_size_bytes": 99377,
+    "canonical_front_vs_endpoint_suppressed": [
+      {
+        "size": 64,
+        "changed_pixels": 55,
+        "changed_pixel_fraction": 0.013427734375,
+        "max_channel_diff": 12,
+        "rgba_rmse": 0.45641317715557905,
+        "alpha_rmse": 0.0
+      },
+      {
+        "size": 128,
+        "changed_pixels": 102,
+        "changed_pixel_fraction": 0.0062255859375,
+        "max_channel_diff": 19,
+        "rgba_rmse": 0.421458851463061,
+        "alpha_rmse": 0.0
+      },
+      {
+        "size": 256,
+        "changed_pixels": 496,
+        "changed_pixel_fraction": 0.007568359375,
+        "max_channel_diff": 24,
+        "rgba_rmse": 0.6396954002321144,
+        "alpha_rmse": 0.0
+      },
+      {
+        "size": 512,
+        "changed_pixels": 978,
+        "changed_pixel_fraction": 0.00373077392578125,
+        "max_channel_diff": 34,
+        "rgba_rmse": 0.582181155978502,
+        "alpha_rmse": 0.0
+      },
+      {
+        "size": 1024,
+        "changed_pixels": 2738,
+        "changed_pixel_fraction": 0.0026111602783203125,
+        "max_channel_diff": 46,
+        "rgba_rmse": 0.7423874435139858,
+        "alpha_rmse": 0.0
+      },
+      {
+        "size": 1600,
+        "changed_pixels": 4697,
+        "changed_pixel_fraction": 0.001834765625,
+        "max_channel_diff": 53,
+        "rgba_rmse": 0.720898284043942,
+        "alpha_rmse": 0.0
+      }
+    ],
+    "manual_visual_review": "endpoint-suppressed preferred",
+    "inference_boundary": "Suppression requires exact coincident path/polygon geometry plus a later sibling with unit opacity, no mask/filter/clip/blend compositing, and fully opaque gradient fills. Translucent or otherwise composited occluders are not suppressed."
+  }
+}

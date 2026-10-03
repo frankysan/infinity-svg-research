@@ -1,5 +1,10 @@
 {
   "format": "infinity-svg-army-issue-review",
   "version": 1,
-  "issues": {}
+  "issues": {
+    "cd4afd324f3e7c4286131d8020ad22264bf1abaa8f19817a0ba51b41007cb07c": {
+      "status": "candidate-validated",
+      "note": "Ruby Monday flattened blend stacks reconstructed from canonical zero-translation front endpoints; exact opaque coincident dark endpoints suppressed as defs-only use masters to remove shared-edge antialias seams. Manual visual review selected the endpoint-suppressed candidate."
+    }
+  }
 }
